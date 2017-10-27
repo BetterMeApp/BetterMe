@@ -3,4 +3,7 @@
     <string name="home">Home</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="profile">Profile</string>
+    <string name="create_new">Create New</string>
+    <string name="tasks">Tasks</string>
 </resources>
