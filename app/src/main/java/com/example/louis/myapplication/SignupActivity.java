@@ -1,5 +1,6 @@
 package com.example.louis.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -30,6 +34,7 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        final Context ctx = this;
 
         mEmail = (EditText) findViewById(R.id.signup_email);
         mUsername = (EditText) findViewById(R.id.signup_username);
@@ -40,13 +45,9 @@ public class SignupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null){
-                    // entry point for app is HomeActy, so even if a user somehow gets to the login, it will kick them back to homeActy (so no need to worry about erasing a users displayName)
-                    UserProfileChangeRequest req = new UserProfileChangeRequest.Builder().setDisplayName(mUsername.getText().toString()).build();
-                    user.updateProfile(req);
-
                     //user is logged in, go back to Login (and from there go to HomeActy)
                     finish();
                 }
@@ -67,7 +68,8 @@ public class SignupActivity extends AppCompatActivity {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 
-    public void attachListeners(){
+    private void attachListeners(){
+        final Context ctx = this;
         mSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,11 +82,31 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(SignupActivity.this, "Signup Failed. Ensure you are using a valid email and your username and password are both 8 characters or longer.", Toast.LENGTH_LONG).show();
                     return;
                 }
-                try {
-                    mAuth.createUserWithEmailAndPassword(email, pw);
-                } catch (Exception e){
-                    Toast.makeText(SignupActivity.this, "Something failed in the Auth process.\nPlease try again or contact support.", Toast.LENGTH_LONG).show();
-                }
+                mAuth.createUserWithEmailAndPassword(email, pw)
+                        .addOnCompleteListener((Activity) ctx, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(!task.isSuccessful()){
+                                    Toast.makeText(SignupActivity.this, "Oops! Something went wrong in the Sign-Up process.\nPlease try again or contact support.", Toast.LENGTH_LONG).show();
+                                } else {
+                                    //user?
+
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    UserProfileChangeRequest req = new UserProfileChangeRequest.Builder().setDisplayName(mUsername.getText().toString()).build();
+                                    user.updateProfile(req)
+                                            .addOnCompleteListener((Activity) ctx, new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (!task.isSuccessful()) {
+                                                        Log.d(TAG, "onComplete: displayname update failed");
+                                                    }
+                                                }
+                                            });
+
+
+                                }
+                            }
+                        });
 
             }
         });
@@ -131,4 +153,5 @@ public class SignupActivity extends AppCompatActivity {
             inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
     }
+
 }

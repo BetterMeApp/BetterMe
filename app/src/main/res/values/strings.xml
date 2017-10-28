@@ -4,6 +4,8 @@
     <string name="username_input_label">Username:</string>
     <string name="password_input_label">Password:</string>
     <string name="goto_login_text">Already have an account? Login Here!</string>
+    <string name="goto_signup_text">Need to setup an account? Sign-up Here!</string>
     <string name="signup_btn">SignUp!</string>
+    <string name="login_btn">Log In!</string>
 
 </resources>
