@@ -9,20 +9,26 @@ import java.sql.Time;
 
 public class Task {
 
-    String mTaskTitle;
-    String mDescription;
-    Time mStartTime;
-    Date mStartDate;
-    Integer mGoalNumber;
-    Integer mCompletedNumber;
+    public String title;
+    public String description;
+    public String taskImg;
+    public Time startTime;
+    public Date startDate;
+    public Integer goalNumber;
+    public Integer completedNumber;
+    public Integer amountMinutes;
+    public Integer numberOfCheckBoxes;
 
-    public Task(String title, String description, Time time, Date date, Integer goal, Integer completed){
-        this.mTaskTitle = title;
-        this.mDescription = description;
-        this.mStartTime = time;
-        this.mStartDate = date;
-        this.mGoalNumber = goal;
-        this.mCompletedNumber = completed;
+    public Task(String title, String description, String imgURL, Time time, Date date, Integer goal, Integer done, Integer minutes, Integer checkBoxes){
+        this.title = title;
+        this.description = description;
+        this.taskImg = imgURL;
+        this.startTime = time;
+        this.startDate = date;
+        this.goalNumber = goal;
+        this.completedNumber = done;
+        this.amountMinutes = minutes;
+        this.numberOfCheckBoxes = checkBoxes;
     }
 
 }
