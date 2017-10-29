@@ -2,6 +2,7 @@ package com.example.louis.myapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,13 +13,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import Model.DownloadImageTask;
 import Model.Task;
 import butterknife.BindView;
 
 public class PickTaskActivity extends AppCompatActivity {
 
-    @BindView(R.id.listView_tasks_to_choose)
-    ListView mTasksListView;
+    private static final String TAG = "PickTaskActivity: ";
+    @BindView(R.id.listView_tasks_to_choose) ListView mTasksListView;
     ArrayList<Task> mTaskList;
 
     @Override
@@ -27,12 +29,13 @@ public class PickTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pick_task);
 
         createTaskArrayList();
-        setFeedListView(mTaskList);
+        Log.d(TAG, "createTaskArrayList method created: " + mTaskList.toString());
+        setTaskListView(mTaskList);
 
     }
 
-    private void setFeedListView(ArrayList<Task> arrayList) {
-        TaskListAdapter taskAdapter = new TaskListAdapter(arrayList);
+    private void setTaskListView(ArrayList<Task> taskArrayList) {
+        TaskListAdapter taskAdapter = new TaskListAdapter(taskArrayList);
         mTasksListView.setAdapter(taskAdapter);
     }
 
@@ -89,7 +92,7 @@ public class PickTaskActivity extends AppCompatActivity {
 
         Task compliments = new Task("Give compliments" ,"Give a compliment to a person or people in your life.", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, null, null);
 
-        Task meditate = new Task("Meditate", "Set time aside to meditate each day." "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, 5, null);
+        Task meditate = new Task("Meditate", "Set time aside to meditate each day.", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, 5, null);
 
         Task mornings = new Task("Wake n Make", "Wake up earlier to enjoy the morning before getting the day started. You will have more time to enjoy your morning coffee and plenty of time to make your bed each day!", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, 5, null);
 
@@ -98,7 +101,6 @@ public class PickTaskActivity extends AppCompatActivity {
         Task vegandsmoothie = new Task("Vegetarian Meal and Smoothie", "Each day prepare one balanced vegetarian meal and make a fruit and vegetable smoothie", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, null, 2);
 
         Collections.addAll(mTaskList, pushups, compliments, meditate, mornings, rejection, vegandsmoothie);
-
     }
 
 }
