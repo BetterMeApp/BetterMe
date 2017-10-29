@@ -1,6 +1,8 @@
 package com.example.louis.myapplication;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import butterknife.OnClick;
 public class MenuActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle mToggle;
+    private NavigationView mNavigationView;
 
     @BindView(R.id.drawer) DrawerLayout mDrawerLayout;
 
@@ -29,6 +32,7 @@ public class MenuActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
 //    @Override
@@ -38,28 +42,26 @@ public class MenuActivity extends AppCompatActivity {
 //        return true;
 //    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        return mToggle.onOptionsItemSelected(item);
-//    }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mToggle.onOptionsItemSelected(item);
-        switch (item.getItemId()) {
-            case R.id.tasks:
-                 Intent detailIntent = new Intent(this, DetailActivity.class);
-                 startActivity(detailIntent);
-                return true;
-            case R.id.home:
-                Intent homeIntent = new Intent(this, MainActivity.class);
-                startActivity(homeIntent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return mToggle.onOptionsItemSelected(item);
     }
 
-    dr
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        mToggle.onOptionsItemSelected(item);
+//        switch (item.getItemId()) {
+//            case R.id.tasks:
+//                 Intent detailIntent = new Intent(this, DetailActivity.class);
+//                 startActivity(detailIntent);
+//                return true;
+//            case R.id.home:
+//                Intent homeIntent = new Intent(this, MainActivity.class);
+//                startActivity(homeIntent);
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 }

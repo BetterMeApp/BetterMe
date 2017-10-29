@@ -8,11 +8,7 @@ public class MainActivity extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         setContentView(R.layout.activity_main);
-
-
-
         super.onCreate(savedInstanceState);
     }
 }

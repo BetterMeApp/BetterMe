@@ -7,18 +7,13 @@
     tools:context="com.example.louis.myapplication.MainActivity"
     android:id="@+id/drawer">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </LinearLayout>
-
     <android.support.design.widget.NavigationView
         android:id="@+id/menu_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:menu="@menu/nav_menu"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_header">
 
     </android.support.design.widget.NavigationView>
 
