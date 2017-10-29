@@ -3,6 +3,7 @@ package com.example.louis.myapplication;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +15,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -35,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView mUsername;
     private Button mUpdateImg;
     private ListView mTasksCompleted;
+    //TODO: add adapter to show completed tasks
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +101,6 @@ public class ProfileActivity extends AppCompatActivity {
         mUpdateImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //goto pick profile img activity?
                 Intent pickImgIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickImgIntent, REQUEST_CHOOSE_IMAGE);
             }
@@ -117,14 +121,22 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void getGalImg(Intent data) throws FileNotFoundException{
         InputStream galImg = this.getContentResolver().openInputStream(data.getData());
-        //security of images in firebaseStorage???
-        StorageReference newImgRef = mStorageRef.child("images/" + galImg.hashCode());
-        newImgRef.putStream(galImg);
-//TODO:finish method functionality
 
         //send img to firebase storage
-        //set user's photoUrl to resulting storage url
-        //have the imageview repopulate (call configureLayout?)
+        //security of images in firebaseStorage???
+        StorageReference newImgRef = mStorageRef.child("images/" + galImg.hashCode());
+        newImgRef.putStream(galImg).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
+                //set user's photoUrl to resulting storage url
+                Uri photoUri = taskSnapshot.getDownloadUrl();
+                UserProfileChangeRequest req = new UserProfileChangeRequest.Builder().setPhotoUri(photoUri).build();
+                mAuth.getCurrentUser().updateProfile(req);
+            }
+        });
+
+        //have the imageview repopulate (call configureLayout?)
+        configureLayout();
     }
 }
