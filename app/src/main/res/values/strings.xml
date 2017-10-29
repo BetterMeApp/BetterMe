@@ -1,5 +1,20 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="title_activity_home_task">HomeTaskActivity</string>
+    <string name="count_one">counting</string>
+    <string name="count_two">counting</string>
+    <string name="count_three">counting</string>
+    <string name="count_four">counting</string>
+    <string name="count_five">counting</string>
+    <string name="task_one">task</string>
+    <string name="task_two">task</string>
+    <string name="task_three">task</string>
+    <string name="task_four">task</string>
+    <string name="task_five">task</string>
+    <string name="days_left">days left</string>
+    <string name="daily">daily %</string>
+    <string name="hint_percentage">%</string>
+    <string name="desc">logo</string>
     <string name="email_input_label">Email:</string>
     <string name="username_input_label">Username:</string>
     <string name="password_input_label">Password:</string>
