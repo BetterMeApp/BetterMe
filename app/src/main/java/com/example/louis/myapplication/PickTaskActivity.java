@@ -20,26 +20,30 @@ import butterknife.BindView;
 public class PickTaskActivity extends AppCompatActivity {
 
     private static final String TAG = "PickTaskActivity: ";
-    @BindView(R.id.listView_tasks_to_choose) ListView mTasksListView;
-    ArrayList<Task> mTaskList;
+
+    private ListView mTasksListView;
+
+    private ArrayList<Task> mTaskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_task);
 
+        mTaskList = new ArrayList<>();
+        mTasksListView = findViewById(R.id.listView_tasks_to_choose);
         createTaskArrayList();
         Log.d(TAG, "createTaskArrayList method created: " + mTaskList.toString());
-        setTaskListView(mTaskList);
+        setTaskListView();
 
     }
 
-    private void setTaskListView(ArrayList<Task> taskArrayList) {
-        TaskListAdapter taskAdapter = new TaskListAdapter(taskArrayList);
+    private void setTaskListView() {
+        TaskListAdapter taskAdapter;
+        taskAdapter = new TaskListAdapter(mTaskList);
         mTasksListView.setAdapter(taskAdapter);
     }
 
-    // inner class creating custom list adapter for the feed listview used in setupFeedListView
     class TaskListAdapter extends BaseAdapter {
 
         private ArrayList<Task> adapterTaskList;
@@ -71,11 +75,11 @@ public class PickTaskActivity extends AppCompatActivity {
 
             view = getLayoutInflater().inflate(R.layout.task_custom_listview_item, null);
 
-            ImageView taskImgView = (ImageView) view.findViewById(R.id.imageView_task_img);
-            TextView taskTitleView = (TextView) view.findViewById(R.id.textView_task_title);
-            TextView taskDescriptionView = (TextView) view.findViewById(R.id.textView_task_description);
+            ImageView taskImgView = view.findViewById(R.id.imageView_task_img);
+            TextView taskTitleView = view.findViewById(R.id.textView_task_title);
+            TextView taskDescriptionView = view.findViewById(R.id.textView_task_description);
 
-            new DownloadImageTask(taskImgView).execute("http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png");
+            //new DownloadImageTask(taskImgView).execute();
             taskTitleView.setText(currentItem.title);
             taskDescriptionView.setText(currentItem.description);
 
@@ -84,10 +88,6 @@ public class PickTaskActivity extends AppCompatActivity {
     }
 
     private void createTaskArrayList() {
-
-        mTaskList = new ArrayList<>();
-
-
         Task pushups = new Task("Push-ups", "Stay fit!  Do push-ups throughout the day until you reach your goal.", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, null, null);
 
         Task compliments = new Task("Give compliments" ,"Give a compliment to a person or people in your life.", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, null, null);
@@ -102,7 +102,6 @@ public class PickTaskActivity extends AppCompatActivity {
 
         Collections.addAll(mTaskList, pushups, compliments, meditate, mornings, rejection, vegandsmoothie);
     }
-
 }
 
 
