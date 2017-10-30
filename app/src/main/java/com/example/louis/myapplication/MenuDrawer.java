@@ -1,7 +1,5 @@
 package com.example.louis.myapplication;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,15 +13,15 @@ import android.widget.ListView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class MenuActivity extends AppCompatActivity implements ListView.OnItemClickListener {
+public class MenuDrawer extends AppCompatActivity {
 
     private ActionBarDrawerToggle mToggle;
-    private NavigationView mNavigationView;
-    private ListView mDrawerList;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
 
-    @BindView(R.id.drawer) DrawerLayout mDrawerLayout;
+    @BindView(R.id.drawer)
+    DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +29,31 @@ public class MenuActivity extends AppCompatActivity implements ListView.OnItemCl
         setContentView(R.layout.navigation_drawer);
         ButterKnife.bind(this);
 
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mTitle = mDrawerTitle = getTitle();
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close) {
+//        mDrawerLayout.addDrawerListener(mToggle);
+//        mToggle.syncState();
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu();
+            }
 
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu();
+            }
+        };
+
+        mDrawerLayout.setDrawerListener(mToggle);
     }
+
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//        boolean drawerOpen = mDrawerLayout.isDrawerOpen(m)
+//    }
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
@@ -47,20 +62,10 @@ public class MenuActivity extends AppCompatActivity implements ListView.OnItemCl
 //        return true;
 //    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return mToggle.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        selectItem(position);
-    }
-
-    private void selectItem(int position) {
-        mDrawerList.setItemChecked(position, true);
-        mDrawerLayout.closeDrawer(mDrawerList);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        return mToggle.onOptionsItemSelected(item);
+//    }
 
 
 //    @Override

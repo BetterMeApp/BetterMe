@@ -10,7 +10,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class DetailActivity extends MenuActivity {
+public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
