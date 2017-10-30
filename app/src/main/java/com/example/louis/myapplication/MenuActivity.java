@@ -10,15 +10,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity implements ListView.OnItemClickListener {
 
     private ActionBarDrawerToggle mToggle;
     private NavigationView mNavigationView;
+    private ListView mDrawerList;
 
     @BindView(R.id.drawer) DrawerLayout mDrawerLayout;
 
@@ -33,6 +36,8 @@ public class MenuActivity extends AppCompatActivity {
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+//        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
     }
 
 //    @Override
@@ -45,6 +50,16 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return mToggle.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        selectItem(position);
+    }
+
+    private void selectItem(int position) {
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
 
