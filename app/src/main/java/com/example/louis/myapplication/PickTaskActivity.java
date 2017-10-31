@@ -11,16 +11,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Collections;
-
 import Model.DownloadImageTask;
 import Model.Task;
-
-
-// todo need to go to different activity once a task is selected
-// todo need to fix slow loading of images into image view
+import butterknife.ButterKnife;
 
 public class PickTaskActivity extends AppCompatActivity {
 
@@ -36,6 +31,7 @@ public class PickTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_task);
+        ButterKnife.bind(this);
 
         mTaskList = new ArrayList<>();
         mTasksListView = findViewById(R.id.listView_tasks_to_choose);
