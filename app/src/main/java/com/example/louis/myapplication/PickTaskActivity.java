@@ -1,5 +1,6 @@
 package com.example.louis.myapplication;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +24,9 @@ import butterknife.BindView;
 public class PickTaskActivity extends AppCompatActivity {
 
     private static final String TAG = "PickTaskActivity: ";
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
     @BindView(R.id.listView_tasks_to_choose) ListView mTasksListView;
     ArrayList<Task> mTaskList;
 
@@ -28,10 +35,35 @@ public class PickTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_task);
 
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null){
+                    //user is logged in
+                } else {
+                    finish();
+                }
+            }
+        };
+
         createTaskArrayList();
         Log.d(TAG, "createTaskArrayList method created: " + mTaskList.toString());
         setTaskListView(mTaskList);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(mAuthListener);
     }
 
     private void setTaskListView(ArrayList<Task> taskArrayList) {
