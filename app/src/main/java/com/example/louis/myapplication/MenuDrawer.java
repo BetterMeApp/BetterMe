@@ -59,7 +59,7 @@ public class MenuDrawer extends AppCompatActivity implements NavigationView.OnNa
         if (id == R.id.profile) {
 
         } else if (id == R.id.home) {
-            Intent homeIntent = new Intent(this, MainActivity.class);
+            Intent homeIntent = new Intent(this, HomeTaskActivity.class);
             startActivity(homeIntent);
             return true;
         } else if (id == R.id.tasks) {
