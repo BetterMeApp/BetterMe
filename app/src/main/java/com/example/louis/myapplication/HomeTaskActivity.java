@@ -18,7 +18,7 @@ import java.util.Date;
 
 import butterknife.ButterKnife;
 
-public class HomeTaskActivity extends MenuDrawer implements NavigationView.OnNavigationItemSelectedListener{
+public class HomeTaskActivity extends MenuDrawer {
     private static final String TAG = "HomeTaskActivity";
     private TextView mTaskOne, mTaskTwo, mTaskThree, mTaskFour, mTaskFive, mDailyOne, mDailyTwo, mDailyThree, mDailyFour, mDailyFive, mDaysLeftOne, mDaysLeftTwo, mDaysLeftThree, mDaysLeftFour, mDaysLeftFive;
     private TextView mPercentOne;
