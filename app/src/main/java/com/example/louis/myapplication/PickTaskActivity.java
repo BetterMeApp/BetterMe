@@ -16,6 +16,7 @@ import java.util.Collections;
 import Model.DownloadImageTask;
 import Model.Task;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class PickTaskActivity extends AppCompatActivity {
 
@@ -27,6 +28,7 @@ public class PickTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_task);
+        ButterKnife.bind(this);
 
         createTaskArrayList();
         Log.d(TAG, "createTaskArrayList method created: " + mTaskList.toString());
