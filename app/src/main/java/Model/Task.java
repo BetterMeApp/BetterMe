@@ -19,7 +19,7 @@ public class Task {
     public Integer amountMinutes;
     public Integer numberOfCheckBoxes;
 
-    public Task(String title, String description, String imgURL, Time time, Date date, Integer goal, Integer done, Integer minutes, Integer checkBoxes){
+    public Task(String title, String description, String imgURL, Time time, Date date, Integer goal, Integer done){
         this.title = title;
         this.description = description;
         this.taskImgURL = imgURL;
@@ -27,8 +27,7 @@ public class Task {
         this.startDate = date;
         this.goalNumber = goal;
         this.completedNumber = done;
-        this.amountMinutes = minutes;
-        this.numberOfCheckBoxes = checkBoxes;
+
     }
 
 }

@@ -88,7 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
         try {
             mUsername.setText(user.getDisplayName());
             if(user.getPhotoUrl() != null){
-                new DownloadImageTask(mImgProfile).execute(user.getPhotoUrl().toString());
+                new DownloadImageTask(user.getPhotoUrl().toString(), mImgProfile).execute();
             }
         } catch(Exception e){
             Log.d(TAG, "configureLayout: Error: " + e.getMessage());
