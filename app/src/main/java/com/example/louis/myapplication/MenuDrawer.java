@@ -26,7 +26,7 @@ public class MenuDrawer extends AppCompatActivity implements NavigationView.OnNa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.navigation_drawer);
+        setContentView(R.layout.menu_drawer);
         ButterKnife.bind(this);
 
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
