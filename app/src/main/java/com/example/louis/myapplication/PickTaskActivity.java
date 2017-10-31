@@ -1,7 +1,6 @@
 package com.example.louis.myapplication;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,17 +12,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 
 import Model.DownloadImageTask;
 import Model.Task;
-import Model.URLToBmpProvider;
-import butterknife.BindView;
-
-import static android.R.attr.src;
 
 
 // todo need to go to different activity once a task is selected
