@@ -1,8 +1,16 @@
 package com.example.louis.myapplication;
 
 import android.support.annotation.NonNull;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import Model.ProgressionBar;
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
