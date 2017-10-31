@@ -2,6 +2,7 @@ package com.example.louis.myapplication;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -12,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class HomeTaskActivity extends AppCompatActivity {
+public class HomeTaskActivity extends MenuDrawer implements NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "HomeTaskActivity";
     private TextView mTaskOne, mTaskTwo, mTaskThree, mTaskFour, mTaskFive, mDailyOne, mDailyTwo, mDailyThree, mDailyFour, mDailyFive, mDaysLeftOne, mDaysLeftTwo, mDaysLeftThree, mDaysLeftFour, mDaysLeftFive;
     private TextView mPercentOne;
