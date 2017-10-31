@@ -3,12 +3,11 @@ package com.example.louis.myapplication;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-
-public class MainActivity extends MenuDrawer {
+public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
     }
 }

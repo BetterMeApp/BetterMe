@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "510114290307",
+    "firebase_url": "https://betterme-cf17.firebaseio.com",
+    "project_id": "betterme-cf17",
+    "storage_bucket": "betterme-cf17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510114290307:android:27256d7b8d981b01",
+        "android_client_info": {
+          "package_name": "com.example.louis.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510114290307-toufmgdittig057o5ohrce37uio6kbtu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrBIwwieKy-qN1ohndR2zH-5sQeQtq5Yg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

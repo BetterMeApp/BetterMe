@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="home">Home</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="profile">Profile</string>
+    <string name="create_new">Create New</string>
+    <string name="tasks">Tasks</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
