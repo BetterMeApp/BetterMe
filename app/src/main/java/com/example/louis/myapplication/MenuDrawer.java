@@ -8,14 +8,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MenuDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public abstract class MenuDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ActionBarDrawerToggle mToggle;
+    public ActionBarDrawerToggle mToggle;
 
     @BindView(R.id.drawer)
     DrawerLayout mDrawerLayout;
@@ -23,10 +25,15 @@ public class MenuDrawer extends AppCompatActivity implements NavigationView.OnNa
     @BindView(R.id.nav_view)
     NavigationView mNavView;
 
+    // any class that extends this abstract class must define this.
+    public abstract int getLayoutId();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_drawer);
+        //setContentView(R.layout.menu_drawer);
+        int id = R.layout.menu_drawer;
+        setContentView(id);
         ButterKnife.bind(this);
 
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -35,7 +42,13 @@ public class MenuDrawer extends AppCompatActivity implements NavigationView.OnNa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mNavView.setNavigationItemSelectedListener(this);
+
+        int layoutId = this.getLayoutId();
+        RelativeLayout rl = findViewById(R.id.foo);
+        View.inflate(this, layoutId, rl);
     }
+
+
 
     @Override
     public void onBackPressed() {

@@ -3,8 +3,11 @@ package com.example.louis.myapplication;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
@@ -12,6 +15,8 @@ import com.google.firebase.FirebaseApp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import butterknife.ButterKnife;
 
 public class HomeTaskActivity extends MenuDrawer implements NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "HomeTaskActivity";
@@ -29,10 +34,15 @@ public class HomeTaskActivity extends MenuDrawer implements NavigationView.OnNav
     private Handler mHandler;
     private Runnable mRunnable;
 
+    public int getLayoutId() {
+        int id = R.layout.activity_home_task;
+        return id;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_task);
+
         FirebaseApp.initializeApp(this);
 
         mTaskOne = (TextView) findViewById(R.id.task_one);
