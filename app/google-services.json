@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "510114290307",
+    "firebase_url": "https://betterme-cf17.firebaseio.com",
+    "project_id": "betterme-cf17",
+    "storage_bucket": "betterme-cf17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510114290307:android:27256d7b8d981b01",
+        "android_client_info": {
+          "package_name": "com.example.louis.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510114290307-rfg4vh7auuinc65fs96lp2l1n3kqedac.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.louis.myapplication",
+            "certificate_hash": "5aaff1d435e7c23c35aabe6b943640089bfa1df4"
+          }
+        },
+        {
+          "client_id": "510114290307-r13vh5tjenp8esms2b1p2ckjjnfse7sg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.louis.myapplication",
+            "certificate_hash": "ab5c2f477823475909219a604065ccb0b8afbb98"
+          }
+        },
+        {
+          "client_id": "510114290307-toufmgdittig057o5ohrce37uio6kbtu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrBIwwieKy-qN1ohndR2zH-5sQeQtq5Yg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "510114290307-toufmgdittig057o5ohrce37uio6kbtu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
