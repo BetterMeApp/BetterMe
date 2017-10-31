@@ -1,6 +1,7 @@
 package com.example.louis.myapplication;
 
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,34 +12,48 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.Collections;
 import Model.DownloadImageTask;
 import Model.Task;
-import butterknife.ButterKnife;
 
 public class PickTaskActivity extends AppCompatActivity {
 
     private static final String TAG = "PickTaskActivity: ";
 
     private ListView mTasksListView;
-
     private ArrayList<Bitmap> mBmps;
     private ArrayList<Task> mTaskList;
     private Bitmap taskBmp;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private ListView mTaskListView = (ListView) findViewById(R.id.listView_tasks_to_choose);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_task);
-        ButterKnife.bind(this);
-
         mTaskList = new ArrayList<>();
         mTasksListView = findViewById(R.id.listView_tasks_to_choose);
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null){
+                    //user is logged in
+                } else {
+                    finish();
+                }
+            }
+        };
+
         createTaskArrayList();
         setTaskListView();
         setTaskClickListener();
-
     }
 
     private void setTaskClickListener(){
@@ -60,6 +75,22 @@ public class PickTaskActivity extends AppCompatActivity {
     private void setTaskListView() {
         TaskListAdapter taskAdapter;
         taskAdapter = new TaskListAdapter(mTaskList);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(mAuthListener);
+    }
+
+    private void setTaskListView(ArrayList<Task> taskArrayList) {
+        TaskListAdapter taskAdapter = new TaskListAdapter(taskArrayList);
         mTasksListView.setAdapter(taskAdapter);
     }
 
@@ -70,15 +101,6 @@ public class PickTaskActivity extends AppCompatActivity {
         public TaskListAdapter(ArrayList<Task> taskArrayList) {
             super();
             this.adapterTaskList = taskArrayList;
-
-//            mBmps = new ArrayList<>();
-//            for (Task task : adapterTaskList) {
-//                String taskURL = task.taskImgURL;
-//                new URLToBmpProvider().execute(taskURL);
-//                Bitmap bippy = BitmapFactory.decodeResource(getResources(), R.raw.placeholder);
-//                mBmps.add(bippy);
-//            }
-
         }
 
 
@@ -108,7 +130,6 @@ public class PickTaskActivity extends AppCompatActivity {
             TextView taskTitleView = view.findViewById(R.id.textView_task_title);
             TextView taskDescriptionView = view.findViewById(R.id.textView_task_description);
 
-            //taskImgView.setImageBitmap(mBmps.get(i));
             new DownloadImageTask(taskURL, taskImgView).execute();
             taskTitleView.setText(currentItem.title);
             taskDescriptionView.setText(currentItem.description);
