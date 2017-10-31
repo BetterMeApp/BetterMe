@@ -135,6 +135,7 @@ public class PickTaskActivity extends AppCompatActivity {
 
         Task dogLove = new Task ("Dog Love", "Give your furry friend(s) special care each day.  Take your dog to the dog park, go running, get that overdue vet appointment scheduled, and give them an extra belly rub.  Just one thing each day extra to be a more loving owner of your happy dog.", "https://firebasestorage.googleapis.com/v0/b/betterme-cf17.appspot.com/o/default%20task%20images%2Fdoglove.jpg?alt=media&token=f24c8e34-018a-46a2-b5d8-9dfc4b92c46a", null, null, 1, 0);
 
+
         Collections.addAll(mTaskList, pushups, complements, meditate, mornings, rejection, vegandsmoothie, letter, dogLove);
     }
 }
