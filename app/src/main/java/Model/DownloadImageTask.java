@@ -6,7 +6,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by steven on 10/28/17.
@@ -14,9 +18,13 @@ import java.io.InputStream;
 
 public class DownloadImageTask extends AsyncTask<String, String, Bitmap> {
     private static final String TAG = "DownloadImageTask";
-    private ImageView imgView;
 
-    public DownloadImageTask(ImageView imageView){
+    private ImageView imgView;
+    private String mUrl;
+    private static Map<String, Bitmap> cache = new HashMap<>();
+
+    public DownloadImageTask(String Url, ImageView imageView){
+        this.mUrl = Url;
         this.imgView = imageView;
     }
 
@@ -29,18 +37,29 @@ public class DownloadImageTask extends AsyncTask<String, String, Bitmap> {
     protected Bitmap doInBackground(String... strings) {
         Bitmap bmp = null;
         try {
-            InputStream image = new java.net.URL(strings[0]).openStream();
+            if (cache.containsKey(mUrl)) {
+                return cache.get(mUrl);
+            }
+            InputStream image = new java.net.URL(mUrl).openStream();
             bmp = BitmapFactory.decodeStream(image);
-        } catch (Exception e){
-            Log.d(TAG, "doInBackground: error" + e);
+
+            cache.put(mUrl, bmp);
+            return bmp;
+
+        } catch (Exception e) {
+            Log.d(TAG, "doInBackground: IO exception caught- " + e.getMessage());
+            return null;
         }
-        return bmp;
     }
 
     @Override
     protected void onPostExecute(Bitmap bmp) {
-        super.onPostExecute(bmp);
-
-        imgView.setImageBitmap(bmp);
+        if (bmp != null) {
+            super.onPostExecute(bmp);
+            imgView.setImageBitmap(bmp);
+        }
     }
+
+
+
 }
