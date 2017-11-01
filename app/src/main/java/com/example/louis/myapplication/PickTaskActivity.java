@@ -20,7 +20,7 @@ import java.util.Collections;
 import Model.DownloadImageTask;
 import Model.Task;
 
-public class PickTaskActivity extends AppCompatActivity {
+public class PickTaskActivity extends MenuDrawer {
 
     private static final String TAG = "PickTaskActivity: ";
 
@@ -33,6 +33,11 @@ public class PickTaskActivity extends AppCompatActivity {
     private ListView mTaskListView;
     private RelativeLayout mSelectedTaskLayout;
     private RelativeLayout mTaskListLayout;
+
+    public int getLayoutId() {
+        int id = R.layout.activity_pick_task;
+        return id;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

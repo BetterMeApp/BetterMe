@@ -8,14 +8,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MenuDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public abstract class MenuDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ActionBarDrawerToggle mToggle;
+    public ActionBarDrawerToggle mToggle;
 
     @BindView(R.id.drawer)
     DrawerLayout mDrawerLayout;
@@ -23,10 +25,18 @@ public class MenuDrawer extends AppCompatActivity implements NavigationView.OnNa
     @BindView(R.id.nav_view)
     NavigationView mNavView;
 
+    @BindView(R.id.menu_layout)
+    RelativeLayout mMenuLayout;
+
+    // any class that extends this abstract class must define this.
+    public abstract int getLayoutId();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.navigation_drawer);
+        //setContentView(R.layout.menu_drawer);
+        int id = R.layout.menu_drawer;
+        setContentView(id);
         ButterKnife.bind(this);
 
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -35,7 +45,12 @@ public class MenuDrawer extends AppCompatActivity implements NavigationView.OnNa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mNavView.setNavigationItemSelectedListener(this);
+
+        int layoutId = this.getLayoutId();
+        View.inflate(this, layoutId, mMenuLayout);
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -57,14 +72,20 @@ public class MenuDrawer extends AppCompatActivity implements NavigationView.OnNa
         int id = item.getItemId();
 
         if (id == R.id.profile) {
-
+            Intent profileIntent = new Intent(this, ProfileActivity.class);
+            startActivity(profileIntent);
+            return true;
         } else if (id == R.id.home) {
             Intent homeIntent = new Intent(this, HomeTaskActivity.class);
             startActivity(homeIntent);
             return true;
-        } else if (id == R.id.tasks) {
+        } else if (id == R.id.pick_task) {
             Intent detailIntent = new Intent(this, DetailActivity.class);
             startActivity(detailIntent);
+            return true;
+        } else if (id == R.id.detail_task) {
+            Intent pickTaskIntent = new Intent(this, PickTaskActivity.class);
+            startActivity(pickTaskIntent);
             return true;
         }
 
