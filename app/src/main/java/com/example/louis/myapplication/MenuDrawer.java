@@ -25,6 +25,9 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
     @BindView(R.id.nav_view)
     NavigationView mNavView;
 
+    @BindView(R.id.menu_layout)
+    RelativeLayout mMenuLayout;
+
     // any class that extends this abstract class must define this.
     public abstract int getLayoutId();
 
@@ -44,8 +47,7 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
         mNavView.setNavigationItemSelectedListener(this);
 
         int layoutId = this.getLayoutId();
-        RelativeLayout rl = findViewById(R.id.foo);
-        View.inflate(this, layoutId, rl);
+        View.inflate(this, layoutId, mMenuLayout);
     }
 
 

@@ -22,7 +22,6 @@
             android:name=".DetailActivity"
             android:label="Tasks"
             android:parentActivityName=".HomeTaskActivity" />
-        <activity android:name=".MenuDrawer"/>
         <activity android:name=".ProfileActivity" />
     </application>
 
