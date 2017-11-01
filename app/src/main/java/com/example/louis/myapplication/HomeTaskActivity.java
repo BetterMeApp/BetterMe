@@ -51,7 +51,6 @@ public class HomeTaskActivity extends MenuDrawer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
-        setContentView(R.layout.activity_home_task);
 
         final Context ctx = this;
         mAuth = FirebaseAuth.getInstance();
