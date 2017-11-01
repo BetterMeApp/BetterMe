@@ -5,7 +5,8 @@
     <string name="close">Close</string>
     <string name="profile">Profile</string>
     <string name="create_new">Create New</string>
-    <string name="tasks">Tasks</string>
+    <string name="task">Tasks</string>
+    <string name="pick_task">Pick Task</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

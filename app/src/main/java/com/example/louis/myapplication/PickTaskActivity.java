@@ -29,7 +29,6 @@ public class PickTaskActivity extends MenuDrawer {
     private Bitmap taskBmp;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private ListView mTaskListView = (ListView) findViewById(R.id.listView_tasks_to_choose);
 
     public int getLayoutId() {
         int id = R.layout.activity_pick_task;
@@ -57,7 +56,7 @@ public class PickTaskActivity extends MenuDrawer {
         };
 
         createTaskArrayList();
-        setTaskListView();
+        setTaskListView(mTaskList);
         setTaskClickListener();
     }
 
@@ -77,10 +76,10 @@ public class PickTaskActivity extends MenuDrawer {
 
     }
 
-    private void setTaskListView() {
-        TaskListAdapter taskAdapter;
-        taskAdapter = new TaskListAdapter(mTaskList);
-    }
+//    private void setTaskListView() {
+//        TaskListAdapter taskAdapter;
+//        taskAdapter = new TaskListAdapter(mTaskList);
+//    }
 
     @Override
     protected void onStart() {

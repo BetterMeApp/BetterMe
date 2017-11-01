@@ -9,11 +9,11 @@
         android:title="@string/home"/>
 
     <item android:id="@+id/pick_task"
-        android:icon="@mipmap/ic_content_paste_black_24dp"
-        android:title="@string/tasks"/>
+        android:icon="@mipmap/ic_queue_black_24dp"
+        android:title="@string/pick_task"/>
 
     <item android:id="@+id/detail_task"
         android:icon="@mipmap/ic_content_paste_black_24dp"
-        android:title="@string/tasks"/>
+        android:title="@string/task"/>
 
 </menu>
