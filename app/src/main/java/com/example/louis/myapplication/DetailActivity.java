@@ -3,17 +3,21 @@ package com.example.louis.myapplication;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-import Model.BetterMeTask;
+public class DetailActivity extends MenuDrawer {
+    private static final String TAG = "DetailActivity";
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
-public class DetailTaskActivity extends AppCompatActivity {
     private Task mSelectedTask;
     private TextView mTaskTitle;
     private TextView mDescription;
@@ -27,13 +31,15 @@ public class DetailTaskActivity extends AppCompatActivity {
     private ImageView mImagePhoto;
     private ImageView mTaskImage;
 
+    public int getLayoutId() {
+        int id = R.layout.activity_detail;
+        return id;
+    }
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
 
-        mSelectedTask = BetterMeTask.selectedTask;
+//        mSelectedTask = Task.selectedTask;
 
         ImageView imageView = (ImageView) findViewById(R.id.image_photo);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.image);
@@ -41,6 +47,32 @@ public class DetailTaskActivity extends AppCompatActivity {
         roundedBitmapDrawable.setCircular(true);
         imageView.setImageDrawable(roundedBitmapDrawable);
 
+
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null){
+                    // user is logged in
+                } else {
+                    finish();
+                }
+            }
+        };
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(mAuthListener);
     }
 
     private void configureLayout() {
@@ -55,13 +87,5 @@ public class DetailTaskActivity extends AppCompatActivity {
         mLogo = (ImageView) findViewById(R.id.logo);
         mImagePhoto = (ImageView) findViewById(R.id.image_photo);
         mTaskImage = (ImageView) findViewById(R.id.task_image);
-//        mTaskTitle.setText(mSelectedTask.task);
-//        mDescription.setText(mSelectedTask.description);
-//        mDateStarted.setText(mSelectedTask.dateStarted);
-//        mTimeStarted.setText(mSelectedTask.timeStarted);
-//        mGoal.setText(mSelectedTask.goal);
-//        mTaskTally.setText(mSelectedTask.taskTally);
-//        mTaskImage.(mSelectedTask.taskImage);
-
     }
 }

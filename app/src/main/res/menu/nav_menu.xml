@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/profile"
+        android:icon="@mipmap/ic_account_circle_black_24dp"
+        android:title="@string/profile"/>
+
+    <item android:id="@+id/home"
+        android:icon="@mipmap/ic_home_black_24dp"
+        android:title="@string/home"/>
+
+    <item android:id="@+id/pick_task"
+        android:icon="@mipmap/ic_content_paste_black_24dp"
+        android:title="@string/tasks"/>
+
+    <item android:id="@+id/detail_task"
+        android:icon="@mipmap/ic_content_paste_black_24dp"
+        android:title="@string/tasks"/>
+
+</menu>

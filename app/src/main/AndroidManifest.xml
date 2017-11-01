@@ -19,8 +19,12 @@
         </activity>
         <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".DetailTaskActivity" />
         <activity android:name=".ProfileActivity" />
+
+        <activity
+            android:name=".DetailActivity"
+            android:label="Tasks"
+            android:parentActivityName=".HomeTaskActivity" />
     </application>
 
 </manifest>

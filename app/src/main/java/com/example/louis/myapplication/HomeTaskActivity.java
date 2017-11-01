@@ -1,11 +1,16 @@
 package com.example.louis.myapplication;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,9 +23,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class HomeTaskActivity extends AppCompatActivity {
+public class HomeTaskActivity extends MenuDrawer {
     private static final String TAG = "HomeTaskActivity";
-    private TextView mTaskTitle, mTaskTwo, mTaskThree, mTaskFour, mTaskFive, mDailyOne, mDailyTwo, mDailyThree, mDailyFour, mDailyFive, mDaysLeftOne, mDaysLeftTwo, mDaysLeftThree, mDaysLeftFour, mDaysLeftFive;
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private TextView mTaskOne, mTaskTwo, mTaskThree, mTaskFour, mTaskFive, mDailyOne, mDailyTwo, mDailyThree, mDailyFour, mDailyFive, mDaysLeftOne, mDaysLeftTwo, mDaysLeftThree, mDaysLeftFour, mDaysLeftFive;
     private TextView mPercentOne;
     private TextView mPercentTwo;
     private TextView mPercentThree;
@@ -33,8 +42,14 @@ public class HomeTaskActivity extends AppCompatActivity {
     private TextView mCountFive;
     private Handler mHandler;
     private Runnable mRunnable;
+    private TextView mTaskTitle;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDatabaseRef;
+
+    public int getLayoutId() {
+        int id = R.layout.activity_home_task;
+        return id;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +96,25 @@ public class HomeTaskActivity extends AppCompatActivity {
         });
 
         mTaskTitle = (TextView) findViewById(R.id.task_title);
+        FirebaseApp.initializeApp(this);
+
+        final Context ctx = this;
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null){
+                    //user is signed in
+                } else {
+                    //user not signed in
+                    Intent loginIntent = new Intent(ctx, LoginActivity.class);
+                    startActivity(loginIntent);
+                }
+            }
+        };
+
+        mTaskOne = (TextView) findViewById(R.id.task_title);
         mTaskTwo = (TextView) findViewById(R.id.task_two);
         mTaskThree = (TextView) findViewById(R.id.task_three);
         mTaskFour = (TextView) findViewById(R.id.task_four);
@@ -108,6 +142,18 @@ public class HomeTaskActivity extends AppCompatActivity {
 
         countDownStart();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(mAuthListener);
     }
 
     public void countDownStart() {
