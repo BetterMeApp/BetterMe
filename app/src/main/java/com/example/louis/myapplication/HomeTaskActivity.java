@@ -55,8 +55,8 @@ public class HomeTaskActivity extends AppCompatActivity {
 
 
                 List<String> allTasks = new ArrayList<>();
-                for (DataSnapshot snapshsot : dataSnapshot.getChildren()) {
-                    String task = snapshsot.getValue(String.class);
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String task = child.getKey();
                     allTasks.add(task);
                     Log.d(TAG, "onDataChange: " + task);
                 }
