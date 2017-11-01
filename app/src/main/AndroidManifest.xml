@@ -9,12 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity android:name=".PickTaskActivity"/>
             <activity android:name=".HomeTaskActivity">
+=======
+        <activity android:name=".HomeTaskActivity">
+>>>>>>> 981b4f85c77f252540ba95b5cbe181a3eecf774b
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".PickTaskActivity">
         </activity>
         <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity" />
