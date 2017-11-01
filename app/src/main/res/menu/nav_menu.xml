@@ -8,7 +8,12 @@
         android:icon="@mipmap/ic_home_black_24dp"
         android:title="@string/home"/>
 
-    <item android:id="@+id/tasks"
+    <item android:id="@+id/pick_task"
         android:icon="@mipmap/ic_content_paste_black_24dp"
         android:title="@string/tasks"/>
+
+    <item android:id="@+id/detail_task"
+        android:icon="@mipmap/ic_content_paste_black_24dp"
+        android:title="@string/tasks"/>
+
 </menu>

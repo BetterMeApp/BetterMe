@@ -22,7 +22,7 @@ import Model.Task;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PickTaskActivity extends AppCompatActivity {
+public class PickTaskActivity extends MenuDrawer {
 
     private static final String TAG = "PickTaskActivity: ";
     private FirebaseAuth mAuth;
@@ -31,10 +31,14 @@ public class PickTaskActivity extends AppCompatActivity {
     @BindView(R.id.listView_tasks_to_choose) ListView mTasksListView;
     ArrayList<Task> mTaskList;
 
+    public int getLayoutId() {
+        int id = R.layout.activity_pick_task;
+        return id;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pick_task);
         ButterKnife.bind(this);
 
         mAuth = FirebaseAuth.getInstance();

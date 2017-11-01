@@ -28,7 +28,7 @@ import java.io.InputStream;
 
 import Model.DownloadImageTask;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends MenuDrawer {
     private static final String TAG = "ProfileActivity";
     private static final int REQUEST_CHOOSE_IMAGE = 1;
     private FirebaseAuth mAuth;
@@ -41,9 +41,13 @@ public class ProfileActivity extends AppCompatActivity {
     private ListView mTasksCompleted;
     //TODO: add adapter to show completed tasks
 
+    public int getLayoutId() {
+        int id = R.layout.activity_profile;
+        return id;
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
