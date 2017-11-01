@@ -1,5 +1,6 @@
 package com.example.louis.myapplication;
 
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,6 +11,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.Task;
+
+import android.support.annotation.NonNull;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import Model.ProgressionBar;
+import butterknife.BindView;
+import butterknife.OnClick;
+
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -39,7 +54,6 @@ public class DetailActivity extends MenuDrawer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        mSelectedTask = Task.selectedTask;
 
         ImageView imageView = (ImageView) findViewById(R.id.image_photo);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.image);
@@ -73,6 +87,7 @@ public class DetailActivity extends MenuDrawer {
     protected void onStop() {
         super.onStop();
         mAuth.removeAuthStateListener(mAuthListener);
+
     }
 
     private void configureLayout() {
@@ -87,5 +102,6 @@ public class DetailActivity extends MenuDrawer {
         mLogo = (ImageView) findViewById(R.id.logo);
         mImagePhoto = (ImageView) findViewById(R.id.image_photo);
         mTaskImage = (ImageView) findViewById(R.id.task_image);
+
     }
 }

@@ -152,5 +152,4 @@
         android:textColor="@color/primaryDarkColor"
         android:textSize="20sp" />
 
-        />
 </RelativeLayout>

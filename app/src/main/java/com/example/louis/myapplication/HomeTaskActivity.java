@@ -25,7 +25,6 @@ import java.util.List;
 
 public class HomeTaskActivity extends MenuDrawer {
     private static final String TAG = "HomeTaskActivity";
-
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -54,9 +53,9 @@ public class HomeTaskActivity extends MenuDrawer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Log.d("DEBUG", "debugging");
-        setContentView(R.layout.activity_home_task);
-        mDatabase = FirebaseDatabase.getInstance();
+        mDatabase = FirebaseDatabase.getInstance(); 
         mDatabaseRef = mDatabase.getReference("tasks");
 
         mDatabaseRef.child("tests").setValue("testing");
@@ -96,6 +95,7 @@ public class HomeTaskActivity extends MenuDrawer {
         });
 
         mTaskTitle = (TextView) findViewById(R.id.task_title);
+
         FirebaseApp.initializeApp(this);
 
         final Context ctx = this;
@@ -114,7 +114,8 @@ public class HomeTaskActivity extends MenuDrawer {
             }
         };
 
-        mTaskOne = (TextView) findViewById(R.id.task_title);
+
+        mTaskTitle = (TextView) findViewById(R.id.task_title);
         mTaskTwo = (TextView) findViewById(R.id.task_two);
         mTaskThree = (TextView) findViewById(R.id.task_three);
         mTaskFour = (TextView) findViewById(R.id.task_four);
