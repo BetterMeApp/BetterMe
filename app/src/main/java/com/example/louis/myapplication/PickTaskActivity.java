@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,13 +30,18 @@ public class PickTaskActivity extends AppCompatActivity {
     private Bitmap taskBmp;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private ListView mTaskListView = (ListView) findViewById(R.id.listView_tasks_to_choose);
+    private ListView mTaskListView;
+    private RelativeLayout mSelectedTaskLayout;
+    private RelativeLayout mTaskListLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_task);
+
         mTaskList = new ArrayList<>();
+        mTaskListLayout = findViewById(R.id.relativeLayout_task_list);
+        mSelectedTaskLayout = findViewById(R.id.relativeLayout_selected_task);
         mTasksListView = findViewById(R.id.listView_tasks_to_choose);
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -63,8 +69,14 @@ public class PickTaskActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
-                Object task = mTasksListView.getItemAtPosition(position);
+                Object task = (Task) mTasksListView.getItemAtPosition(position);
                 Log.d(TAG, "onItemClick: " + task.toString());
+                mSelectedTaskLayout.setVisibility(View.VISIBLE);
+                mTaskListLayout.setVisibility(View.GONE);
+
+                // TODO: 10/31/17 add the task to the user in firebase with the starting values for thier task
+                // TODO: 10/31/17 send them to the DetailActivity
+
 
 
             }
