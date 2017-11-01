@@ -15,16 +15,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SignupActivity" >
+        </activity>
         <activity android:name=".PickTaskActivity">
         </activity>
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity">
+        </activity>
+        <activity android:name=".ProfileActivity">
+        </activity>
         <activity
             android:name=".DetailActivity"
             android:label="Tasks"
             android:parentActivityName=".HomeTaskActivity" />
         <activity android:name=".MenuDrawer"/>
-        <activity android:name=".ProfileActivity" />
     </application>
 
 </manifest>
