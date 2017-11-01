@@ -14,6 +14,15 @@
     <string name="days_left">days left</string>
     <string name="daily">daily %</string>
     <string name="hint_percentage">%</string>
+    <string name="hint_task_title">Title</string>
+    <string name="hint_description">Description</string>
+    <string name="hint_start_date">Date started</string>
+    <string name="hint_start_time">Time started</string>
+    <string name="hint_goal_number">Your goal</string>
+    <string name="hint_task_tally">Task tally</string>
+    <string name="hint_minute_number">Minutes</string>
+    <string name="hint_boxes_checked"># Boxes</string>
+    <string name="hint_username">Username</string>
     <string name="desc">logo</string>
     <string name="email_input_label">Email:</string>
     <string name="username_input_label">Username:</string>

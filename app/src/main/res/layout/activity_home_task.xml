@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:alpha=".9"
     tools:context="com.example.louis.myapplication.HomeTaskActivity">
     <ImageView
         android:id="@+id/logo"
@@ -13,7 +14,7 @@
         android:contentDescription="@string/desc"
         tools:mockup_opacity="1"/>
     <TextView
-        android:id="@+id/task_one"
+        android:id="@+id/task_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -27,7 +28,7 @@
         android:id="@+id/task_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/task_one"
+        android:layout_below="@+id/task_title"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="24dp"
         android:textColor="@color/secondaryTextColor"

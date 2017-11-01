@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import Model.DownloadImageTask;
-import Model.Task;
+import Model.BetterMeTask;
 import butterknife.BindView;
 
 public class PickTaskActivity extends AppCompatActivity {
 
     private static final String TAG = "PickTaskActivity: ";
     @BindView(R.id.listView_tasks_to_choose) ListView mTasksListView;
-    ArrayList<Task> mTaskList;
+    ArrayList<BetterMeTask> mTaskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class PickTaskActivity extends AppCompatActivity {
 
     }
 
-    private void setTaskListView(ArrayList<Task> taskArrayList) {
+    private void setTaskListView(ArrayList<BetterMeTask> taskArrayList) {
         TaskListAdapter taskAdapter = new TaskListAdapter(taskArrayList);
         mTasksListView.setAdapter(taskAdapter);
     }
@@ -42,9 +42,9 @@ public class PickTaskActivity extends AppCompatActivity {
     // inner class creating custom list adapter for the feed listview used in setupFeedListView
     class TaskListAdapter extends BaseAdapter {
 
-        private ArrayList<Task> adapterTaskList;
+        private ArrayList<BetterMeTask> adapterTaskList;
 
-        public TaskListAdapter(ArrayList<Task> taskArrayList) {
+        public TaskListAdapter(ArrayList<BetterMeTask> taskArrayList) {
             super();
             this.adapterTaskList = taskArrayList;
         }
@@ -67,7 +67,7 @@ public class PickTaskActivity extends AppCompatActivity {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
 
-            Task currentItem = adapterTaskList.get(i);
+            BetterMeTask currentItem = adapterTaskList.get(i);
 
             view = getLayoutInflater().inflate(R.layout.task_custom_listview_item, null);
 
@@ -88,17 +88,17 @@ public class PickTaskActivity extends AppCompatActivity {
         mTaskList = new ArrayList<>();
 
 
-        Task pushups = new Task("Push-ups", "Stay fit!  Do push-ups throughout the day until you reach your goal.", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, null, null);
+        BetterMeTask pushups = new BetterMeTask("Push-ups", "Stay fit!  Do push-ups throughout the day until you reach your goal.", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, null, null);
 
-        Task compliments = new Task("Give compliments" ,"Give a compliment to a person or people in your life.", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, null, null);
+        BetterMeTask compliments = new BetterMeTask("Give compliments" ,"Give a compliment to a person or people in your life.", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, null, null);
 
-        Task meditate = new Task("Meditate", "Set time aside to meditate each day.", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, 5, null);
+        BetterMeTask meditate = new BetterMeTask("Meditate", "Set time aside to meditate each day.", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, 5, null);
 
-        Task mornings = new Task("Wake n Make", "Wake up earlier to enjoy the morning before getting the day started. You will have more time to enjoy your morning coffee and plenty of time to make your bed each day!", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, 5, null);
+        BetterMeTask mornings = new BetterMeTask("Wake n Make", "Wake up earlier to enjoy the morning before getting the day started. You will have more time to enjoy your morning coffee and plenty of time to make your bed each day!", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, 5, null);
 
-        Task rejection = new Task("Get Rejected", "Work on social anxiety and the fear of rejection by getting rejected by a person once a day.  Ask a crush on a date or ask a stranger if you can borrow $100 dollars for a week.", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, null, null);
+        BetterMeTask rejection = new BetterMeTask("Get Rejected", "Work on social anxiety and the fear of rejection by getting rejected by a person once a day.  Ask a crush on a date or ask a stranger if you can borrow $100 dollars for a week.", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, null, null);
 
-        Task vegandsmoothie = new Task("Vegetarian Meal and Smoothie", "Each day prepare one balanced vegetarian meal and make a fruit and vegetable smoothie", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, null, 2);
+        BetterMeTask vegandsmoothie = new BetterMeTask("Vegetarian Meal and Smoothie", "Each day prepare one balanced vegetarian meal and make a fruit and vegetable smoothie", "http://www.euneighbours.eu/sites/default/files/2017-01/placeholder.png", null, null, 1, 0, null, 2);
 
         Collections.addAll(mTaskList, pushups, compliments, meditate, mornings, rejection, vegandsmoothie);
     }

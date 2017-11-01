@@ -6,15 +6,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class HomeTaskActivity extends AppCompatActivity {
     private static final String TAG = "HomeTaskActivity";
-    private TextView mTaskOne, mTaskTwo, mTaskThree, mTaskFour, mTaskFive, mDailyOne, mDailyTwo, mDailyThree, mDailyFour, mDailyFive, mDaysLeftOne, mDaysLeftTwo, mDaysLeftThree, mDaysLeftFour, mDaysLeftFive;
+    private TextView mTaskTitle, mTaskTwo, mTaskThree, mTaskFour, mTaskFive, mDailyOne, mDailyTwo, mDailyThree, mDailyFour, mDailyFive, mDaysLeftOne, mDaysLeftTwo, mDaysLeftThree, mDaysLeftFour, mDaysLeftFive;
     private TextView mPercentOne;
     private TextView mPercentTwo;
     private TextView mPercentThree;
@@ -27,14 +33,54 @@ public class HomeTaskActivity extends AppCompatActivity {
     private TextView mCountFive;
     private Handler mHandler;
     private Runnable mRunnable;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("DEBUG", "debugging");
         setContentView(R.layout.activity_home_task);
-        FirebaseApp.initializeApp(this);
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseRef = mDatabase.getReference("tasks");
 
-        mTaskOne = (TextView) findViewById(R.id.task_one);
+        mDatabaseRef.child("tests").setValue("testing");
+
+//        final DatabaseReference taskRef = mDatabase.getReference("tasks");
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: Task changed");
+
+
+                List<String> allTasks = new ArrayList<>();
+                for (DataSnapshot snapshsot : dataSnapshot.getChildren()) {
+                    String task = snapshsot.getValue(String.class);
+                    allTasks.add(task);
+                    Log.d(TAG, "onDataChange: " + task);
+                }
+
+                TextView taskTitle = (TextView)findViewById(R.id.task_title);
+                taskTitle.setText(allTasks.get(0));
+
+
+
+//                DataSnapshot pushups = dataSnapshot.child("pushups");
+//                String description = pushups.child("description").getValue(String.class);
+
+//                TextView taskTitle = (TextView)findViewById(R.?id>    .task_title);
+//                String task = dataSnapshot.getValue(String.class);
+//                taskTitle.setText(task);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: Error - " + databaseError.getMessage());
+            }
+        });
+
+        mTaskTitle = (TextView) findViewById(R.id.task_title);
         mTaskTwo = (TextView) findViewById(R.id.task_two);
         mTaskThree = (TextView) findViewById(R.id.task_three);
         mTaskFour = (TextView) findViewById(R.id.task_four);
@@ -88,4 +134,30 @@ public class HomeTaskActivity extends AppCompatActivity {
                 }
 
     }
+//    public void viewDetailedTask(final Task taskDetail) {
+//        new AsyncTask<Void, Void, Void>() {
+//
+//            @Override
+//            protected Void doInBackground(Void... voids) {
+//                try {
+//                    Task task = new Task(taskDetail.toString());
+//                } catch (Exception e) {
+//
+//                    return null;
+//                }
+//            }execute();
+//        }
+//
+//    }
+
+
+
+
+
+
+//    private void writeUserData(mTaskOne, dailyPercentage, daysLeft) {
+//        firebase.database().ref('users/' + userId).set({
+//
+//        })
+
 }
