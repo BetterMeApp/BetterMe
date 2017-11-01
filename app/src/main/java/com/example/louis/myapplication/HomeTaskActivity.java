@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.NavigationView;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
@@ -17,7 +21,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class HomeTaskActivity extends AppCompatActivity {
+import butterknife.ButterKnife;
+
+public class HomeTaskActivity extends MenuDrawer {
     private static final String TAG = "HomeTaskActivity";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -36,10 +42,15 @@ public class HomeTaskActivity extends AppCompatActivity {
     private Handler mHandler;
     private Runnable mRunnable;
 
+    public int getLayoutId() {
+        int id = R.layout.activity_home_task;
+        return id;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_task);
+        FirebaseApp.initializeApp(this);
 
         final Context ctx = this;
         mAuth = FirebaseAuth.getInstance();
@@ -56,7 +67,6 @@ public class HomeTaskActivity extends AppCompatActivity {
                 }
             }
         };
-
 
         mTaskOne = (TextView) findViewById(R.id.task_one);
         mTaskTwo = (TextView) findViewById(R.id.task_two);

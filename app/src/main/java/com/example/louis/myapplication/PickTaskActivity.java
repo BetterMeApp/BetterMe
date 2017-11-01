@@ -19,7 +19,7 @@ import java.util.Collections;
 import Model.DownloadImageTask;
 import Model.Task;
 
-public class PickTaskActivity extends AppCompatActivity {
+public class PickTaskActivity extends MenuDrawer {
 
     private static final String TAG = "PickTaskActivity: ";
 
@@ -31,10 +31,15 @@ public class PickTaskActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ListView mTaskListView = (ListView) findViewById(R.id.listView_tasks_to_choose);
 
+    public int getLayoutId() {
+        int id = R.layout.activity_pick_task;
+        return id;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pick_task);
+
         mTaskList = new ArrayList<>();
         mTasksListView = findViewById(R.id.listView_tasks_to_choose);
         mAuth = FirebaseAuth.getInstance();

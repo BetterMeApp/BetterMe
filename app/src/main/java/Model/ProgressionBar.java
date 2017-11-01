@@ -11,6 +11,7 @@ import com.example.louis.myapplication.MenuDrawer;
 import com.example.louis.myapplication.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -32,8 +33,8 @@ public class ProgressionBar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-
+        setContentView(R.layout.progression_bar);
+        ButterKnife.bind(this);
 
     }
 
