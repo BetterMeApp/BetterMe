@@ -10,20 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".HomeTaskActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".PickTaskActivity">
         </activity>
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".LoginActivity">
+        </activity>
+        <activity android:name=".SignupActivity" >
+        </activity>
+        <activity android:name=".ProfileActivity">
+        </activity>
         <activity
             android:name=".DetailActivity"
             android:label="Tasks"
             android:parentActivityName=".HomeTaskActivity" />
     </application>
-
 </manifest>
