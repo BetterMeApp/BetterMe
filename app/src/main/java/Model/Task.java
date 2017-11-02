@@ -16,8 +16,9 @@ public class Task {
     public Date startDate;
     public Integer goalNumber;
     public Integer completedNumber;
+    public Boolean completed;
 
-    public Task(String title, String description, String imgURL, Time time, Date date, Integer goal, Integer done){
+    public Task(String title, String description, String imgURL, Time time, Date date, Integer goal, Integer done, Boolean isCompleted){
         this.title = title;
         this.description = description;
         this.taskImgURL = imgURL;
@@ -25,6 +26,7 @@ public class Task {
         this.startDate = date;
         this.goalNumber = goal;
         this.completedNumber = done;
+        this.completed = isCompleted;
 
     }
 
