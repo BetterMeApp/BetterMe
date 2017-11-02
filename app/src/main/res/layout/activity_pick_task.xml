@@ -9,7 +9,8 @@
         android:id="@+id/relativeLayout_task_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryLightColor">
+        android:background="@color/primaryLightColor"
+        android:visibility="visible" >
 
         <ListView
             android:id="@+id/listView_tasks_to_choose"
@@ -20,22 +21,20 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:visibility="visible" />
+            android:layout_alignParentTop="true" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relativeLayout_selected_task"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@color/primaryLightColor">
+        android:background="@color/primaryLightColor"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imageView_task_img"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
-            app:srcCompat="@android:drawable/alert_dark_frame"
             android:layout_above="@+id/textView_task_title"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -65,47 +64,43 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"/>
 
-        <EditText
-            android:id="@+id/editText_enter_task_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_task_description"
-            android:layout_centerHorizontal="true"
-            android:ems="10"
-            android:inputType="number"
-            android:hint="push-ups per day"/>
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/constraintLayout_buttons"
+        <RelativeLayout
+            android:id="@+id/relativeLayout_enter_goal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/editText_enter_task_number"
-            android:background="@color/secondaryColor">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_task_description"
+            android:background="@color/primaryColor">
 
-            <ToggleButton
-                android:id="@+id/toggleButton_totals"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:textOff="Monthly Total"
-                android:textOn="Daily Total"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:background="@color/secondaryColor"/>
+            <TextView
+                android:id="@+id/textView_entry_directions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter the total for each day and then add the task to your activities."
+                android:layout_alignParentTop="true"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:textColor="@color/primaryTextColor"/>
+
+            <EditText
+                android:id="@+id/editText_enter_task_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView_entry_directions"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:inputType="number"
+                android:hint="push-ups per day"
+                android:textColorHint="@color/secondaryLightColor"/>
 
             <Button
                 android:id="@+id/button_add_task"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Set Total"
-                android:layout_marginRight="8dp"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@color/secondaryColor"/>
-        </android.support.constraint.ConstraintLayout>
+                android:text="Add Task"
+                android:background="@color/secondaryColor"
+                android:layout_below="@id/editText_enter_task_number" />
 
+        </RelativeLayout>
 
     </RelativeLayout>
 
