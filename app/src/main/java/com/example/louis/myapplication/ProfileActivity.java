@@ -1,17 +1,8 @@
 package com.example.louis.myapplication;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,23 +10,26 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.util.ArrayList;
 
-import Model.DownloadImageTask;
+import Model.Task;
 
 public class ProfileActivity extends MenuDrawer {
     private static final String TAG = "ProfileActivity";
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private StorageReference mStorageRef;
+    private FirebaseDatabase mRef;
 
     private TextView mUsername;
     private ListView mTasksCompleted;
+    private LinearLayout mTaskListLayout;
+    private ArrayList<Task> mTaskList;
     private Model.TaskListAdapter mTaskListAdapter;
 
     public int getLayoutId() {
@@ -45,6 +39,8 @@ public class ProfileActivity extends MenuDrawer {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mTaskList = Model.CreateTasksList.createTaskArrayList();
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -61,6 +57,7 @@ public class ProfileActivity extends MenuDrawer {
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         configureLayout();
+        setViews();
     }
 
     @Override
@@ -81,5 +78,21 @@ public class ProfileActivity extends MenuDrawer {
 
         FirebaseUser user = mAuth.getCurrentUser();
         mUsername.setText(user.getDisplayName());
+    }
+
+    private void setViews() {
+        mTasksCompleted = findViewById(R.id.profile_tasks_completed);
+        mTaskListLayout = findViewById(R.id.profile_task_layout);
+
+        mTaskListAdapter = new Model.TaskListAdapter(this, mTaskList);
+        mTasksCompleted.setAdapter(mTaskListAdapter);
+    }
+
+    private void checkCompletedTask() {
+
+    }
+
+    private void checkDatabaseChanges() {
+
     }
 }
