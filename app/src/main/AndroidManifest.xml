@@ -28,5 +28,4 @@
             android:label="Tasks"
             android:parentActivityName=".HomeTaskActivity" />
     </application>
-
 </manifest>

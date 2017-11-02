@@ -1,24 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/better_me_logo"
+        android:alpha="0.1" />
+    <ImageView
+        android:id="@+id/task_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/image_task"
+        android:layout_above="@+id/description"
+        android:layout_toLeftOf="@+id/description"
+        android:layout_toStartOf="@+id/description" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/task_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="66dp"
-        android:text="TextView" />
-
+        android:hint="@string/hint_task_title"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="20sp" />
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/task_title"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="TextView" />
+        android:hint="@string/hint_description"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/date_started"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:hint="@string/hint_start_date"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/time_started"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/hint_start_time"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date_started"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:hint="@string/hint_goal_number"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/task_tally"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/time_started"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/hint_task_tally"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/minute_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/goal"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:hint="@string/hint_minute_number"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/checked_boxes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/task_tally"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/hint_boxes_checked"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="20sp" />
+    <ImageView
+        android:id="@+id/image_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/minute_number"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/image"/>
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checked_boxes"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="90dp"
+        android:layout_marginEnd="90dp"
+        android:hint="@string/hint_username"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="20sp" />
+
 </RelativeLayout>

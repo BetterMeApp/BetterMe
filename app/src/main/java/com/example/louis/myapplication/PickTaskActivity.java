@@ -1,9 +1,8 @@
 package com.example.louis.myapplication;
 
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
@@ -90,6 +88,7 @@ public class PickTaskActivity extends MenuDrawer {
             }
         });
 
+
     }
     public void toggleTotalType(){
         if (mToggleTotalTypeButton.isChecked()){
@@ -97,6 +96,10 @@ public class PickTaskActivity extends MenuDrawer {
         } else {
             mEnterTotalEditText.setHint("push-ups per day");
         }
+
+        createTaskArrayList();
+        setTaskListView(mTaskList);
+        setTaskClickListener();
     }
 
     private void setTaskClickListener(){
@@ -169,6 +172,7 @@ public class PickTaskActivity extends MenuDrawer {
 
             Task currentItem = adapterTaskList.get(i);
             String taskURL = currentItem.taskImgURL;
+
             view = getLayoutInflater().inflate(R.layout.task_custom_listview_item, null);
 
             ImageView taskImgView = view.findViewById(R.id.imageView_task_img);
@@ -200,7 +204,6 @@ public class PickTaskActivity extends MenuDrawer {
         Task letter = new Task ("Send Letters",  "Write and send a letter to someone each day.  Letters can be a wonderful way to connect with people far away or to write something that might not be as easy to say.", "https://firebasestorage.googleapis.com/v0/b/betterme-cf17.appspot.com/o/default%20task%20images%2Fletter.jpg?alt=media&token=9bdec428-8001-4c4f-ab0f-f2c7732687f2", null, null, 1, 0);
 
         Task dogLove = new Task ("Dog Love", "Give your furry friend(s) special care each day.  Take your dog to the dog park, go running, get that overdue vet appointment scheduled, and give them an extra belly rub.  Just one thing each day extra to be a more loving owner of your happy dog.", "https://firebasestorage.googleapis.com/v0/b/betterme-cf17.appspot.com/o/default%20task%20images%2Fdoglove.jpg?alt=media&token=f24c8e34-018a-46a2-b5d8-9dfc4b92c46a", null, null, 1, 0);
-
 
         Collections.addAll(mTaskList, pushups, complements, meditate, mornings, rejection, vegandsmoothie, letter, dogLove);
     }
