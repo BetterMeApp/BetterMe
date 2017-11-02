@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="com.example.louis.myapplication.HomeTaskActivity"
-    tools:openDrawer="start">
-
+    android:alpha=".9"
+    tools:context="com.example.louis.myapplication.HomeTaskActivity">
     <ImageView
         android:id="@+id/logo"
         android:layout_width="match_parent"
@@ -15,21 +14,21 @@
         android:contentDescription="@string/desc"
         tools:mockup_opacity="1"/>
     <TextView
-        android:id="@+id/task_one"
+        android:id="@+id/task_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:hint="@string/hint_task_title"
         android:textColor="@color/secondaryTextColor"
-        android:textSize="20sp"
-        android:text="@string/task_one"/>
+        android:textSize="20sp"/>
     <TextView
         android:id="@+id/task_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/task_one"
+        android:layout_below="@+id/task_title"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="24dp"
         android:textColor="@color/secondaryTextColor"

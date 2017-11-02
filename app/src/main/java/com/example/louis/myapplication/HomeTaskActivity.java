@@ -4,24 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.NavigationView;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import butterknife.ButterKnife;
+import java.util.List;
 
 public class HomeTaskActivity extends MenuDrawer {
     private static final String TAG = "HomeTaskActivity";
@@ -41,6 +41,9 @@ public class HomeTaskActivity extends MenuDrawer {
     private TextView mCountFive;
     private Handler mHandler;
     private Runnable mRunnable;
+    private TextView mTaskTitle;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseRef;
 
     public int getLayoutId() {
         int id = R.layout.activity_home_task;
@@ -50,6 +53,49 @@ public class HomeTaskActivity extends MenuDrawer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d("DEBUG", "debugging");
+        mDatabase = FirebaseDatabase.getInstance(); 
+        mDatabaseRef = mDatabase.getReference("tasks");
+
+        mDatabaseRef.child("tests").setValue("testing");
+
+//        final DatabaseReference taskRef = mDatabase.getReference("tasks");
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: Task changed");
+
+
+                List<String> allTasks = new ArrayList<>();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String task = child.getKey();
+                    allTasks.add(task);
+                    Log.d(TAG, "onDataChange: " + task);
+                }
+
+                TextView taskTitle = (TextView)findViewById(R.id.task_title);
+                taskTitle.setText(allTasks.get(0));
+
+
+
+//                DataSnapshot pushups = dataSnapshot.child("pushups");
+//                String description = pushups.child("description").getValue(String.class);
+
+//                TextView taskTitle = (TextView)findViewById(R.?id>    .task_title);
+//                String task = dataSnapshot.getValue(String.class);
+//                taskTitle.setText(task);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: Error - " + databaseError.getMessage());
+            }
+        });
+
+        mTaskTitle = (TextView) findViewById(R.id.task_title);
+
         FirebaseApp.initializeApp(this);
 
         final Context ctx = this;
@@ -68,7 +114,8 @@ public class HomeTaskActivity extends MenuDrawer {
             }
         };
 
-        mTaskOne = (TextView) findViewById(R.id.task_one);
+
+        mTaskTitle = (TextView) findViewById(R.id.task_title);
         mTaskTwo = (TextView) findViewById(R.id.task_two);
         mTaskThree = (TextView) findViewById(R.id.task_three);
         mTaskFour = (TextView) findViewById(R.id.task_four);
@@ -134,4 +181,30 @@ public class HomeTaskActivity extends MenuDrawer {
                 }
 
     }
+//    public void viewDetailedTask(final Task taskDetail) {
+//        new AsyncTask<Void, Void, Void>() {
+//
+//            @Override
+//            protected Void doInBackground(Void... voids) {
+//                try {
+//                    Task task = new Task(taskDetail.toString());
+//                } catch (Exception e) {
+//
+//                    return null;
+//                }
+//            }execute();
+//        }
+//
+//    }
+
+
+
+
+
+
+//    private void writeUserData(mTaskOne, dailyPercentage, daysLeft) {
+//        firebase.database().ref('users/' + userId).set({
+//
+//        })
+
 }
