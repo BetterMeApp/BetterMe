@@ -16,8 +16,6 @@ public class Task {
     public Date startDate;
     public Integer goalNumber;
     public Integer completedNumber;
-    public Integer amountMinutes;
-    public Integer numberOfCheckBoxes;
 
     public Task(String title, String description, String imgURL, Time time, Date date, Integer goal, Integer done){
         this.title = title;

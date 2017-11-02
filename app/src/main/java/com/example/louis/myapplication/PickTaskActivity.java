@@ -9,16 +9,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.Collections;
 import Model.DownloadImageTask;
 import Model.Task;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PickTaskActivity extends MenuDrawer {
 
@@ -33,6 +40,9 @@ public class PickTaskActivity extends MenuDrawer {
     private ListView mTaskListView;
     private RelativeLayout mSelectedTaskLayout;
     private RelativeLayout mTaskListLayout;
+    private Button mSetTotalsButton;
+    private ToggleButton mToggleTotalTypeButton;
+    private EditText mEnterTotalEditText;
 
     public int getLayoutId() {
         int id = R.layout.activity_pick_task;
@@ -42,12 +52,21 @@ public class PickTaskActivity extends MenuDrawer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pick_task);
 
+        ButterKnife.bind(this);
         mTaskList = new ArrayList<>();
         mTaskListLayout = findViewById(R.id.relativeLayout_task_list);
         mSelectedTaskLayout = findViewById(R.id.relativeLayout_selected_task);
         mTasksListView = findViewById(R.id.listView_tasks_to_choose);
+        mSetTotalsButton = findViewById(R.id.button_set_totals);
+        mToggleTotalTypeButton = findViewById(R.id.toggleButton_totals);
+        mEnterTotalEditText = findViewById(R.id.editText_enter_task_number);
+
+        createTaskArrayList();
+        setTaskListView(mTaskList);
+        setTaskClickListener();
+        setClickListeners();
+
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
 
@@ -61,10 +80,23 @@ public class PickTaskActivity extends MenuDrawer {
                 }
             }
         };
+    }
 
-        createTaskArrayList();
-        setTaskListView();
-        setTaskClickListener();
+    public void setClickListeners() {
+        mToggleTotalTypeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleTotalType();
+            }
+        });
+
+    }
+    public void toggleTotalType(){
+        if (mToggleTotalTypeButton.isChecked()){
+            mEnterTotalEditText.setHint("push-ups per month");
+        } else {
+            mEnterTotalEditText.setHint("push-ups per day");
+        }
     }
 
     private void setTaskClickListener(){
@@ -79,7 +111,8 @@ public class PickTaskActivity extends MenuDrawer {
                 mSelectedTaskLayout.setVisibility(View.VISIBLE);
                 mTaskListLayout.setVisibility(View.GONE);
 
-                // TODO: 10/31/17 add the task to the user in firebase with the starting values for thier task
+
+                // TODO: 10/31/17 add the task to the user in firebase with the starting values for their task
                 // TODO: 10/31/17 send them to the DetailActivity
 
 
@@ -87,11 +120,6 @@ public class PickTaskActivity extends MenuDrawer {
             }
         });
 
-    }
-
-    private void setTaskListView() {
-        TaskListAdapter taskAdapter;
-        taskAdapter = new TaskListAdapter(mTaskList);
     }
 
     @Override

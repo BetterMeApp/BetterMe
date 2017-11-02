@@ -8,7 +8,8 @@
     <RelativeLayout
         android:id="@+id/relativeLayout_task_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/primaryLightColor">
 
         <ListView
             android:id="@+id/listView_tasks_to_choose"
@@ -27,7 +28,8 @@
         android:id="@+id/relativeLayout_selected_task"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:background="@color/primaryLightColor">
 
         <ImageView
             android:id="@+id/imageView_task_img"
@@ -88,8 +90,8 @@
                 android:textOn="Daily Total"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="32dp"
-                android:layout_marginStart="32dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:background="@color/secondaryColor"/>
 
             <Button
@@ -97,9 +99,9 @@
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:text="Set Total"
-                android:layout_marginRight="32dp"
+                android:layout_marginRight="8dp"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintTop_toTopOf="parent"
                 android:background="@color/secondaryColor"/>
         </android.support.constraint.ConstraintLayout>
