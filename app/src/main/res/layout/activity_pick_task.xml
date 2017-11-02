@@ -95,7 +95,7 @@
                 android:background="@color/secondaryColor"/>
 
             <Button
-                android:id="@+id/button_set_totals"
+                android:id="@+id/button_add_task"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:text="Set Total"
