@@ -121,7 +121,7 @@ public class DetailActivity extends MenuDrawer {
 
     private void configureLayout() {
         mTaskTitle = (TextView) findViewById(R.id.task_title);
-        mDescription = (TextView) findViewById(description);
+        mDescription = (TextView) findViewById(R.id.description);
         mDateStarted = (TextView) findViewById(R.id.date_started);
         mTimeStarted = (TextView) findViewById(R.id.time_started);
         mGoal = (TextView) findViewById(R.id.goal);
