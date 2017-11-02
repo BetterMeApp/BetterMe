@@ -45,6 +45,7 @@ public class PickTaskActivity extends MenuDrawer {
     private ToggleButton mToggleTotalTypeButton;
     private EditText mEnterTotalEditText;
     private Model.TaskListAdapter taskAdapter;
+    private ImageView mTaskImage;
 
     public int getLayoutId() {
         int id = R.layout.activity_pick_task;
@@ -100,7 +101,7 @@ public class PickTaskActivity extends MenuDrawer {
         mAddTaskButton = findViewById(R.id.button_add_task);
         mToggleTotalTypeButton = findViewById(R.id.toggleButton_totals);
         mEnterTotalEditText = findViewById(R.id.editText_enter_task_number);
-
+        mTaskImage = findViewById(R.id.imageView_task_img);
         taskAdapter = new Model.TaskListAdapter(this, mTaskList);
         mTasksListView.setAdapter(taskAdapter);
     }
@@ -131,7 +132,11 @@ public class PickTaskActivity extends MenuDrawer {
     }
 
     private void addTask(){
+
         //todo logic for submitting their pushup activity to firebase under the current user with the goal total in pushups per day
+        // grab user
+        // put task info under user
+        //
     }
 
     private void setTaskClickListener(){
