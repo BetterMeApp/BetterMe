@@ -30,14 +30,11 @@ import Model.DownloadImageTask;
 
 public class ProfileActivity extends MenuDrawer {
     private static final String TAG = "ProfileActivity";
-    private static final int REQUEST_CHOOSE_IMAGE = 1;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private StorageReference mStorageRef;
 
-    private ImageView mImgProfile;
     private TextView mUsername;
-    private Button mUpdateImg;
     private ListView mTasksCompleted;
     //TODO: add adapter to show completed tasks
 
@@ -64,9 +61,6 @@ public class ProfileActivity extends MenuDrawer {
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         configureLayout();
-        attachListeners();
-
-
     }
 
     @Override
@@ -82,65 +76,10 @@ public class ProfileActivity extends MenuDrawer {
     }
 
     private void configureLayout(){
-        mImgProfile = (ImageView) findViewById(R.id.profile_img);
-        mUsername = (TextView) findViewById(R.id.profile_username);
-        mUpdateImg = (Button) findViewById(R.id.profile_update_btn);
-        mTasksCompleted = (ListView) findViewById(R.id.profile_tasks_completed);
+        mUsername = findViewById(R.id.profile_username);
+        mTasksCompleted = findViewById(R.id.profile_tasks_completed);
 
         FirebaseUser user = mAuth.getCurrentUser();
-
-        try {
-            mUsername.setText(user.getDisplayName());
-            if(user.getPhotoUrl() != null){
-                new DownloadImageTask(user.getPhotoUrl().toString(), mImgProfile).execute();
-            }
-        } catch(Exception e){
-            Log.d(TAG, "configureLayout: Error: " + e.getMessage());
-        }
-
-    }
-
-    private void attachListeners(){
-
-        mUpdateImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent pickImgIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickImgIntent, REQUEST_CHOOSE_IMAGE);
-            }
-        });
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        try {
-            getGalImg(data);
-        } catch (FileNotFoundException e){
-            Log.d(TAG, "onActivityResult: error: " + e);
-        }
-    }
-
-    private void getGalImg(Intent data) throws FileNotFoundException{
-        InputStream galImg = this.getContentResolver().openInputStream(data.getData());
-
-        //send img to firebase storage
-        //security of images in firebaseStorage???
-        StorageReference newImgRef = mStorageRef.child("images/" + galImg.hashCode());
-        newImgRef.putStream(galImg).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                //set user's photoUrl to resulting storage url
-                Uri photoUri = taskSnapshot.getDownloadUrl();
-                UserProfileChangeRequest req = new UserProfileChangeRequest.Builder().setPhotoUri(photoUri).build();
-                mAuth.getCurrentUser().updateProfile(req);
-            }
-        });
-
-        //have the imageview repopulate (call configureLayout?)
-        configureLayout();
+        mUsername.setText(user.getDisplayName());
     }
 }

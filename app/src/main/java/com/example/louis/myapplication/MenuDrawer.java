@@ -34,7 +34,6 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.menu_drawer);
         int id = R.layout.menu_drawer;
         setContentView(id);
         ButterKnife.bind(this);

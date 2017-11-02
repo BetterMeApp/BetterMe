@@ -69,17 +69,10 @@ public class PickTaskActivity extends MenuDrawer {
 
                 Object task = mTasksListView.getItemAtPosition(position);
                 Log.d(TAG, "onItemClick: " + task.toString());
-
-
             }
         });
 
     }
-
-//    private void setTaskListView() {
-//        TaskListAdapter taskAdapter;
-//        taskAdapter = new TaskListAdapter(mTaskList);
-//    }
 
     @Override
     protected void onStart() {
