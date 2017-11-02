@@ -36,7 +36,7 @@ public class ProfileActivity extends MenuDrawer {
 
     private TextView mUsername;
     private ListView mTasksCompleted;
-    //TODO: add adapter to show completed tasks
+    private Model.TaskListAdapter mTaskListAdapter;
 
     public int getLayoutId() {
         int id = R.layout.activity_profile;
