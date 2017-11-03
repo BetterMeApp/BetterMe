@@ -2,6 +2,7 @@ package com.example.louis.myapplication;
 
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,11 +11,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Model.Task;
 
@@ -23,8 +29,9 @@ public class ProfileActivity extends MenuDrawer {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private StorageReference mStorageRef;
-    private FirebaseDatabase mRef;
+
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseRef;
 
     private TextView mUsername;
     private ListView mTasksCompleted;
@@ -47,17 +54,20 @@ public class ProfileActivity extends MenuDrawer {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     //user is logged in
                 } else {
                     finish();
                 }
             }
         };
-        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         configureLayout();
         setViews();
+        checkDatabaseChanges();
+        checkCompletedTask();
+
+        Log.d(TAG, "ZZonCreate: " + mDatabaseRef);
     }
 
     @Override
@@ -72,7 +82,7 @@ public class ProfileActivity extends MenuDrawer {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 
-    private void configureLayout(){
+    private void configureLayout() {
         mUsername = findViewById(R.id.profile_username);
         mTasksCompleted = findViewById(R.id.profile_tasks_completed);
 
@@ -88,11 +98,30 @@ public class ProfileActivity extends MenuDrawer {
         mTasksCompleted.setAdapter(mTaskListAdapter);
     }
 
-    private void checkCompletedTask() {
+    private void checkDatabaseChanges() {
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseRef = mDatabase.getReference("users").child(mAuth.getCurrentUser().getUid()).child("title").child("completed");
 
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<String> completedTask = new ArrayList<>();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String task = child.getKey();
+                    completedTask.add(task);
+
+                    Log.d(TAG, "onDataChange: " + task);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: Error - " + databaseError.getMessage());
+            }
+        });
     }
 
-    private void checkDatabaseChanges() {
+    private void checkCompletedTask() {
 
     }
 }
