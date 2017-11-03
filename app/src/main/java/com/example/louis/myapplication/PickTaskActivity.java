@@ -156,7 +156,7 @@ public class PickTaskActivity extends MenuDrawer {
     }
 
     private void addTask(){
-        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         String time = String.valueOf(new Date().getTime());
         Integer goalNumber = Integer.parseInt(mEnterTotalEditText.getText().toString());
 
