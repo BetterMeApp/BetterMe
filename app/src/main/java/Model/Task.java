@@ -54,9 +54,9 @@ public class Task {
     }
 
     public static void dataListener() {
-        mDatabase = FirebaseDatabase.getInstance();
-        mDatabaseRef = mDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
-        mTaskArrayList = new ArrayList<>();
+//        mDatabase = FirebaseDatabase.getInstance();
+//        mDatabaseRef = mDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
+//        mTaskArrayList = new ArrayList<>();
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             public static final String TAG = "Data Listener";
