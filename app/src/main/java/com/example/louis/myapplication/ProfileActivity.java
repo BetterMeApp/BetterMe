@@ -55,7 +55,8 @@ public class ProfileActivity extends MenuDrawer {
             }
         };
 
-        checkTaskCompletion();
+//        checkTaskCompletion();
+        Task.dataListener();
         setViews();
     }
 
@@ -95,6 +96,7 @@ public class ProfileActivity extends MenuDrawer {
 
                     try {
                         Log.d(TAG, "onDataChange: " + data.child("title"));
+
                         String title = data.child("title").getValue().toString();
                         String description = data.child("description").getValue().toString();
                         String taskImgURL = data.child("imgURL").getValue().toString();
