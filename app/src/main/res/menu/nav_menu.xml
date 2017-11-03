@@ -14,6 +14,9 @@
 
     <item android:id="@+id/detail_task"
         android:icon="@mipmap/ic_content_paste_black_24dp"
-        android:title="@string/task"/>
+        android:title="@string/task_details"/>
+
+    <item android:id="@+id/logout"
+        android:title="@string/logout"/>
 
 </menu>

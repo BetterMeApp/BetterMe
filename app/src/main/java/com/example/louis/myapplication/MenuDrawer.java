@@ -1,6 +1,11 @@
 package com.example.louis.myapplication;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +23,8 @@ import butterknife.ButterKnife;
 public abstract class MenuDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public ActionBarDrawerToggle mToggle;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @BindView(R.id.drawer)
     DrawerLayout mDrawerLayout;
@@ -47,9 +54,32 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
 
         int layoutId = this.getLayoutId();
         View.inflate(this, layoutId, mMenuLayout);
+
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    //user is logged in
+                } else {
+                    finish();
+                }
+            }
+        };
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(mAuthListener);
+    }
 
     @Override
     public void onBackPressed() {
@@ -86,9 +116,15 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
             Intent pickTaskIntent = new Intent(this, PickTaskActivity.class);
             startActivity(pickTaskIntent);
             return true;
+        } else if (id == R.id.logout) {
+            Intent logoutIntent = new Intent(this, LoginActivity.class);
+            startActivity(logoutIntent);
+            return true;
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
