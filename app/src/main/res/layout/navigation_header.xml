@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:text="Username"
         android:textSize="18sp"
-        android:textColor="@color/primaryTextColor"
+        android:textColor="@color/white"
         android:layout_below="@+id/profile_image"
         android:paddingStart="15dp"
         android:paddingLeft="15dp"/>
