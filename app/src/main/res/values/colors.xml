@@ -9,6 +9,6 @@
         <color name="secondaryColor">#d81b60 </color>
         <color name="secondaryLightColor">#ff5c8d </color>
         <color name="secondaryDarkColor">#a00037 </color>
-        <color name="primaryTextColor">#fafafa </color>
-        <color name="secondaryTextColor">#ffffff </color>
+        <color name="white">#fafafa </color>
+        <color name="black">#000000</color>
 </resources>

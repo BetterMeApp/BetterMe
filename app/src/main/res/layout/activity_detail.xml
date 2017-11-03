@@ -38,7 +38,7 @@
         android:layout_marginEnd="200dp"
         android:layout_marginRight="200dp"
         android:text="@string/better_me"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@color/white"
         android:textStyle="italic"
         android:textSize="20sp"/>
     <TextView
@@ -49,7 +49,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp"
         android:hint="@string/hint_task_title"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@color/white"
         android:textSize="20sp" />
 
     <TextView
@@ -65,7 +65,7 @@
         android:layout_marginTop="30dp"
         android:hint="@string/hint_description"
         android:textAlignment="center"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@color/white"
         android:textSize="20sp" />
     <TextView
         android:id="@+id/date_started"
@@ -78,7 +78,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:hint="@string/hint_start_date"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@color/white"
         android:textSize="20sp" />
     <TextView
         android:id="@+id/time_started"
@@ -91,7 +91,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginEnd="8dp"
         android:hint="@string/hint_start_time"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@color/white"
         android:textSize="20sp" />
     <TextView
         android:id="@+id/goal"
@@ -104,7 +104,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:hint="@string/hint_goal_number"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@color/white"
         android:textSize="20sp" />
     <TextView
         android:id="@+id/task_tally"
@@ -117,7 +117,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginEnd="8dp"
         android:hint="@string/hint_task_tally"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@color/white"
         android:textSize="20sp" />
     <TextView
         android:id="@+id/minute_number"
