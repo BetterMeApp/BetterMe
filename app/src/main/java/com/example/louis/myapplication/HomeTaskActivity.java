@@ -54,6 +54,43 @@ public class HomeTaskActivity extends MenuDrawer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+      
+        ImageView imageView = (ImageView) findViewById(R.id.logo);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        imageView.setImageDrawable(roundedBitmapDrawable);
+
+        Log.d("DEBUG", "debugging");
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseRef = mDatabase.getReference("tasks");
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: Task changed");
+
+
+                List<String> allTasks = new ArrayList<>();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String task = child.getKey();
+                    allTasks.add(task);
+                    Log.d(TAG, "onDataChange: " + task);
+                }
+
+                TextView taskTitle = (TextView)findViewById(R.id.task_title);
+                taskTitle.setText(allTasks.get(3));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: Error - " + databaseError.getMessage());
+            }
+        });
+
+        FirebaseApp.initializeApp(this);
+
         final Context ctx = this;
 
         mAuth = FirebaseAuth.getInstance();

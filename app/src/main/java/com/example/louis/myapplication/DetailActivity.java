@@ -11,7 +11,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,17 +19,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.example.louis.myapplication.R.id.description;
-
 public class DetailActivity extends MenuDrawer {
     private static final String TAG = "DetailActivity";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
-    private Task mSelectedTask;
     private TextView mTaskTitle;
     private TextView mDescription;
     private TextView mDateStarted;
@@ -75,26 +67,45 @@ public class DetailActivity extends MenuDrawer {
         };
 
         mDatabase = FirebaseDatabase.getInstance();
-        mDatabaseRef = mDatabase.getReference("tasks");
-
-        mDatabaseRef.child("tests").setValue("testing");
-        mDatabaseRef.child("tests2").setValue("testing");
-        Log.d(TAG, "activity: HomeTask");
+        String userId = "xZEHwfTM4jbNOJRBikKvQhzpkbh2";
+        mDatabaseRef = mDatabase.getReference("users").child(userId);
+//        Query queryDatabase = mDatabaseRef.child("users").child("user");
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+//                String task = dataSnapshot.getValue(String.class);
                 Log.d(TAG, "onDataChange: Task changed");
+                DataSnapshot pushUpSnapshot = dataSnapshot.child("Push-ups");
+                Iterable<DataSnapshot> pushUpChildren = pushUpSnapshot.getChildren();
 
-                List<String> allDescription = new ArrayList<>();
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String task = child.getKey();
-                    allDescription.add(task);
-                    Log.d(TAG, "onDataChange: " + description);
-                }
 
-                TextView taskTitle = (TextView)findViewById(description);
-                taskTitle.setText(allDescription.get(0));
+                boolean isCompleted = pushUpSnapshot.child("completed").getValue(Boolean.class);
+                String time = pushUpSnapshot.child("time").getValue(String.class);
+                String date = pushUpSnapshot.child("date").getValue(String.class);
+                String title = pushUpSnapshot.child("title").getValue(String.class);
+                String description = pushUpSnapshot.child("description").getValue(String.class);
+                Integer goal = Integer.valueOf(pushUpSnapshot.child("goal").getValue().toString());
+                String goalString = goal.toString();
+                Integer tally = Integer.valueOf(pushUpSnapshot.child("done").getValue().toString());
+                String tallyString = tally.toString();
+                TextView taskTitle = (TextView)findViewById(R.id.task_title);
+                taskTitle.setText(title);
+
+                TextView taskDescription = (TextView)findViewById(R.id.description);
+                taskDescription.setText(description);
+
+                TextView taskTime = (TextView)findViewById(R.id.time_started);
+                taskTime.setText(time);
+
+                TextView taskDate = (TextView)findViewById(R.id.date_started);
+                taskDate.setText(date);
+
+                TextView taskGoal = (TextView)findViewById(R.id.goal);
+                taskGoal.setText(goalString);
+
+                TextView taskTally = (TextView)findViewById(R.id.task_tally);
+                taskTally.setText(tallyString);
             }
 
             @Override
