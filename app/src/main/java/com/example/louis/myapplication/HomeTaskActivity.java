@@ -9,7 +9,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
@@ -21,24 +25,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+//import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import Model.Task;
+import Model.TaskListAdapter;
+
 public class HomeTaskActivity extends MenuDrawer {
     private static final String TAG = "HomeTaskActivity";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ImageView mLogo;
-    private TextView mDailyOne;
-    private TextView mDaysLeftOne;
-    private TextView mPercentOne;
-    private TextView mCountOne;
-    private TextView mTaskTitle;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDatabaseRef;
+    private ArrayList<Model.Task> mTaskArrayList;
+    private ListView mTaskListView;
+    private TaskListAdapter mAdapter;
 
     public int getLayoutId() {
         int id = R.layout.activity_home_task;
@@ -48,60 +54,8 @@ public class HomeTaskActivity extends MenuDrawer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ImageView imageView = (ImageView) findViewById(R.id.logo);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        imageView.setImageDrawable(roundedBitmapDrawable);
-
-
-        Log.d("DEBUG", "debugging");
-        mDatabase = FirebaseDatabase.getInstance();
-        mDatabaseRef = mDatabase.getReference("tasks");
-
-        mDatabaseRef.child("tests").setValue("testing");
-        mDatabaseRef.child("tests2").setValue("testing");
-        Log.d(TAG, "activity: HomeTask");
-
-        mDatabaseRef.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange: Task changed");
-
-
-                List<String> allTasks = new ArrayList<>();
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String task = child.getKey();
-                    allTasks.add(task);
-                    Log.d(TAG, "onDataChange: " + task);
-                }
-
-                TextView taskTitle = (TextView)findViewById(R.id.task_title);
-                taskTitle.setText(allTasks.get(3));
-
-
-
-//                DataSnapshot pushups = dataSnapshot.child("pushups");
-//                String description = pushups.child("description").getValue(String.class);
-
-//                TextView taskTitle = (TextView)findViewById(R.?id>    .task_title);
-//                String task = dataSnapshot.getValue(String.class);
-//                taskTitle.setText(task);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled: Error - " + databaseError.getMessage());
-            }
-        });
-
-
-
-        FirebaseApp.initializeApp(this);
-
         final Context ctx = this;
+
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -116,17 +70,20 @@ public class HomeTaskActivity extends MenuDrawer {
                 }
             }
         };
-//        mAuth.signOut();
+        mLogo = (ImageView) findViewById(R.id.logo);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        mLogo.setImageDrawable(roundedBitmapDrawable);
 
-        mTaskTitle = (TextView) findViewById(R.id.task_title);
-        mDailyOne = (TextView) findViewById(R.id.daily_one);
-        mDaysLeftOne = (TextView) findViewById(R.id.days_left_one);
-        mCountOne = (TextView) findViewById(R.id.count_one);
-        mPercentOne = (TextView)  findViewById(R.id.percent_one);
-        mLogo = (ImageView)  findViewById(R.id.logo);
 
-        countDownStart();
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseRef = mDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
 
+        mTaskArrayList = new ArrayList<>();
+        addDatabaseListener();
+        Log.d(TAG, "onCreate: Arraylist good????" + mTaskArrayList.toString());
+        configureListView();
     }
 
     @Override
@@ -141,54 +98,103 @@ public class HomeTaskActivity extends MenuDrawer {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 
-    public void countDownStart() {
+    private void addDatabaseListener(){
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
 
-                try {
-                    Calendar createdTask = Calendar.getInstance();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-                    Date futureDate = dateFormat.parse("2017-11-17");
-                    Date currentDate = new Date();
-                    createdTask.add(Calendar.DAY_OF_MONTH, 30);
-//                    String futureDate = dateFormat.format(createdTask.getTime());
-                    Long diff = futureDate.getTime() - currentDate.getTime();
-                    Long days = diff / (24 * 60 * 60 * 1000);
-                    diff -= days * (24 * 60 * 60 * 1000);
-                    mCountOne.setText(String.valueOf(days));
-                    Log.d(TAG, "countDownStart: Days" + days);
-                    int totalDays = 30;
-                    float Percentage;
-                    Percentage = (float) ((days * 100)/totalDays);
-                    mPercentOne.setText(String.valueOf(Percentage));
-                    Log.d(TAG, "countDownStart: Percentage" + Percentage);
-                } catch (Exception e) {
-                    e.printStackTrace();
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: Task changed");
+
+
+                for (DataSnapshot task : dataSnapshot.getChildren()) {
+                    //=====check to see if task is already complete=================
+                    if(task.child("completed").getValue().toString() == "true"){
+                        continue;
+                    }
+                    //=========load arraylist with Tasks======================
+
+                    //identify each value (this could be refactored, but clarifies what value each is being assigned to)
+                    try {
+                    String title = task.child("title").getValue().toString();
+                    String description = task.child("description").getValue().toString();
+                    String taskImgURL = task.child("imgURL").getValue().toString();
+                    Long startTime = Long.valueOf(task.child("time").getValue().toString());
+                    Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(task.child("date").getValue().toString());
+                    Integer goalNumber = Integer.valueOf(task.child("goal").getValue().toString());
+                    Integer completedNumber = Integer.valueOf(task.child("done").getValue().toString());
+                    Boolean completed = (Boolean) task.child("isCompleted").getValue();
+                    Integer daysCompleted = Integer.valueOf(task.child("dayscompleted").getValue().toString());
+
+                    //create new task
+                    Task newTask = new Model.Task(title,
+                            description,
+                            taskImgURL,
+                            startTime,
+                            startDate,
+                            goalNumber,
+                            completedNumber,
+                            completed,
+                            daysCompleted);
+
+                    //add task to arraylist
+                    mTaskArrayList.add(newTask);
+                        Log.d(TAG, "onDataChange: Arraylist being built? " + mTaskArrayList.toString());
+                    } catch(Exception e){
+                        Log.d(TAG, "onDataChange: Date format parsing failed" + e.getMessage());
+                        e.printStackTrace();
+                    }
+
                 }
+                mAdapter.notifyDataSetChanged();
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: Error - " + databaseError.getMessage());
+            }
+        });
     }
-//    public void viewDetailedTask(final Task taskDetail) {
-//        new AsyncTask<Void, Void, Void>() {
-//
-//            @Override
-//            protected Void doInBackground(Void... voids) {
-//                try {
-//                    Task task = new Task(taskDetail.toString());
-//                } catch (Exception e) {
-//
-//                    return null;
-//                }
-//            }execute();
-//        }
-//
-//    }
 
+    private void configureListView(){
+        final Context context = this;
+        mTaskListView = findViewById(R.id.current_task_listView);
+        mAdapter = new TaskListAdapter(this, mTaskArrayList){
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+//                return super.getView(i, view, viewGroup);
+                //use recycler view?
+                view = LayoutInflater.from(context).inflate(R.layout.home_task_list_item, null);
+                //find views to adjust
+                TextView title = view.findViewById(R.id.task_title);
+                TextView percent = view.findViewById(R.id.percent_one);
+                TextView count = view.findViewById(R.id.count_one);
 
+                //fill-in views
+                title.setText(getItem(i).title);
 
+                //percent should be completedNumber/goalNumber
+                float percentage = getItem(i).completedNumber / getItem(i).goalNumber;
+                percent.setText(String.valueOf(percentage));
 
+                //days left should be 30 - daysCompleted
+                //daysCompleted should (somewhere) be incremented each day (or by TodayDate - StartDate)
+                //if daysCompleted is a utilized property for each task, the following code could be refactored
+                Date today = new Date();
+                Date startDay = getItem(i).startDate;
+                startDay.setTime(getItem(i).startTime);
+                Long diff = today.getTime() - startDay.getTime();
+                Long days = diff / (24 * 60 * 60 * 1000);
+                Long daysLeft = 30 - days;
+                count.setText(String.valueOf(daysLeft));
 
-
-//    private void writeUserData(mTaskOne, dailyPercentage, daysLeft) {
-//        firebase.database().ref('users/' + userId).set({
-//
-//        })
+//                view.setOnClickListener();
+                Log.d(TAG, "getView: inside anonymous inner class");
+                return view;
+            }
+        };
+        Log.d(TAG, "configureListView: just before setting adapter");
+        mTaskListView.setAdapter(mAdapter);
+    }
 
 }

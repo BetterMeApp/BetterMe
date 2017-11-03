@@ -29,7 +29,7 @@ public class TaskListAdapter extends BaseAdapter {
         return adapterTaskList.size();
     }
     @Override
-    public Object getItem(int i) {
+    public Task getItem(int i) {
         return adapterTaskList.get(i);
     }
     @Override
