@@ -44,7 +44,7 @@ public class PickTaskActivity extends MenuDrawer {
     private Button mAddTaskButton;
     private ToggleButton mToggleTotalTypeButton;
     private EditText mEnterTotalEditText;
-    private Model.TaskListAdapter taskAdapter;
+    private Model.TaskListAdapter mTaskListAdapter;
     private ImageView mTaskImage;
 
     public int getLayoutId() {
@@ -102,21 +102,19 @@ public class PickTaskActivity extends MenuDrawer {
         mToggleTotalTypeButton = findViewById(R.id.toggleButton_totals);
         mEnterTotalEditText = findViewById(R.id.editText_enter_task_number);
         mTaskImage = findViewById(R.id.imageView_task_img);
-        taskAdapter = new Model.TaskListAdapter(this, mTaskList);
-        mTasksListView.setAdapter(taskAdapter);
+        mTaskListAdapter = new Model.TaskListAdapter(this, mTaskList);
+        mTasksListView.setAdapter(mTaskListAdapter);
     }
 
     public void setClickListeners() {
         setTaskClickListener();
         addTask();
         mToggleTotalTypeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleTotalType();
-            }
-        });
-
-
+                @Override
+                public void onClick(View v) {
+                    toggleTotalType();
+                }
+            });
     }
 
     public void toggleTotalType(){
