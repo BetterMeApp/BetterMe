@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     xmlns:tools="http://schemas.android.com/tools">
     <ImageView
         android:id="@+id/logo_background"
@@ -16,25 +17,39 @@
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginRight="275dp"
+        android:layout_marginEnd="275dp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/desc"
         android:src="@drawable/logo"
-        android:layout_above="@+id/description"
-        android:layout_toLeftOf="@+id/description"
-        android:layout_toStartOf="@+id/description" />
-
+        tools:mockup_opacity="1" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="200dp"
+        android:layout_marginRight="200dp"
+        android:text="@string/better_me"
+        android:textColor="@color/secondaryTextColor"
+        android:textStyle="italic"
+        android:textSize="20sp"/>
     <TextView
         android:id="@+id/task_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="66dp"
+        android:layout_marginTop="150dp"
         android:hint="@string/hint_task_title"
-        android:textColor="@color/primaryDarkColor"
+        android:textColor="@color/secondaryTextColor"
         android:textSize="20sp" />
 
     <TextView
@@ -43,9 +58,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/task_title"
         android:layout_centerHorizontal="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="30dp"
         android:hint="@string/hint_description"
-        android:textColor="@color/primaryDarkColor"
+        android:textAlignment="center"
+        android:textColor="@color/secondaryTextColor"
         android:textSize="20sp" />
     <TextView
         android:id="@+id/date_started"
@@ -58,7 +78,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:hint="@string/hint_start_date"
-        android:textColor="@color/primaryDarkColor"
+        android:textColor="@color/secondaryTextColor"
         android:textSize="20sp" />
     <TextView
         android:id="@+id/time_started"
@@ -71,7 +91,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginEnd="8dp"
         android:hint="@string/hint_start_time"
-        android:textColor="@color/primaryDarkColor"
+        android:textColor="@color/secondaryTextColor"
         android:textSize="20sp" />
     <TextView
         android:id="@+id/goal"
@@ -84,7 +104,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:hint="@string/hint_goal_number"
-        android:textColor="@color/primaryDarkColor"
+        android:textColor="@color/secondaryTextColor"
         android:textSize="20sp" />
     <TextView
         android:id="@+id/task_tally"
@@ -97,7 +117,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginEnd="8dp"
         android:hint="@string/hint_task_tally"
-        android:textColor="@color/primaryDarkColor"
+        android:textColor="@color/secondaryTextColor"
         android:textSize="20sp" />
     <TextView
         android:id="@+id/minute_number"
