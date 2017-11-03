@@ -17,6 +17,7 @@
         android:title="@string/task_details"/>
 
     <item android:id="@+id/logout"
+        android:icon="@mipmap/ic_undo_black_24dp"
         android:title="@string/logout"/>
 
 </menu>

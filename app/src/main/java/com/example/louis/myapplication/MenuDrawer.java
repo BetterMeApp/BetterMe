@@ -126,6 +126,7 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
             startActivity(pickTaskIntent);
             return true;
         } else if (id == R.id.logout) {
+            FirebaseAuth.getInstance().signOut();
             Intent logoutIntent = new Intent(this, LoginActivity.class);
             startActivity(logoutIntent);
             return true;
