@@ -15,6 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import Model.Task;
+
 public class DetailActivity extends MenuDrawer {
     private static final String TAG = "DetailActivity";
     private FirebaseAuth mAuth;
@@ -32,6 +34,7 @@ public class DetailActivity extends MenuDrawer {
     private ImageView mLogoBackground;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDatabaseRef;
+    private Task mCurrentTask;
 
     public int getLayoutId() {
         int id = R.layout.activity_detail;
@@ -56,7 +59,7 @@ public class DetailActivity extends MenuDrawer {
 
         mDatabase = FirebaseDatabase.getInstance();
         String userId = "xZEHwfTM4jbNOJRBikKvQhzpkbh2";
-        mDatabaseRef = mDatabase.getReference("users").child(userId);
+        mDatabaseRef = mDatabase.getReference("users").child(userId).child(Task.mCurrentTask);
 //        Query queryDatabase = mDatabaseRef.child("users").child("user");
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
@@ -64,18 +67,18 @@ public class DetailActivity extends MenuDrawer {
             public void onDataChange(DataSnapshot dataSnapshot) {
 //                String task = dataSnapshot.getValue(String.class);
                 Log.d(TAG, "onDataChange: Task changed");
-                DataSnapshot pushUpSnapshot = dataSnapshot.child("Push-ups");
-                Iterable<DataSnapshot> pushUpChildren = pushUpSnapshot.getChildren();
+//                DataSnapshot pushUpSnapshot = dataSnapshot.child("Push-ups");
+//                Iterable<DataSnapshot> pushUpChildren = pushUpSnapshot.getChildren();
 
 
-                boolean isCompleted = pushUpSnapshot.child("completed").getValue(Boolean.class);
-                String time = pushUpSnapshot.child("time").getValue(String.class);
-                String date = pushUpSnapshot.child("date").getValue(String.class);
-                String title = pushUpSnapshot.child("title").getValue(String.class);
-                String description = pushUpSnapshot.child("description").getValue(String.class);
-                Integer goal = Integer.valueOf(pushUpSnapshot.child("goal").getValue().toString());
+                boolean isCompleted = dataSnapshot.child("completed").getValue(Boolean.class);
+                String time = dataSnapshot.child("time").getValue(String.class);
+                String date = dataSnapshot.child("date").getValue(String.class);
+                String title = dataSnapshot.child("title").getValue(String.class);
+                String description = dataSnapshot.child("description").getValue(String.class);
+                Integer goal = Integer.valueOf(dataSnapshot.child("goal").getValue().toString());
                 String goalString = goal.toString();
-                Integer tally = Integer.valueOf(pushUpSnapshot.child("done").getValue().toString());
+                Integer tally = Integer.valueOf(dataSnapshot.child("done").getValue().toString());
                 String tallyString = tally.toString();
                 TextView taskTitle = (TextView)findViewById(R.id.task_title);
                 taskTitle.setText(title);
@@ -104,6 +107,7 @@ public class DetailActivity extends MenuDrawer {
         });
 
     }
+
 
     @Override
     protected void onStart() {
