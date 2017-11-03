@@ -105,10 +105,9 @@ public class HomeTaskActivity extends MenuDrawer {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onDataChange: Task changed");
 
-
                 for (DataSnapshot task : dataSnapshot.getChildren()) {
                     //=====check to see if task is already complete=================
-                    if(task.child("completed").getValue().toString() == "true"){
+                    if(task.child("completed").getValue().toString() == "true") {
                         continue;
                     }
                     //=========load arraylist with Tasks======================

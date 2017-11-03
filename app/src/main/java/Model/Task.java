@@ -31,5 +31,4 @@ public class Task {
         this.daysCompleted = daysCompleted;
 
     }
-
 }

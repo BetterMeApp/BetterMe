@@ -1,8 +1,12 @@
 package com.example.louis.myapplication;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,10 +23,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import Model.Task;
+import Model.TaskListAdapter;
 
 public class ProfileActivity extends MenuDrawer {
     private static final String TAG = "ProfileActivity";
@@ -36,8 +43,8 @@ public class ProfileActivity extends MenuDrawer {
     private TextView mUsername;
     private ListView mTasksCompleted;
     private LinearLayout mTaskListLayout;
-    private ArrayList<Task> mTaskList;
-    private Model.TaskListAdapter mTaskListAdapter;
+    private ArrayList<Task> mTaskArrayList;
+    private TaskListAdapter mTaskListAdapter;
 
     public int getLayoutId() {
         int id = R.layout.activity_profile;
@@ -47,7 +54,7 @@ public class ProfileActivity extends MenuDrawer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mTaskList = Model.CreateTasksList.createTaskArrayList();
+//        mTaskArrayList = Model.CreateTasksList.createTaskArrayList();
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -62,10 +69,9 @@ public class ProfileActivity extends MenuDrawer {
             }
         };
 
+        checkTaskCompletion();
         configureLayout();
         setViews();
-        checkDatabaseChanges();
-        checkCompletedTask();
 
         Log.d(TAG, "ZZonCreate: " + mDatabaseRef);
     }
@@ -94,24 +100,55 @@ public class ProfileActivity extends MenuDrawer {
         mTasksCompleted = findViewById(R.id.profile_tasks_completed);
         mTaskListLayout = findViewById(R.id.profile_task_layout);
 
-        mTaskListAdapter = new Model.TaskListAdapter(this, mTaskList);
+        mTaskListAdapter = new TaskListAdapter(this, mTaskArrayList);
         mTasksCompleted.setAdapter(mTaskListAdapter);
     }
 
-    private void checkDatabaseChanges() {
+    private void checkTaskCompletion() {
         mDatabase = FirebaseDatabase.getInstance();
-        mDatabaseRef = mDatabase.getReference("users").child(mAuth.getCurrentUser().getUid()).child("title").child("completed");
+        mDatabaseRef = mDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
+        mTaskArrayList = new ArrayList<>();
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<String> completedTask = new ArrayList<>();
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String task = child.getKey();
-                    completedTask.add(task);
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "onDataChange: " + data.getValue().toString());
 
-                    Log.d(TAG, "onDataChange: " + task);
+                    if (data.child("completed").getValue().toString().equals("false")) {
+                        continue;
+                    }
+
+                    try {
+                        Log.d(TAG, "onDataChange: " + data.child("title"));
+                        String title = data.child("title").getValue().toString();
+                        String description = data.child("description").getValue().toString();
+                        String taskImgURL = data.child("imgURL").getValue().toString();
+                        Long startTime = Long.valueOf(data.child("time").getValue().toString());
+                        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(data.child("date").getValue().toString());
+                        Integer goalNumber = Integer.valueOf(data.child("goal").getValue().toString());
+                        Integer completedNumber = Integer.valueOf(data.child("done").getValue().toString());
+                        Boolean completed = (Boolean) data.child("isCompleted").getValue();
+                        Integer daysCompleted = Integer.valueOf(data.child("dayscompleted").getValue().toString());
+
+                        Task newCompletedTask = new Model.Task(title,
+                                description,
+                                taskImgURL,
+                                startTime,
+                                startDate,
+                                goalNumber,
+                                completedNumber,
+                                completed,
+                                daysCompleted);
+
+                        mTaskArrayList.add(newCompletedTask);
+                        Log.d(TAG, "onDataChange: Arraylist being built? " + mTaskArrayList.toString());
+                    } catch (Exception e) {
+                        Log.d(TAG, "onDataChange: Date format parsing failed" + e.getMessage());
+                        e.printStackTrace();
+                    }
                 }
+                mTaskListAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -119,9 +156,5 @@ public class ProfileActivity extends MenuDrawer {
                 Log.d(TAG, "onCancelled: Error - " + databaseError.getMessage());
             }
         });
-    }
-
-    private void checkCompletedTask() {
-
     }
 }
