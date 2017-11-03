@@ -42,6 +42,7 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
 //        imageView.setImageDrawable(roundedBitmapDrawable);
 
         //setContentView(R.layout.menu_drawer);
+
         int id = R.layout.menu_drawer;
         setContentView(id);
         ButterKnife.bind(this);
