@@ -1,10 +1,12 @@
 package com.example.louis.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +52,7 @@ public class PickTaskActivity extends MenuDrawer {
     private Intent mMoveToHome;
     private TextView mTitleOfTask;
     private TextView mDescriptionOfTask;
+    private Button mBackButton;
     private ToggleButton mToggleTotalTypeButton;
 
     public int getLayoutId() {
@@ -90,6 +93,7 @@ public class PickTaskActivity extends MenuDrawer {
         mTitleOfTask = findViewById(R.id.textView_task_title);
         mDescriptionOfTask = findViewById(R.id.textView_task_description);
         mTaskImageView = findViewById(R.id.imageView_task_img);
+        mBackButton = findViewById(R.id.button_back);
         //mToggleTotalTypeButton = findViewById(R.id.toggleButton_totals);
 
         taskAdapter = new Model.TaskListAdapter(this, mTaskList);
@@ -108,6 +112,21 @@ public class PickTaskActivity extends MenuDrawer {
                     addTask();
                     startActivity(mMoveToHome);
                 }
+            }
+        });
+
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTaskListLayout.setVisibility(View.VISIBLE);
+                mSelectedTaskLayout.setVisibility(View.GONE);
+            }
+        });
+
+        mSelectedTaskLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismissKeyboard(mSelectedTaskLayout);
             }
         });
 
@@ -168,6 +187,11 @@ public class PickTaskActivity extends MenuDrawer {
                 new DownloadImageTask(mTaskToAdd.taskImgURL, mTaskImageView).execute();
             }
         });
+    }
+
+    private void dismissKeyboard(View view){
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 //        private void toggleTotalType(){

@@ -2,8 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/relativeLayout_task_list"
@@ -41,28 +40,31 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
+
         <TextView
             android:id="@+id/textView_task_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Title of the Task"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:layout_above="@+id/textView_task_description"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/secondaryDarkColor"/>
 
         <TextView
             android:id="@+id/textView_task_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="This will be the task description that will briefly explain what the task entails and ask them to enter the number of tasks/day they want to do."
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"/>
+            android:layout_marginRight="8dp"
+            android:textColor="@color/black"/>
 
         <RelativeLayout
             android:id="@+id/relativeLayout_enter_goal"
@@ -79,7 +81,7 @@
                 android:layout_alignParentTop="true"
                 android:textSize="18sp"
                 android:textAlignment="center"
-                android:textColor="@color/primaryTextColor"/>
+                android:textColor="@color/white"/>
 
             <EditText
                 android:id="@+id/editText_enter_task_number"
@@ -87,20 +89,30 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView_entry_directions"
                 android:layout_centerHorizontal="true"
-                android:ems="10"
+                android:ems="6"
                 android:inputType="number"
-                android:hint="push-ups per day"
+                android:hint="# per day"
                 android:textColorHint="@color/secondaryLightColor"/>
 
             <Button
                 android:id="@+id/button_add_task"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:text="Add Task"
                 android:background="@color/secondaryColor"
                 android:layout_below="@id/editText_enter_task_number" />
 
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/button_back"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Pick A Different Task"
+            android:textColor="@color/secondaryColor"
+            android:background="@color/black"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="4dp"/>
 
     </RelativeLayout>
 
