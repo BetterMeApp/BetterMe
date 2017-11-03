@@ -23,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import Model.DownloadImageTask;
 import Model.Task;
@@ -164,17 +166,20 @@ public class PickTaskActivity extends MenuDrawer {
         String time = String.valueOf(new Date().getTime());
         Integer goalNumber = Integer.parseInt(mEnterTotalEditText.getText().toString());
         String mUserId = mAuth.getCurrentUser().getUid();
-        mDbRef = mDatabase.getReference("users").child(mUserId).child(mTaskToAdd.title);
-        mDbRef.child("title").setValue(mTaskToAdd.title);
-        mDbRef.child("description").setValue(mTaskToAdd.description);
-        mDbRef.child("imgURL").setValue(mTaskToAdd.taskImgURL);
-        mDbRef.child("time").setValue(time);
-        mDbRef.child("date").setValue(date);
-        mDbRef.child("goal").setValue(goalNumber);
-        mDbRef.child("done").setValue(mTaskToAdd.completedNumber);
-        mDbRef.child("completed").setValue(mTaskToAdd.completed);
-        mDbRef.child("dayscompleted").setValue(mTaskToAdd.daysCompleted);
+        Map<String, Object> update = new HashMap<String, Object>();
+        update.put("title", mTaskToAdd.title);
+        update.put("description",mTaskToAdd.description);
+        update.put("imgURL",mTaskToAdd.taskImgURL);
+        update.put("time",time);
+        update.put("date",date);
+        update.put("goal",goalNumber);
+        update.put("done",mTaskToAdd.completedNumber);
+        update.put("completed",mTaskToAdd.completed);
+        update.put("dayscompleted",mTaskToAdd.daysCompleted);
 
+
+        mDbRef = mDatabase.getReference("users").child(mUserId).child(mTaskToAdd.title);
+        mDbRef.updateChildren(update);
     }
 
     private void setTaskClickListener(){
