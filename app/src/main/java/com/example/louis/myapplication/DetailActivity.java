@@ -46,8 +46,7 @@ public class DetailActivity extends MenuDrawer {
     private DatabaseReference mDatabaseRef;
 
     public int getLayoutId() {
-        int id = R.layout.activity_detail;
-        return id;
+        return R.layout.activity_detail;
     }
 
     protected void onCreate(Bundle savedInstanceState) {

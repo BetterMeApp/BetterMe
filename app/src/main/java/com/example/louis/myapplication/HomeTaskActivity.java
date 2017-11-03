@@ -47,8 +47,7 @@ public class HomeTaskActivity extends MenuDrawer {
     private TaskListAdapter mAdapter;
 
     public int getLayoutId() {
-        int id = R.layout.activity_home_task;
-        return id;
+        return R.layout.activity_home_task;
     }
 
     @Override

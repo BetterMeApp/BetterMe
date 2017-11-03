@@ -48,8 +48,7 @@ public class PickTaskActivity extends MenuDrawer {
     private ImageView mTaskImage;
 
     public int getLayoutId() {
-        int id = R.layout.activity_pick_task;
-        return id;
+        return R.layout.activity_pick_task;
     }
 
     @Override

@@ -5,28 +5,19 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import Model.Task;
 import Model.TaskListAdapter;
@@ -40,21 +31,16 @@ public class ProfileActivity extends MenuDrawer {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDatabaseRef;
 
-    private TextView mUsername;
     private ListView mTasksCompleted;
-    private LinearLayout mTaskListLayout;
     private ArrayList<Task> mTaskArrayList;
     private TaskListAdapter mTaskListAdapter;
 
     public int getLayoutId() {
-        int id = R.layout.activity_profile;
-        return id;
+        return R.layout.activity_profile;
     }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        mTaskArrayList = Model.CreateTasksList.createTaskArrayList();
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -70,10 +56,7 @@ public class ProfileActivity extends MenuDrawer {
         };
 
         checkTaskCompletion();
-        configureLayout();
         setViews();
-
-        Log.d(TAG, "ZZonCreate: " + mDatabaseRef);
     }
 
     @Override
@@ -88,17 +71,8 @@ public class ProfileActivity extends MenuDrawer {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 
-    private void configureLayout() {
-        mUsername = findViewById(R.id.profile_username);
-        mTasksCompleted = findViewById(R.id.profile_tasks_completed);
-
-        FirebaseUser user = mAuth.getCurrentUser();
-        mUsername.setText(user.getDisplayName());
-    }
-
     private void setViews() {
         mTasksCompleted = findViewById(R.id.profile_tasks_completed);
-        mTaskListLayout = findViewById(R.id.profile_task_layout);
 
         mTaskListAdapter = new TaskListAdapter(this, mTaskArrayList);
         mTasksCompleted.setAdapter(mTaskListAdapter);
@@ -131,7 +105,7 @@ public class ProfileActivity extends MenuDrawer {
                         Boolean completed = (Boolean) data.child("isCompleted").getValue();
                         Integer daysCompleted = Integer.valueOf(data.child("dayscompleted").getValue().toString());
 
-                        Task newCompletedTask = new Model.Task(title,
+                        Task newCompletedTask = new Task(title,
                                 description,
                                 taskImgURL,
                                 startTime,
