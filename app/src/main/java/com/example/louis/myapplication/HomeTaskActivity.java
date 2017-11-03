@@ -55,15 +55,9 @@ public class HomeTaskActivity extends MenuDrawer {
         roundedBitmapDrawable.setCircular(true);
         imageView.setImageDrawable(roundedBitmapDrawable);
 
-
         Log.d("DEBUG", "debugging");
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseRef = mDatabase.getReference("tasks");
-
-        mDatabaseRef.child("tests").setValue("testing");
-        mDatabaseRef.child("tests2").setValue("testing");
-        Log.d(TAG, "activity: HomeTask");
-
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -81,14 +75,6 @@ public class HomeTaskActivity extends MenuDrawer {
                 TextView taskTitle = (TextView)findViewById(R.id.task_title);
                 taskTitle.setText(allTasks.get(3));
 
-
-
-//                DataSnapshot pushups = dataSnapshot.child("pushups");
-//                String description = pushups.child("description").getValue(String.class);
-
-//                TextView taskTitle = (TextView)findViewById(R.?id>    .task_title);
-//                String task = dataSnapshot.getValue(String.class);
-//                taskTitle.setText(task);
             }
 
             @Override
@@ -96,8 +82,6 @@ public class HomeTaskActivity extends MenuDrawer {
                 Log.d(TAG, "onCancelled: Error - " + databaseError.getMessage());
             }
         });
-
-
 
         FirebaseApp.initializeApp(this);
 
