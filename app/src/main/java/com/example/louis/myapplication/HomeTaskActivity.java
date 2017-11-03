@@ -188,7 +188,13 @@ public class HomeTaskActivity extends MenuDrawer {
                 Long daysLeft = 30 - days;
                 count.setText(String.valueOf(daysLeft));
 
-//                view.setOnClickListener();
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent detailIntent = new Intent(context, DetailActivity.class);
+                        startActivity(detailIntent);
+                    }
+                });
                 Log.d(TAG, "getView: inside anonymous inner class");
                 return view;
             }
