@@ -72,8 +72,7 @@ public class HomeTaskActivity extends MenuDrawer {
             }
         };
         mLogo = (ImageView) findViewById(R.id.logo);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+
         roundedBitmapDrawable.setCircular(true);
         mLogo.setImageDrawable(roundedBitmapDrawable);
 
