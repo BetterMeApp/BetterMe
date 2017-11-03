@@ -36,23 +36,25 @@ public class PickTaskActivity extends MenuDrawer {
 
     private static final String TAG = "PickTaskActivity: ";
 
-    private ListView mTasksListView;
-    private ArrayList<Task> mTaskList;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private RelativeLayout mSelectedTaskLayout;
-    private RelativeLayout mTaskListLayout;
-    private Button mAddTaskButton;
-    private EditText mEnterTotalEditText;
-    private Model.TaskListAdapter taskAdapter;
-    private ImageView mTaskImageView;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDbRef;
-    private Task mTaskToAdd;
-    private Intent mMoveToHome;
+    private Model.TaskListAdapter taskAdapter;
+    private Model.TaskListAdapter mTaskListAdapter;
+    private RelativeLayout mSelectedTaskLayout;
+    private RelativeLayout mTaskListLayout;
+    private ImageView mTaskImage;
+    private ImageView mTaskImageView;
+    private ListView mTasksListView;
     private TextView mTitleOfTask;
     private TextView mDescriptionOfTask;
+    private ArrayList<Task> mTaskList;
+    private Intent mMoveToHome;
+    private Button mAddTaskButton;
     private Button mBackButton;
+    private EditText mEnterTotalEditText;
+    private Task mTaskToAdd;
     private ToggleButton mToggleTotalTypeButton;
 
     public int getLayoutId() {
@@ -90,6 +92,7 @@ public class PickTaskActivity extends MenuDrawer {
         mTasksListView = findViewById(R.id.listView_tasks_to_choose);
         mAddTaskButton = findViewById(R.id.button_add_task);
         mEnterTotalEditText = findViewById(R.id.editText_enter_task_number);
+
         mTitleOfTask = findViewById(R.id.textView_task_title);
         mDescriptionOfTask = findViewById(R.id.textView_task_description);
         mTaskImageView = findViewById(R.id.imageView_task_img);
@@ -98,6 +101,10 @@ public class PickTaskActivity extends MenuDrawer {
 
         taskAdapter = new Model.TaskListAdapter(this, mTaskList);
         mTasksListView.setAdapter(taskAdapter);
+
+        mTaskImage = findViewById(R.id.imageView_task_img);
+        mTaskListAdapter = new Model.TaskListAdapter(this, mTaskList);
+        mTasksListView.setAdapter(mTaskListAdapter);
     }
 
     public void setClickListeners() {
@@ -129,6 +136,8 @@ public class PickTaskActivity extends MenuDrawer {
                 dismissKeyboard(mSelectedTaskLayout);
             }
         });
+
+        addTask();
 
 //        mToggleTotalTypeButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -170,7 +179,7 @@ public class PickTaskActivity extends MenuDrawer {
         mDbRef.child("goal").setValue(goalNumber);
         mDbRef.child("done").setValue(mTaskToAdd.completedNumber);
         mDbRef.child("completed").setValue(mTaskToAdd.completed);
-        mDbRef.child("dayscompleted").setValue(mTaskToAdd.dayscompleted);
+        mDbRef.child("dayscompleted").setValue(mTaskToAdd.daysCompleted);
 
     }
 
