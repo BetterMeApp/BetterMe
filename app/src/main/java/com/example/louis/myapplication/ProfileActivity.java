@@ -144,7 +144,7 @@ public class ProfileActivity extends MenuDrawer {
                         mTaskArrayList.add(newCompletedTask);
                         Log.d(TAG, "onDataChange: Arraylist being built? " + mTaskArrayList.toString());
                     } catch (Exception e) {
-                        Log.d(TAG, "onDataChange: Date format parsing failed" + e.getMessage());
+                        Log.d(TAG, "onDataChange: ArrayList failed" + e.getMessage());
                         e.printStackTrace();
                     }
                 }
