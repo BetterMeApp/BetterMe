@@ -6,16 +6,15 @@ import com.google.firebase.auth.FirebaseUser;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,12 +34,22 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
     @BindView(R.id.menu_layout)
     RelativeLayout mMenuLayout;
 
+
     // any class that extends this abstract class must define this.
     public abstract int getLayoutId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        ImageView imageView = (ImageView) findViewById(R.id.logo);
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+//        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+//        roundedBitmapDrawable.setCircular(true);
+//        imageView.setImageDrawable(roundedBitmapDrawable);
+
+        //setContentView(R.layo ut.menu_drawer);
+
         int id = R.layout.menu_drawer;
         setContentView(id);
         ButterKnife.bind(this);

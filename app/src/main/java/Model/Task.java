@@ -20,6 +20,7 @@ import java.util.Date;
  */
 
 public class Task {
+    public static String mCurrentTask;
 
     public static FirebaseAuth mAuth;
 

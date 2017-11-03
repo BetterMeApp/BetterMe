@@ -9,6 +9,15 @@
     tools:context="com.example.louis.myapplication.HomeTaskActivity">
 
     <ImageView
+        android:id="@+id/logo_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/logo"
+        android:alpha="0.1" />
+    <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,6 +35,7 @@
         tools:mockup_opacity="1"
         />
     <TextView
+        android:id="@+id/task_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -34,82 +44,14 @@
         android:layout_marginEnd="200dp"
         android:layout_marginRight="200dp"
         android:text="@string/better_me"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="@color/white"
         android:textStyle="italic"
         android:textSize="20sp"/>
-    <!--<TextView-->
-        <!--android:id="@+id/task_title"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="150dp"-->
-        <!--android:layout_marginLeft="4dp"-->
-        <!--android:layout_marginRight="4dp"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:hint="@string/hint_task_title"-->
-        <!--android:textColor="@color/secondaryTextColor"-->
-        <!--android:textSize="15sp"/>-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/daily_one"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_toEndOf="@+id/task_title"-->
-        <!--android:layout_toRightOf="@+id/task_title"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_marginTop="150dp"-->
-        <!--android:layout_marginLeft="60dp"-->
-        <!--android:layout_marginStart="60dp"-->
-        <!--android:textColor="@color/secondaryTextColor"-->
-        <!--android:textSize="15sp"-->
-        <!--android:text="@string/daily"/>-->
-    <!--<TextView-->
-        <!--android:id="@+id/percent_one"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginEnd="15dp"-->
-        <!--android:layout_marginRight="15dp"-->
-        <!--android:layout_alignBaseline="@+id/daily_one"-->
-        <!--android:layout_alignBottom="@+id/daily_one"-->
-        <!--android:layout_toLeftOf="@+id/days_left_one"-->
-        <!--android:layout_toStartOf="@+id/days_left_one"-->
-        <!--android:hint="@string/hint_percentage"-->
-        <!--android:textColor="@color/secondaryTextColor"-->
-        <!--android:textSize="15sp"/>-->
-    <!--<TextView-->
-        <!--android:id="@+id/days_left_one"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignBaseline="@+id/percent_one"-->
-        <!--android:layout_alignBottom="@+id/percent_one"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_marginRight="40dp"-->
-        <!--android:layout_marginEnd="40dp"-->
-        <!--android:textColor="@color/secondaryTextColor"-->
-        <!--android:textSize="15sp"-->
-        <!--android:text="@string/days_left"/>-->
-    <!--<TextView-->
-        <!--android:id="@+id/count_one"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignBaseline="@+id/days_left_one"-->
-        <!--android:layout_alignBottom="@+id/days_left_one"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_marginRight="8dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:textSize="15sp"-->
-        <!--android:textColor="@color/secondaryTextColor"/>-->
 
     <ListView
         android:id="@+id/current_task_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignLeft="@+id/task_title"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignStart="@+id/task_title"
         android:layout_below="@+id/logo" />
+
 </RelativeLayout>
