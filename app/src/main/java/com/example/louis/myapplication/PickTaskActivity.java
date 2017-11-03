@@ -44,7 +44,6 @@ public class PickTaskActivity extends MenuDrawer {
     private Model.TaskListAdapter mTaskListAdapter;
     private RelativeLayout mSelectedTaskLayout;
     private RelativeLayout mTaskListLayout;
-    private ImageView mTaskImage;
     private ImageView mTaskImageView;
     private ListView mTasksListView;
     private TextView mTitleOfTask;
@@ -92,17 +91,15 @@ public class PickTaskActivity extends MenuDrawer {
         mTasksListView = findViewById(R.id.listView_tasks_to_choose);
         mAddTaskButton = findViewById(R.id.button_add_task);
         mEnterTotalEditText = findViewById(R.id.editText_enter_task_number);
-
         mTitleOfTask = findViewById(R.id.textView_task_title);
         mDescriptionOfTask = findViewById(R.id.textView_task_description);
-        mTaskImageView = findViewById(R.id.imageView_task_img);
         mBackButton = findViewById(R.id.button_back);
+        mTaskImageView = findViewById(R.id.imageView_task_img);
         //mToggleTotalTypeButton = findViewById(R.id.toggleButton_totals);
 
         taskAdapter = new Model.TaskListAdapter(this, mTaskList);
         mTasksListView.setAdapter(taskAdapter);
 
-        mTaskImage = findViewById(R.id.imageView_task_img);
         mTaskListAdapter = new Model.TaskListAdapter(this, mTaskList);
         mTasksListView.setAdapter(mTaskListAdapter);
     }
@@ -136,8 +133,6 @@ public class PickTaskActivity extends MenuDrawer {
                 dismissKeyboard(mSelectedTaskLayout);
             }
         });
-
-        addTask();
 
 //        mToggleTotalTypeButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
