@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -72,7 +73,8 @@ public class HomeTaskActivity extends MenuDrawer {
             }
         };
         mLogo = (ImageView) findViewById(R.id.logo);
-
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedBitmapDrawable.setCircular(true);
         mLogo.setImageDrawable(roundedBitmapDrawable);
 
@@ -82,7 +84,6 @@ public class HomeTaskActivity extends MenuDrawer {
 
         mTaskArrayList = new ArrayList<>();
         addDatabaseListener();
-        Log.d(TAG, "onCreate: Arraylist good????" + mTaskArrayList.toString());
         configureListView();
     }
 
@@ -100,21 +101,18 @@ public class HomeTaskActivity extends MenuDrawer {
 
     private void addDatabaseListener(){
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange: Task changed");
-
-
-                for (DataSnapshot task : dataSnapshot.getChildren()) {
+                for(DataSnapshot task : dataSnapshot.getChildren()){
+                    Log.d(TAG, "onDataChange: completedNumber check->: " + task.getValue().toString());
                     //=====check to see if task is already complete=================
-                    if(task.child("completed").getValue().toString() == "true"){
-                        continue;
-                    }
-                    //=========load arraylist with Tasks======================
-
-                    //identify each value (this could be refactored, but clarifies what value each is being assigned to)
-                    try {
+                if(task.child("completed").getValue().toString().equals("true")){
+                    continue;
+                }
+//                    //=========load arraylist with Tasks======================
+//
+//                    //identify each value (this could be refactored, but clarifies what value each is being assigned to)
+                try {
                     String title = task.child("title").getValue().toString();
                     String description = task.child("description").getValue().toString();
                     String taskImgURL = task.child("imgURL").getValue().toString();
@@ -122,7 +120,7 @@ public class HomeTaskActivity extends MenuDrawer {
                     Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(task.child("date").getValue().toString());
                     Integer goalNumber = Integer.valueOf(task.child("goal").getValue().toString());
                     Integer completedNumber = Integer.valueOf(task.child("done").getValue().toString());
-                    Boolean completed = (Boolean) task.child("isCompleted").getValue();
+                    Boolean completed = (Boolean) task.child("completed").getValue();
                     Integer daysCompleted = Integer.valueOf(task.child("dayscompleted").getValue().toString());
 
                     //create new task
@@ -138,22 +136,21 @@ public class HomeTaskActivity extends MenuDrawer {
 
                     //add task to arraylist
                     mTaskArrayList.add(newTask);
-                        Log.d(TAG, "onDataChange: Arraylist being built? " + mTaskArrayList.toString());
-                    } catch(Exception e){
-                        Log.d(TAG, "onDataChange: Date format parsing failed" + e.getMessage());
-                        e.printStackTrace();
-                    }
-
+                } catch(Exception e){
+                    Log.d(TAG, "onDataChange: Date format parsing failed" + e.getMessage());
+                    e.printStackTrace();
                 }
-                mAdapter.notifyDataSetChanged();
 
+                mAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled: Error - " + databaseError.getMessage());
+
             }
         });
+
     }
 
     private void configureListView(){
@@ -174,7 +171,10 @@ public class HomeTaskActivity extends MenuDrawer {
                 title.setText(getItem(i).title);
 
                 //percent should be completedNumber/goalNumber
-                float percentage = getItem(i).completedNumber / getItem(i).goalNumber;
+//                Log.d(TAG, "getView: percentage calc->: " + getItem(i).completedNumber / getItem(i).goalNumber);
+                Double comp = Double.valueOf(getItem(i).completedNumber.toString());
+                Double goal = Double.valueOf(getItem(i).goalNumber.toString());
+                Double percentage = 100 * (comp / goal);
                 percent.setText(String.valueOf(percentage));
 
                 //days left should be 30 - daysCompleted
@@ -196,11 +196,9 @@ public class HomeTaskActivity extends MenuDrawer {
                         startActivity(detailIntent);
                     }
                 });
-                Log.d(TAG, "getView: inside anonymous inner class");
                 return view;
             }
         };
-        Log.d(TAG, "configureListView: just before setting adapter");
         mTaskListView.setAdapter(mAdapter);
     }
 
