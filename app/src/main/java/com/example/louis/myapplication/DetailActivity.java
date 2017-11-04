@@ -2,6 +2,7 @@ package com.example.louis.myapplication;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
@@ -23,6 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import Model.DownloadImageTask;
 
 public class DetailActivity extends MenuDrawer {
     private static final String TAG = "DetailActivity";
@@ -36,13 +40,15 @@ public class DetailActivity extends MenuDrawer {
     private TextView mTimeStarted;
     private TextView mGoal;
     private TextView mTaskTally;
-    private TextView mMinuteNumber;
-    private TextView mCheckedBoxes;
+    private TextView mTallyLabel;
     private ImageView mLogo;
     private ImageView mImagePhoto;
     private ImageView mLogoBackground;
     private RelativeLayout mLayout;
-
+    private Integer mNumberPicked;
+    private Button mIncrement;
+    private Button mDecrement;
+    private Button mAddToGoal;
 
     public int getLayoutId() {
         int id = R.layout.activity_detail;
@@ -55,7 +61,7 @@ public class DetailActivity extends MenuDrawer {
         configureLayout();
         configureFirebase();
         configureNumberPicker();
-        dismissKeyboard();
+        setClickListeners();
     }
 
     private void configureLayout() {
@@ -66,6 +72,10 @@ public class DetailActivity extends MenuDrawer {
         mLogo = findViewById(R.id.logo);
         mLogoBackground = findViewById(R.id.logo_background);
         mLayout = findViewById(R.id.relativeLayout_info_area);
+        mIncrement = findViewById(R.id.button_increment);
+        mDecrement = findViewById(R.id.button_decrement);
+        mAddToGoal = findViewById(R.id.button_add_towards_goal);
+        mTallyLabel = findViewById(R.id.textView_daily_tally_label);
     }
 
     private void configureFirebase() {
@@ -98,9 +108,9 @@ public class DetailActivity extends MenuDrawer {
 
                 String date = realTimeTaskInfo.child("date").getValue(String.class);
                 String title = realTimeTaskInfo.child("title").getValue(String.class);
-                String description = realTimeTaskInfo.child("description").getValue(String.class);
+                String imgUrl = realTimeTaskInfo.child("imgURL").getValue(String.class);
                 Integer goal = Integer.valueOf(realTimeTaskInfo.child("goal").getValue().toString());
-                Integer tally = Integer.valueOf(realTimeTaskInfo.child("done").getValue().toString());
+                //new DownloadImageTask(imgUrl, mImagePhoto).execute();
                 mTaskTitle.setText(title);
                 mDateStarted.setText(date);
                 mGoal.setText(goal.toString());
@@ -115,10 +125,32 @@ public class DetailActivity extends MenuDrawer {
 
     }
 
+    public void setClickListeners() {
+        mIncrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToCompleted();
+            }
+        });
+
+        mDecrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subtractToCompleted();
+            }
+        });
+        mAddToGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+    }
+
     private void configureNumberPicker(){
-        final TextView numberPicked = findViewById(R.id.textView_number_picked);
+        final TextView numberPickedTextView = findViewById(R.id.textView_number_picked);
         NumberPicker numberPicker = findViewById(R.id.number_picker);
-        dismissKeyboard();
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(25);
         numberPicker.setWrapSelectorWheel(true);
@@ -126,11 +158,50 @@ public class DetailActivity extends MenuDrawer {
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal){
             //Display the newly selected number from picker
-            numberPicked.setText("Selected Number : " + newVal);
+            numberPickedTextView.setText("Selected Number : " + newVal);
+            mNumberPicked = newVal;
+            mIncrement.setVisibility(View.VISIBLE);
+            mDecrement.setVisibility(View.VISIBLE);
         }
     });
 }
 
+    private void addToCompleted() {
+        int newTotal;
+        if (mNumberPicked != 0) {
+            String currentTally = mTaskTally.getText().toString();
+            if (!currentTally.equals("")) {
+                int tallyInt = Integer.valueOf(currentTally);
+                newTotal = mNumberPicked + tallyInt;
+                mTaskTally.setText(String.valueOf(newTotal));
+                tallyInt = Integer.valueOf(mTaskTally.getText().toString());
+                int goalChecker1 = Integer.valueOf(mGoal.getText().toString());
+                if (goalChecker1 <= tallyInt) {
+                    mTallyLabel.setTextColor(Color.parseColor("#4caf50"));
+                }
+            } else {
+                int tallyInt = 0;
+                mTaskTally.setText(mNumberPicked.toString());
+                tallyInt = Integer.valueOf(mTaskTally.getText().toString());
+                int goalChecker2 = Integer.valueOf(mGoal.getText().toString());
+                if (goalChecker2 <= tallyInt) {
+                    mTallyLabel.setTextColor(Color.parseColor("#4caf50"));
+                }
+                mAddToGoal.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private void subtractToCompleted(){
+        int newTotal;
+        if (mNumberPicked != 0){
+            int tally = Integer.valueOf(mTaskTally.getText().toString());
+            if ((tally - mNumberPicked) > 0) {
+                newTotal = tally - mNumberPicked;
+                mTaskTally.setText(String.valueOf(newTotal));
+            }
+        }
+    }
 
     private void dismissKeyboard(){
         View view = this.getCurrentFocus();

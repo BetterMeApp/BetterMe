@@ -67,7 +67,7 @@
             android:id="@+id/textView_day_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12"
+            android:hint="##"
             android:layout_below="@id/textView_day_number_label"
             android:layout_centerHorizontal="true"
             android:textColor="@color/secondaryLightColor"
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textView_daily_goal_label"
             android:layout_centerHorizontal="true"
-            android:text="100"
+            android:hint="###"
             android:textColor="@color/secondaryDarkColor"
             android:textSize="40sp" />
         <ImageView
@@ -140,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView_daily_tally_label"
-                android:text="75"
+                android:text="22"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="35dp"
                 android:layout_marginStart="35dp"
@@ -161,11 +161,12 @@
                 android:background="@color/secondaryColor"
                 android:textColor="@color/black"
                 android:layout_below="@+id/task_tally"
-                android:text="Add"/>
+                android:text="Add"
+                android:visibility="invisible"/>
             <Button
                 android:id="@+id/button_increment"
-                android:layout_width="16dp"
-                android:layout_height="wrap_content"
+                android:layout_width="27dp"
+                android:layout_height="30dp"
                 android:text="+"
                 android:background="@color/secondaryColor"
                 android:textColor="@color/black"
@@ -174,11 +175,12 @@
                 android:layout_below="@id/textView_number_picked"
                 android:layout_marginRight="25dp"
                 android:layout_marginEnd="25dp"
-                android:layout_marginTop="35dp"/>
+                android:layout_marginTop="40dp"
+                android:visibility="invisible"/>
             <Button
                 android:id="@+id/button_decrement"
-                android:layout_width="16dp"
-                android:layout_height="wrap_content"
+                android:layout_width="27dp"
+                android:layout_height="30dp"
                 android:text="-"
                 android:background="@color/secondaryColor"
                 android:textColor="@color/black"
@@ -187,7 +189,8 @@
                 android:layout_below="@id/button_increment"
                 android:layout_marginRight="25dp"
                 android:layout_marginEnd="25dp"
-                android:layout_marginTop="25dp" />
+                android:layout_marginTop="25dp"
+                android:visibility="invisible"/>
 
         </RelativeLayout>
     </RelativeLayout>
