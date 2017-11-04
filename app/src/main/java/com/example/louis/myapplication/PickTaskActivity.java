@@ -2,7 +2,6 @@ package com.example.louis.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import Model.DownloadImageTask;
 import Model.Task;
@@ -57,8 +59,7 @@ public class PickTaskActivity extends MenuDrawer {
     private ToggleButton mToggleTotalTypeButton;
 
     public int getLayoutId() {
-        int id = R.layout.activity_pick_task;
-        return id;
+        return R.layout.activity_pick_task;
     }
 
     @Override
@@ -83,7 +84,7 @@ public class PickTaskActivity extends MenuDrawer {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 
-    public  void setViews(){
+    public void setViews() {
         mTaskList = Model.CreateTasksList.createTaskArrayList();
 
         mTaskListLayout = findViewById(R.id.relativeLayout_task_list);
@@ -142,13 +143,13 @@ public class PickTaskActivity extends MenuDrawer {
 //        });
     }
 
-    public void setFirebase(){
+    public void setFirebase() {
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     //user is logged in
                 } else {
                     finish();
@@ -159,26 +160,28 @@ public class PickTaskActivity extends MenuDrawer {
         mDatabase = FirebaseDatabase.getInstance();
     }
 
-    private void addTask(){
+    private void addTask() {
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         String time = String.valueOf(new Date().getTime());
         Integer goalNumber = Integer.parseInt(mEnterTotalEditText.getText().toString());
-
         String mUserId = mAuth.getCurrentUser().getUid();
-        mDbRef = mDatabase.getReference("users").child(mUserId).child(mTaskToAdd.title);
-        mDbRef.child("title").setValue(mTaskToAdd.title);
-        mDbRef.child("description").setValue(mTaskToAdd.description);
-        mDbRef.child("imgURL").setValue(mTaskToAdd.taskImgURL);
-        mDbRef.child("time").setValue(time);
-        mDbRef.child("date").setValue(date);
-        mDbRef.child("goal").setValue(goalNumber);
-        mDbRef.child("done").setValue(mTaskToAdd.completedNumber);
-        mDbRef.child("completed").setValue(mTaskToAdd.completed);
-        mDbRef.child("dayscompleted").setValue(mTaskToAdd.daysCompleted);
+        Map<String, Object> update = new HashMap<String, Object>();
+        update.put("title", mTaskToAdd.title);
+        update.put("description", mTaskToAdd.description);
+        update.put("imgURL", mTaskToAdd.taskImgURL);
+        update.put("time", time);
+        update.put("date", date);
+        update.put("goal", goalNumber);
+        update.put("done", mTaskToAdd.completedNumber);
+        update.put("completed", mTaskToAdd.completed);
+        update.put("dayscompleted", mTaskToAdd.daysCompleted);
 
+
+        mDbRef = mDatabase.getReference("users").child(mUserId).child(mTaskToAdd.title);
+        mDbRef.updateChildren(update);
     }
 
-    private void setTaskClickListener(){
+    private void setTaskClickListener() {
         mTasksListView.setClickable(true);
         mTasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -193,7 +196,7 @@ public class PickTaskActivity extends MenuDrawer {
         });
     }
 
-    private void dismissKeyboard(View view){
+    private void dismissKeyboard(View view) {
         InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }

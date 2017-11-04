@@ -8,8 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,34 +23,30 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import Model.DownloadImageTask;
+import Model.Task;
 
 public class DetailActivity extends MenuDrawer {
     private static final String TAG = "DetailActivity";
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDatabaseRef;
     private TextView mTaskTitle;
-    private TextView mDescription;
     private TextView mDateStarted;
-    private TextView mTimeStarted;
     private TextView mGoal;
     private TextView mTaskTally;
     private TextView mTallyLabel;
-    private ImageView mLogo;
     private ImageView mImagePhoto;
-    private ImageView mLogoBackground;
-    private RelativeLayout mLayout;
     private Integer mNumberPicked;
     private Button mIncrement;
     private Button mDecrement;
     private Button mAddToGoal;
+    private Task mCurrentTask;
 
     public int getLayoutId() {
-        int id = R.layout.activity_detail;
-        return id;
+        return R.layout.activity_detail;
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +63,6 @@ public class DetailActivity extends MenuDrawer {
         mDateStarted = findViewById(R.id.date_started);
         mGoal = findViewById(R.id.goal);
         mTaskTally = findViewById(R.id.task_tally);
-        mLogo = findViewById(R.id.logo);
-        mLogoBackground = findViewById(R.id.logo_background);
-        mLayout = findViewById(R.id.relativeLayout_info_area);
         mIncrement = findViewById(R.id.button_increment);
         mDecrement = findViewById(R.id.button_decrement);
         mAddToGoal = findViewById(R.id.button_add_towards_goal);
@@ -84,7 +75,7 @@ public class DetailActivity extends MenuDrawer {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     // user is logged in
                 } else {
                     finish();
@@ -96,6 +87,7 @@ public class DetailActivity extends MenuDrawer {
         String userId = "xZEHwfTM4jbNOJRBikKvQhzpkbh2";
         mDatabaseRef = mDatabase.getReference("users").child(userId);
         //        Query queryDatabase = mDatabaseRef.child("users").child("user");
+        Log.d(TAG, "onCreate: " + userId);
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override

@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     Log.d(TAG, "onAuthStateChanged: Logged in! displayName: " + user.getDisplayName());
                     //user is logged in, goto homeActy
                     finish();
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 
-    private void attachListeners(){
+    private void attachListeners() {
         final Context ctx = this;
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnCompleteListener((Activity) ctx, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(!task.isSuccessful()){
+                                if (!task.isSuccessful()) {
                                     Toast.makeText(LoginActivity.this, "Oops! Something went wrong in the Login process.\nPlease try again or contact support.", Toast.LENGTH_LONG).show();
                                 }
                             }
@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(!b){
+                if (!b) {
                     dismissKeyboard(view);
                 }
             }
@@ -109,14 +109,14 @@ public class LoginActivity extends AppCompatActivity {
         mPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(!b){
+                if (!b) {
                     dismissKeyboard(view);
                 }
             }
         });
     }
 
-    private void dismissKeyboard(View view){
+    private void dismissKeyboard(View view) {
         InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 

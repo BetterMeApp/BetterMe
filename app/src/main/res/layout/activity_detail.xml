@@ -140,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView_daily_tally_label"
-                android:text="22"
+                android:hint="##"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="35dp"
                 android:layout_marginStart="35dp"
