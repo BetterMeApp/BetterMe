@@ -51,7 +51,7 @@ public class PickTaskActivity extends MenuDrawer {
     private TextView mTitleOfTask;
     private TextView mDescriptionOfTask;
     private ArrayList<Task> mTaskList;
-    private Intent mMoveToDetail;
+    private Intent mMoveToHome;
     private Button mAddTaskButton;
     private Button mBackButton;
     private EditText mEnterTotalEditText;
@@ -106,7 +106,7 @@ public class PickTaskActivity extends MenuDrawer {
     }
 
     public void setClickListeners() {
-        mMoveToDetail = new Intent(this, DetailActivity.class);
+        mMoveToHome = new Intent(this, HomeTaskActivity.class);
 
         setTaskClickListener();
 
@@ -115,7 +115,7 @@ public class PickTaskActivity extends MenuDrawer {
             public void onClick(View v) {
                 if (mEnterTotalEditText.getText().toString().length() > 0) {
                     addTask();
-                    startActivity(mMoveToDetail);
+                    startActivity(mMoveToHome);
                 }
             }
         });

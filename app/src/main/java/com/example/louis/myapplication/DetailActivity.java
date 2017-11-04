@@ -84,28 +84,56 @@ public class DetailActivity extends MenuDrawer {
         };
 
         mDatabase = FirebaseDatabase.getInstance();
-        String userId = "xZEHwfTM4jbNOJRBikKvQhzpkbh2";
-        mDatabaseRef = mDatabase.getReference("users").child(userId);
+        String userId = mAuth.getCurrentUser().getUid();
+        mDatabaseRef = mDatabase.getReference("users").child(userId).child(Task.mCurrentTask);
         //        Query queryDatabase = mDatabaseRef.child("users").child("user");
         Log.d(TAG, "onCreate: " + userId);
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //     String task = dataSnapshot.getValue(String.class);
-                String selectedTask = "Push-ups";
-                Log.d(TAG, "onDataChange: Task changed");
-                DataSnapshot realTimeTaskInfo = dataSnapshot.child(selectedTask);
-                Iterable<DataSnapshot> taskChildren = realTimeTaskInfo.getChildren();
 
-                String date = realTimeTaskInfo.child("date").getValue(String.class);
-                String title = realTimeTaskInfo.child("title").getValue(String.class);
-                String imgUrl = realTimeTaskInfo.child("imgURL").getValue(String.class);
-                Integer goal = Integer.valueOf(realTimeTaskInfo.child("goal").getValue().toString());
-                //new DownloadImageTask(imgUrl, mImagePhoto).execute();
-                mTaskTitle.setText(title);
-                mDateStarted.setText(date);
-                mGoal.setText(goal.toString());
+                Boolean isCompleted = dataSnapshot.child("completed").getValue(Boolean.class);
+                String time = dataSnapshot.child("time").getValue(String.class);
+                String date = dataSnapshot.child("date").getValue(String.class);
+                String title = dataSnapshot.child("title").getValue(String.class);
+                String description = dataSnapshot.child("description").getValue(String.class);
+                Integer goal = Integer.valueOf(dataSnapshot.child("goal").getValue().toString());
+                String goalString = goal.toString();
+                Integer tally = Integer.valueOf(dataSnapshot.child("done").getValue().toString());
+                String tallyString = tally.toString();
+                TextView taskTitle = (TextView) findViewById(R.id.task_title);
+                taskTitle.setText(title);
+
+//                TextView taskDescription = (TextView) findViewById(R.id.description);
+//                taskDescription.setText(description);
+//
+//                TextView taskTime = (TextView) findViewById(R.id.time_started);
+//                taskTime.setText(time);
+
+                TextView taskDate = (TextView) findViewById(R.id.date_started);
+                taskDate.setText(date);
+
+                TextView taskGoal = (TextView) findViewById(R.id.goal);
+                taskGoal.setText(goalString);
+
+                TextView taskTally = (TextView) findViewById(R.id.task_tally);
+                taskTally.setText(tallyString);
+
+//                //     String task = dataSnapshot.getValue(String.class);
+//                String selectedTask = "Push-ups";
+//                Log.d(TAG, "onDataChange: Task changed");
+//                DataSnapshot realTimeTaskInfo = dataSnapshot.child(selectedTask);
+//                Iterable<DataSnapshot> taskChildren = realTimeTaskInfo.getChildren();
+//
+//                String date = realTimeTaskInfo.child("date").getValue(String.class);
+//                String title = realTimeTaskInfo.child("title").getValue(String.class);
+//                String imgUrl = realTimeTaskInfo.child("imgURL").getValue(String.class);
+//                Integer goal = Integer.valueOf(realTimeTaskInfo.child("goal").getValue().toString());
+//                //new DownloadImageTask(imgUrl, mImagePhoto).execute();
+//                mTaskTitle.setText(title);
+//                mDateStarted.setText(date);
+//                mGoal.setText(goal.toString());
             }
 
             @Override
@@ -134,7 +162,9 @@ public class DetailActivity extends MenuDrawer {
         mAddToGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Integer total = Integer.valueOf(mTaskTally.getText().toString());
+                mDatabaseRef.child("done").setValue(total);
+                finish();
             }
         });
 
@@ -170,6 +200,7 @@ public class DetailActivity extends MenuDrawer {
                 int goalChecker1 = Integer.valueOf(mGoal.getText().toString());
                 if (goalChecker1 <= tallyInt) {
                     mTallyLabel.setTextColor(Color.parseColor("#4caf50"));
+                    mAddToGoal.setVisibility(View.VISIBLE);;
                 }
             } else {
                 int tallyInt = 0;
@@ -178,8 +209,8 @@ public class DetailActivity extends MenuDrawer {
                 int goalChecker2 = Integer.valueOf(mGoal.getText().toString());
                 if (goalChecker2 <= tallyInt) {
                     mTallyLabel.setTextColor(Color.parseColor("#4caf50"));
+                    mAddToGoal.setVisibility(View.VISIBLE);
                 }
-                mAddToGoal.setVisibility(View.VISIBLE);
             }
         }
     }
