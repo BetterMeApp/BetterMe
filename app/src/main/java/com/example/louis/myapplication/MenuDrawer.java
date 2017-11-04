@@ -9,12 +9,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +45,7 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
         setContentView(id);
         ButterKnife.bind(this);
 
+
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
@@ -54,7 +57,6 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
 
         int layoutId = this.getLayoutId();
         View.inflate(this, layoutId, mMenuLayout);
-
     }
 
     @Override

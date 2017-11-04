@@ -32,8 +32,6 @@ import java.util.Date;
 import Model.Task;
 import Model.TaskListAdapter;
 
-//import java.sql.Time;
-
 public class HomeTaskActivity extends MenuDrawer {
     private static final String TAG = "HomeTaskActivity";
     private FirebaseAuth mAuth;
@@ -174,7 +172,6 @@ public class HomeTaskActivity extends MenuDrawer {
                 title.setText(getItem(i).title);
 
                 //percent should be completedNumber/goalNumber
-//                Log.d(TAG, "getView: percentage calc->: " + getItem(i).completedNumber / getItem(i).goalNumber);
                 Double comp = Double.valueOf(getItem(i).completedNumber.toString());
                 Double goal = Double.valueOf(getItem(i).goalNumber.toString());
                 Double percentage = Math.floor(100 * (comp / goal));

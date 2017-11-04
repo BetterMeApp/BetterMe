@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import Model.DownloadImageTask;
 import Model.Task;
 
@@ -93,8 +95,6 @@ public class DetailActivity extends MenuDrawer {
         mDatabase = FirebaseDatabase.getInstance();
         String userId = mAuth.getCurrentUser().getUid();
         mDatabaseRef = mDatabase.getReference("users").child(userId).child(Task.mCurrentTask);
-        //        Query queryDatabase = mDatabaseRef.child("users").child("user");
-        Log.d(TAG, "onCreate: " + userId);
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -113,11 +113,7 @@ public class DetailActivity extends MenuDrawer {
                 taskTitle.setText(title);
                 String imgUrl = dataSnapshot.child("imgURL").getValue(String.class);
                 new DownloadImageTask(imgUrl, mImagePhoto).execute();
-//                TextView taskDescription = (TextView) findViewById(R.id.description);
-//                taskDescription.setText(description);
-//
-//                TextView taskTime = (TextView) findViewById(R.id.time_started);
-//                taskTime.setText(time);
+
                 TextView taskDate = findViewById(R.id.date_started);
                 taskDate.setText(buildDateNoTime(date));
 
@@ -126,28 +122,13 @@ public class DetailActivity extends MenuDrawer {
 
                 TextView taskTally = findViewById(R.id.task_tally);
                 taskTally.setText(tallyString);
-
-//                //     String task = dataSnapshot.getValue(String.class);
-//                String selectedTask = "Push-ups";
-//                Log.d(TAG, "onDataChange: Task changed");
-//                DataSnapshot realTimeTaskInfo = dataSnapshot.child(selectedTask);
-//                Iterable<DataSnapshot> taskChildren = realTimeTaskInfo.getChildren();
-//
-//                String date = realTimeTaskInfo.child("date").getValue(String.class);
-//                String title = realTimeTaskInfo.child("title").getValue(String.class);
-//                Integer goal = Integer.valueOf(realTimeTaskInfo.child("goal").getValue().toString());
-//                mTaskTitle.setText(title);
-//                mDateStarted.setText(date);
-//                mGoal.setText(goal.toString());
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.d(TAG, "onCancelled: Error - " + databaseError.getMessage());
-
             }
         });
-
     }
 
     private String buildDateNoTime(String date) {
@@ -174,6 +155,7 @@ public class DetailActivity extends MenuDrawer {
                 subtractToCompleted();
             }
         });
+
         mAddToGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,10 +164,11 @@ public class DetailActivity extends MenuDrawer {
                 finish();
             }
         });
+
         mInfoArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mNumberPickerLayout.isShown()){
+                if (mNumberPickerLayout.isShown()) {
                     mNumberPickerLayout.setVisibility(View.INVISIBLE);
                     mAddSign.setVisibility(View.VISIBLE);
                 } else {
@@ -197,39 +180,39 @@ public class DetailActivity extends MenuDrawer {
 
     }
 
-    private void configureNumberPicker(){
+    private void configureNumberPicker() {
         final TextView numberPickedTextView = findViewById(R.id.textView_number_picked);
         NumberPicker numberPicker = findViewById(R.id.number_picker);
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(25);
         numberPicker.setWrapSelectorWheel(true);
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-        @Override
-        public void onValueChange(NumberPicker picker, int oldVal, int newVal){
-            //Display the newly selected number from picker
-            String valString = Integer.toString(newVal);
-            numberPickedTextView.setText(valString);
-            mNumberPicked = newVal;
-            mIncrement.setVisibility(View.VISIBLE);
-            int tally = Integer.valueOf(mTaskTally.getText().toString());
-            int goalChecker1 = Integer.valueOf(mGoal.getText().toString());
-            if (newVal <= tally) {
-                mDecrement.setVisibility(View.VISIBLE);
-            } else {
-                mDecrement.setVisibility(View.INVISIBLE);
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                //Display the newly selected number from picker
+                String valString = Integer.toString(newVal);
+                numberPickedTextView.setText(valString);
+                mNumberPicked = newVal;
+                mIncrement.setVisibility(View.VISIBLE);
+                int tally = Integer.valueOf(mTaskTally.getText().toString());
+                int goalChecker1 = Integer.valueOf(mGoal.getText().toString());
+                if (newVal <= tally) {
+                    mDecrement.setVisibility(View.VISIBLE);
+                } else {
+                    mDecrement.setVisibility(View.INVISIBLE);
+                }
+                if (goalChecker1 <= tally) {
+                    mTallyLabel.setText("Completed");
+                    mTallyLabel.setTextColor(Color.parseColor("#4caf50"));
+                    mAddToGoal.setVisibility(View.VISIBLE);
+                } else {
+                    mTallyLabel.setText("Done");
+                    mTallyLabel.setTextColor(Color.parseColor("#001970"));
+                    mAddToGoal.setVisibility(View.INVISIBLE);
+                }
             }
-            if (goalChecker1 <= tally) {
-                mTallyLabel.setText("Completed");
-                mTallyLabel.setTextColor(Color.parseColor("#4caf50"));
-                mAddToGoal.setVisibility(View.VISIBLE);
-            } else {
-                mTallyLabel.setText("Done");
-                mTallyLabel.setTextColor(Color.parseColor("#001970"));
-                mAddToGoal.setVisibility(View.INVISIBLE);
-            }
-        }
-    });
-}
+        });
+    }
 
     private void addToCompleted() {
         int newTotal;
@@ -249,7 +232,8 @@ public class DetailActivity extends MenuDrawer {
                 if (goalChecker1 <= tallyInt) {
                     mTallyLabel.setText("Completed");
                     mTallyLabel.setTextColor(Color.parseColor("#4caf50"));
-                    mAddToGoal.setVisibility(View.VISIBLE);;
+                    mAddToGoal.setVisibility(View.VISIBLE);
+                    ;
                 }
             } else {
                 int tallyInt = 0;
@@ -265,9 +249,9 @@ public class DetailActivity extends MenuDrawer {
         }
     }
 
-    private void subtractToCompleted(){
+    private void subtractToCompleted() {
         int newTotal;
-        if (mNumberPicked != 0){
+        if (mNumberPicked != 0) {
             int tally = Integer.valueOf(mTaskTally.getText().toString());
             if ((tally - mNumberPicked) >= 0) {
                 newTotal = tally - mNumberPicked;
@@ -288,10 +272,10 @@ public class DetailActivity extends MenuDrawer {
         }
     }
 
-    private void dismissKeyboard(){
+    private void dismissKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
