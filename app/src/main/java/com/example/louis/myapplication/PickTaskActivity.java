@@ -2,7 +2,6 @@ package com.example.louis.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -164,7 +164,6 @@ public class PickTaskActivity extends MenuDrawer {
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         String time = String.valueOf(new Date().getTime());
         Integer goalNumber = Integer.parseInt(mEnterTotalEditText.getText().toString());
-
         String mUserId = mAuth.getCurrentUser().getUid();
         Map<String, Object> update = new HashMap<String, Object>();
         update.put("title", mTaskToAdd.title);
