@@ -10,7 +10,7 @@
         android:title="@string/pick_task"/>
 
     <item android:id="@+id/detail_task"
-        android:icon="@mipmap/ic_view_headline_black_24dp"
+        android:icon="@mipmap/ic_playlist_play_black_24dp"
         android:title="@string/task_details"/>
 
     <item android:id="@+id/completed_task"
