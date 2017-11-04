@@ -12,4 +12,5 @@
     <color name="white">#fafafa </color>
     <color name="black">#000000</color>
     <color name="green">#4caf50</color>
+    <color name="greyLight">#82b3c9</color>
 </resources>
