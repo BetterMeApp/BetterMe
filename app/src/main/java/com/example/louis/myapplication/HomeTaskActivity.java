@@ -121,6 +121,7 @@ public class HomeTaskActivity extends MenuDrawer {
                     String taskImgURL = task.child("imgURL").getValue().toString();
                     Long startTime = Long.valueOf(task.child("time").getValue().toString());
                     Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(task.child("date").getValue().toString());
+//                    Date startDate = new Date(startTime);
                     Integer goalNumber = Integer.valueOf(task.child("goal").getValue().toString());
                     Integer completedNumber = Integer.valueOf(task.child("done").getValue().toString());
                     Boolean completed = (Boolean) task.child("completed").getValue();
@@ -177,17 +178,20 @@ public class HomeTaskActivity extends MenuDrawer {
 //                Log.d(TAG, "getView: percentage calc->: " + getItem(i).completedNumber / getItem(i).goalNumber);
                 Double comp = Double.valueOf(getItem(i).completedNumber.toString());
                 Double goal = Double.valueOf(getItem(i).goalNumber.toString());
-                Double percentage = 100 * (comp / goal);
+                Double percentage = Math.floor(100 * (comp / goal));
                 percent.setText(String.valueOf(percentage));
 
                 //days left should be 30 - daysCompleted
                 //daysCompleted should (somewhere) be incremented each day (or by TodayDate - StartDate)
                 //if daysCompleted is a utilized property for each task, the following code could be refactored
                 Date today = new Date();
-                Date startDay = getItem(i).startDate;
-                startDay.setTime(getItem(i).startTime);
+                Log.d(TAG, "getView: today: " + today.toString());
+                Date startDay = new Date(getItem(i).startTime);
+                Log.d(TAG, "getView: startDay: " + startDay.toString());
+//                startDay.setTime(getItem(i).startTime);
+
                 Long diff = today.getTime() - startDay.getTime();
-                Long days = diff / (24 * 60 * 60 * 1000);
+                Long days = diff / (86400000);
                 Long daysLeft = 30 - days;
                 count.setText(String.valueOf(daysLeft));
 
