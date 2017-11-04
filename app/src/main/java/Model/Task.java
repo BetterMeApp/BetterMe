@@ -1,6 +1,5 @@
 package Model;
 
-
 import java.util.Date;
 
 /**
@@ -32,5 +31,4 @@ public class Task {
         this.daysCompleted = daysCompleted;
 
     }
-
 }
