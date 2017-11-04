@@ -26,6 +26,8 @@
         <activity
             android:name=".DetailActivity"
             android:label="Tasks"
-            android:parentActivityName=".HomeTaskActivity" />
+            android:parentActivityName=".HomeTaskActivity">
+        </activity>
+
     </application>
 </manifest>

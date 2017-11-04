@@ -56,7 +56,7 @@
             android:id="@+id/textView_task_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This will be the task description that will briefly explain what the task entails and ask them to enter the number of tasks/day they want to do."
+            android:text="@string/hint_description"
             android:textSize="18sp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
