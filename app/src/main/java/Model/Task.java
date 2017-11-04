@@ -7,6 +7,7 @@ import java.util.Date;
  */
 
 public class Task {
+    public static String mCurrentTask;
 
     public String title;
     public String description;
