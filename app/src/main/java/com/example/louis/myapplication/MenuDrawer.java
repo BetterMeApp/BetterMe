@@ -47,6 +47,7 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mNavView.setNavigationItemSelectedListener(this);
 
