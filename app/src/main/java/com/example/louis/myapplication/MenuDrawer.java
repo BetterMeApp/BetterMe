@@ -1,6 +1,8 @@
 package com.example.louis.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,14 +39,6 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        ImageView imageView = (ImageView) findViewById(R.id.logo);
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-//        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-//        roundedBitmapDrawable.setCircular(true);
-//        imageView.setImageDrawable(roundedBitmapDrawable);
-
-        //setContentView(R.layout.menu_drawer);
-
         int id = R.layout.menu_drawer;
         setContentView(id);
         ButterKnife.bind(this);
@@ -57,8 +53,6 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
         int layoutId = this.getLayoutId();
         View.inflate(this, layoutId, mMenuLayout);
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -79,7 +73,7 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.profile) {
+        if (id == R.id.completed_task) {
             Intent profileIntent = new Intent(this, ProfileActivity.class);
             startActivity(profileIntent);
             return true;
@@ -95,9 +89,16 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
             Intent pickTaskIntent = new Intent(this, PickTaskActivity.class);
             startActivity(pickTaskIntent);
             return true;
+        } else if (id == R.id.logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent logoutIntent = new Intent(this, LoginActivity.class);
+            startActivity(logoutIntent);
+            return true;
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

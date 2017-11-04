@@ -46,8 +46,7 @@ public class HomeTaskActivity extends MenuDrawer {
     private TaskListAdapter mAdapter;
 
     public int getLayoutId() {
-        int id = R.layout.activity_home_task;
-        return id;
+        return R.layout.activity_home_task;
     }
 
     @Override
@@ -61,8 +60,9 @@ public class HomeTaskActivity extends MenuDrawer {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     //user is signed in
+                    startView();
                 } else {
                     //user not signed in
                     Intent loginIntent = new Intent(ctx, LoginActivity.class);
@@ -70,6 +70,9 @@ public class HomeTaskActivity extends MenuDrawer {
                 }
             }
         };
+    }
+
+    public void startView() {
         mLogo = (ImageView) findViewById(R.id.logo);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
@@ -100,6 +103,8 @@ public class HomeTaskActivity extends MenuDrawer {
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: Task changed");
+
                 for(DataSnapshot task : dataSnapshot.getChildren()){
                     Log.d(TAG, "onDataChange: completedNumber check->: " + task.getValue().toString());
                     //=====check to see if task is already complete=================
@@ -110,6 +115,7 @@ public class HomeTaskActivity extends MenuDrawer {
 //
 //                    //identify each value (this could be refactored, but clarifies what value each is being assigned to)
                 try {
+
                     String title = task.child("title").getValue().toString();
                     String description = task.child("description").getValue().toString();
                     String taskImgURL = task.child("imgURL").getValue().toString();

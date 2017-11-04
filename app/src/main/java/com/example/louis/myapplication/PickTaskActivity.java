@@ -59,8 +59,7 @@ public class PickTaskActivity extends MenuDrawer {
     private ToggleButton mToggleTotalTypeButton;
 
     public int getLayoutId() {
-        int id = R.layout.activity_pick_task;
-        return id;
+        return R.layout.activity_pick_task;
     }
 
     @Override
