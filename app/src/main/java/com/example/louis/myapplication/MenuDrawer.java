@@ -83,10 +83,6 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
             Intent homeIntent = new Intent(this, HomeTaskActivity.class);
             startActivity(homeIntent);
             return true;
-        } else if (id == R.id.detail_task) {
-            Intent detailIntent = new Intent(this, DetailActivity.class);
-            startActivity(detailIntent);
-            return true;
         } else if (id == R.id.pick_task) {
             Intent pickTaskIntent = new Intent(this, PickTaskActivity.class);
             startActivity(pickTaskIntent);
