@@ -58,9 +58,10 @@ public class DetailActivity extends MenuDrawer {
         };
 
         mDatabase = FirebaseDatabase.getInstance();
-        String userId = "xZEHwfTM4jbNOJRBikKvQhzpkbh2";
+        String userId = mAuth.getCurrentUser().getUid();
         mDatabaseRef = mDatabase.getReference("users").child(userId).child(Task.mCurrentTask);
 //        Query queryDatabase = mDatabaseRef.child("users").child("user");
+        Log.d(TAG, "onCreate: " + userId);
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -71,7 +72,7 @@ public class DetailActivity extends MenuDrawer {
 //                Iterable<DataSnapshot> pushUpChildren = pushUpSnapshot.getChildren();
 
 
-                boolean isCompleted = dataSnapshot.child("completed").getValue(Boolean.class);
+                Boolean isCompleted = dataSnapshot.child("completed").getValue(Boolean.class);
                 String time = dataSnapshot.child("time").getValue(String.class);
                 String date = dataSnapshot.child("date").getValue(String.class);
                 String title = dataSnapshot.child("title").getValue(String.class);
