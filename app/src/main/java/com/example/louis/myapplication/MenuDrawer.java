@@ -46,6 +46,7 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -82,10 +83,6 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
             Intent homeIntent = new Intent(this, HomeTaskActivity.class);
             startActivity(homeIntent);
             return true;
-        } else if (id == R.id.detail_task) {
-            Intent detailIntent = new Intent(this, DetailActivity.class);
-            startActivity(detailIntent);
-            return true;
         } else if (id == R.id.pick_task) {
             Intent pickTaskIntent = new Intent(this, PickTaskActivity.class);
             startActivity(pickTaskIntent);
@@ -100,6 +97,4 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 }

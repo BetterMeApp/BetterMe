@@ -19,19 +19,9 @@ import Model.Task;
 
 public class DetailActivity extends MenuDrawer {
     private static final String TAG = "DetailActivity";
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private TextView mTaskTitle;
-    private TextView mDescription;
-    private TextView mDateStarted;
-    private TextView mTimeStarted;
-    private TextView mGoal;
-    private TextView mTaskTally;
-    private TextView mMinuteNumber;
-    private TextView mCheckedBoxes;
-    private ImageView mLogo;
-    private ImageView mImagePhoto;
-    private ImageView mLogoBackground;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDatabaseRef;
     private Task mCurrentTask;
@@ -48,7 +38,7 @@ public class DetailActivity extends MenuDrawer {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     // user is logged in
                 } else {
                     finish();
@@ -65,11 +55,6 @@ public class DetailActivity extends MenuDrawer {
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                String task = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "onDataChange: Task changed");
-//                DataSnapshot pushUpSnapshot = dataSnapshot.child("Push-ups");
-//                Iterable<DataSnapshot> pushUpChildren = pushUpSnapshot.getChildren();
-
 
                 Boolean isCompleted = dataSnapshot.child("completed").getValue(Boolean.class);
                 String time = dataSnapshot.child("time").getValue(String.class);
@@ -80,22 +65,22 @@ public class DetailActivity extends MenuDrawer {
                 String goalString = goal.toString();
                 Integer tally = Integer.valueOf(dataSnapshot.child("done").getValue().toString());
                 String tallyString = tally.toString();
-                TextView taskTitle = (TextView)findViewById(R.id.task_title);
+                TextView taskTitle = (TextView) findViewById(R.id.task_title);
                 taskTitle.setText(title);
 
-                TextView taskDescription = (TextView)findViewById(R.id.description);
+                TextView taskDescription = (TextView) findViewById(R.id.description);
                 taskDescription.setText(description);
 
-                TextView taskTime = (TextView)findViewById(R.id.time_started);
+                TextView taskTime = (TextView) findViewById(R.id.time_started);
                 taskTime.setText(time);
 
-                TextView taskDate = (TextView)findViewById(R.id.date_started);
+                TextView taskDate = (TextView) findViewById(R.id.date_started);
                 taskDate.setText(date);
 
-                TextView taskGoal = (TextView)findViewById(R.id.goal);
+                TextView taskGoal = (TextView) findViewById(R.id.goal);
                 taskGoal.setText(goalString);
 
-                TextView taskTally = (TextView)findViewById(R.id.task_tally);
+                TextView taskTally = (TextView) findViewById(R.id.task_tally);
                 taskTally.setText(tallyString);
             }
 
@@ -119,21 +104,6 @@ public class DetailActivity extends MenuDrawer {
     protected void onStop() {
         super.onStop();
         mAuth.removeAuthStateListener(mAuthListener);
-
-    }
-
-    private void configureLayout() {
-        mTaskTitle = (TextView) findViewById(R.id.task_title);
-        mDescription = (TextView) findViewById(R.id.description);
-        mDateStarted = (TextView) findViewById(R.id.date_started);
-        mTimeStarted = (TextView) findViewById(R.id.time_started);
-        mGoal = (TextView) findViewById(R.id.goal);
-        mTaskTally = (TextView) findViewById(R.id.task_tally);
-        mMinuteNumber = (TextView) findViewById(R.id.minute_number);
-        mCheckedBoxes = (TextView) findViewById(R.id.checked_boxes);
-        mLogo = (ImageView) findViewById(R.id.logo);
-        mImagePhoto = (ImageView) findViewById(R.id.image_photo);
-        mLogoBackground = (ImageView) findViewById(R.id.logo_background);
 
     }
 }

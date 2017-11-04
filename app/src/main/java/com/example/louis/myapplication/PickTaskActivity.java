@@ -84,7 +84,7 @@ public class PickTaskActivity extends MenuDrawer {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 
-    public  void setViews(){
+    public void setViews() {
         mTaskList = Model.CreateTasksList.createTaskArrayList();
 
         mTaskListLayout = findViewById(R.id.relativeLayout_task_list);
@@ -143,13 +143,13 @@ public class PickTaskActivity extends MenuDrawer {
 //        });
     }
 
-    public void setFirebase(){
+    public void setFirebase() {
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     //user is logged in
                 } else {
                     finish();
@@ -160,28 +160,28 @@ public class PickTaskActivity extends MenuDrawer {
         mDatabase = FirebaseDatabase.getInstance();
     }
 
-    private void addTask(){
+    private void addTask() {
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         String time = String.valueOf(new Date().getTime());
         Integer goalNumber = Integer.parseInt(mEnterTotalEditText.getText().toString());
         String mUserId = mAuth.getCurrentUser().getUid();
         Map<String, Object> update = new HashMap<String, Object>();
         update.put("title", mTaskToAdd.title);
-        update.put("description",mTaskToAdd.description);
-        update.put("imgURL",mTaskToAdd.taskImgURL);
-        update.put("time",time);
-        update.put("date",date);
-        update.put("goal",goalNumber);
-        update.put("done",mTaskToAdd.completedNumber);
-        update.put("completed",mTaskToAdd.completed);
-        update.put("dayscompleted",mTaskToAdd.daysCompleted);
+        update.put("description", mTaskToAdd.description);
+        update.put("imgURL", mTaskToAdd.taskImgURL);
+        update.put("time", time);
+        update.put("date", date);
+        update.put("goal", goalNumber);
+        update.put("done", mTaskToAdd.completedNumber);
+        update.put("completed", mTaskToAdd.completed);
+        update.put("dayscompleted", mTaskToAdd.daysCompleted);
 
 
         mDbRef = mDatabase.getReference("users").child(mUserId).child(mTaskToAdd.title);
         mDbRef.updateChildren(update);
     }
 
-    private void setTaskClickListener(){
+    private void setTaskClickListener() {
         mTasksListView.setClickable(true);
         mTasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -196,7 +196,7 @@ public class PickTaskActivity extends MenuDrawer {
         });
     }
 
-    private void dismissKeyboard(View view){
+    private void dismissKeyboard(View view) {
         InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }

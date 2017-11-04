@@ -9,10 +9,6 @@
         android:icon="@mipmap/ic_playlist_add_black_24dp"
         android:title="@string/pick_task"/>
 
-    <item android:id="@+id/detail_task"
-        android:icon="@mipmap/ic_playlist_play_black_24dp"
-        android:title="@string/task_details"/>
-
     <item android:id="@+id/completed_task"
         android:icon="@mipmap/ic_playlist_add_check_black_24dp"
         android:title="@string/completed"/>
