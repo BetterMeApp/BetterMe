@@ -178,7 +178,7 @@ public class HomeTaskActivity extends MenuDrawer {
 //                Log.d(TAG, "getView: percentage calc->: " + getItem(i).completedNumber / getItem(i).goalNumber);
                 Double comp = Double.valueOf(getItem(i).completedNumber.toString());
                 Double goal = Double.valueOf(getItem(i).goalNumber.toString());
-                Double percentage = 100 * (comp / goal);
+                Double percentage = Math.floor(100 * (comp / goal));
                 percent.setText(String.valueOf(percentage));
 
                 //days left should be 30 - daysCompleted
