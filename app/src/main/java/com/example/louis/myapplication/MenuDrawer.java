@@ -45,7 +45,6 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
         setContentView(id);
         ButterKnife.bind(this);
 
-
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
