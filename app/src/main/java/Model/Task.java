@@ -20,16 +20,6 @@ import java.util.Date;
  */
 
 public class Task {
-    public static String mCurrentTask;
-
-    public static FirebaseAuth mAuth;
-
-    public static FirebaseDatabase mDatabase;
-    public static DatabaseReference mDatabaseRef;
-
-    public static ListView mTasksCompleted;
-    public static ArrayList<Task> mTaskArrayList;
-    public static TaskListAdapter mTaskListAdapter;
 
     public String title;
     public String description;
@@ -52,62 +42,5 @@ public class Task {
         this.completed = isCompleted;
         this.daysCompleted = daysCompleted;
 
-    }
-
-    public static void dataListener() {
-//        mDatabase = FirebaseDatabase.getInstance();
-//        mDatabaseRef = mDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
-//        mTaskArrayList = new ArrayList<>();
-
-        mDatabaseRef.addValueEventListener(new ValueEventListener() {
-            public static final String TAG = "Data Listener";
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    Log.d(TAG, "onDataChange: " + data.getValue().toString());
-
-                    if (data.child("completed").getValue().toString().equals("false")) {
-                        continue;
-                    }
-
-                    try {
-                        Log.d(TAG, "onDataChange: " + data.child("title"));
-
-                        String title = data.child("title").getValue().toString();
-                        String description = data.child("description").getValue().toString();
-                        String taskImgURL = data.child("imgURL").getValue().toString();
-                        Long startTime = Long.valueOf(data.child("time").getValue().toString());
-                        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(data.child("date").getValue().toString());
-                        Integer goalNumber = Integer.valueOf(data.child("goal").getValue().toString());
-                        Integer completedNumber = Integer.valueOf(data.child("done").getValue().toString());
-                        Boolean completed = (Boolean) data.child("isCompleted").getValue();
-                        Integer daysCompleted = Integer.valueOf(data.child("dayscompleted").getValue().toString());
-
-                        Task newCompletedTask = new Task(title,
-                                description,
-                                taskImgURL,
-                                startTime,
-                                startDate,
-                                goalNumber,
-                                completedNumber,
-                                completed,
-                                daysCompleted);
-
-                        mTaskArrayList.add(newCompletedTask);
-                        Log.d(TAG, "onDataChange: Arraylist being built? " + mTaskArrayList.toString());
-                    } catch (Exception e) {
-                        Log.d(TAG, "onDataChange: ArrayList failed" + e.getMessage());
-                        e.printStackTrace();
-                    }
-                }
-                mTaskListAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled: Error - " + databaseError.getMessage());
-            }
-        });
     }
 }
