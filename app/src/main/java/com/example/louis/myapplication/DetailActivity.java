@@ -38,12 +38,14 @@ public class DetailActivity extends MenuDrawer {
     private TextView mGoal;
     private TextView mTaskTally;
     private TextView mTallyLabel;
+    private TextView mAddSign;
     private ImageView mImagePhoto;
     private Integer mNumberPicked;
     private Button mIncrement;
     private Button mDecrement;
     private Button mAddToGoal;
-    private Task mCurrentTask;
+    private RelativeLayout mInfoArea;
+    private RelativeLayout mNumberPickerLayout;
 
     public int getLayoutId() {
         return R.layout.activity_detail;
@@ -67,6 +69,11 @@ public class DetailActivity extends MenuDrawer {
         mDecrement = findViewById(R.id.button_decrement);
         mAddToGoal = findViewById(R.id.button_add_towards_goal);
         mTallyLabel = findViewById(R.id.textView_daily_tally_label);
+        mImagePhoto = findViewById(R.id.imageView_task_img);
+        mInfoArea = findViewById(R.id.relativeLayout_info_area);
+        mNumberPickerLayout = findViewById(R.id.relativeLayout_number_picker);
+        mAddSign = findViewById(R.id.textView_add_sign);
+
     }
 
     private void configureFirebase() {
@@ -104,20 +111,20 @@ public class DetailActivity extends MenuDrawer {
                 String tallyString = tally.toString();
                 TextView taskTitle = (TextView) findViewById(R.id.task_title);
                 taskTitle.setText(title);
-
+                String imgUrl = dataSnapshot.child("imgURL").getValue(String.class);
+                new DownloadImageTask(imgUrl, mImagePhoto).execute();
 //                TextView taskDescription = (TextView) findViewById(R.id.description);
 //                taskDescription.setText(description);
 //
 //                TextView taskTime = (TextView) findViewById(R.id.time_started);
 //                taskTime.setText(time);
+                TextView taskDate = findViewById(R.id.date_started);
+                taskDate.setText(buildDateNoTime(date));
 
-                TextView taskDate = (TextView) findViewById(R.id.date_started);
-                taskDate.setText(date);
-
-                TextView taskGoal = (TextView) findViewById(R.id.goal);
+                TextView taskGoal = findViewById(R.id.goal);
                 taskGoal.setText(goalString);
 
-                TextView taskTally = (TextView) findViewById(R.id.task_tally);
+                TextView taskTally = findViewById(R.id.task_tally);
                 taskTally.setText(tallyString);
 
 //                //     String task = dataSnapshot.getValue(String.class);
@@ -128,9 +135,7 @@ public class DetailActivity extends MenuDrawer {
 //
 //                String date = realTimeTaskInfo.child("date").getValue(String.class);
 //                String title = realTimeTaskInfo.child("title").getValue(String.class);
-//                String imgUrl = realTimeTaskInfo.child("imgURL").getValue(String.class);
 //                Integer goal = Integer.valueOf(realTimeTaskInfo.child("goal").getValue().toString());
-//                //new DownloadImageTask(imgUrl, mImagePhoto).execute();
 //                mTaskTitle.setText(title);
 //                mDateStarted.setText(date);
 //                mGoal.setText(goal.toString());
@@ -143,6 +148,16 @@ public class DetailActivity extends MenuDrawer {
             }
         });
 
+    }
+
+    private String buildDateNoTime(String date) {
+        int i = 0;
+        String dateNoTime = "";
+        while (i < 11) {
+            dateNoTime += date.charAt(i);
+            i++;
+        }
+        return dateNoTime;
     }
 
     public void setClickListeners() {
@@ -167,6 +182,18 @@ public class DetailActivity extends MenuDrawer {
                 finish();
             }
         });
+        mInfoArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mNumberPickerLayout.isShown()){
+                    mNumberPickerLayout.setVisibility(View.INVISIBLE);
+                    mAddSign.setVisibility(View.VISIBLE);
+                } else {
+                    mNumberPickerLayout.setVisibility(View.VISIBLE);
+                    mAddSign.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
 
     }
 
@@ -180,17 +207,33 @@ public class DetailActivity extends MenuDrawer {
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal){
             //Display the newly selected number from picker
-            numberPickedTextView.setText("Selected Number : " + newVal);
+            String valString = Integer.toString(newVal);
+            numberPickedTextView.setText(valString);
             mNumberPicked = newVal;
             mIncrement.setVisibility(View.VISIBLE);
-            mDecrement.setVisibility(View.VISIBLE);
+            int tally = Integer.valueOf(mTaskTally.getText().toString());
+            int goalChecker1 = Integer.valueOf(mGoal.getText().toString());
+            if (newVal <= tally) {
+                mDecrement.setVisibility(View.VISIBLE);
+            } else {
+                mDecrement.setVisibility(View.INVISIBLE);
+            }
+            if (goalChecker1 <= tally) {
+                mTallyLabel.setText("Completed");
+                mTallyLabel.setTextColor(Color.parseColor("#4caf50"));
+                mAddToGoal.setVisibility(View.VISIBLE);
+            } else {
+                mTallyLabel.setText("Done");
+                mTallyLabel.setTextColor(Color.parseColor("#001970"));
+                mAddToGoal.setVisibility(View.INVISIBLE);
+            }
         }
     });
 }
 
     private void addToCompleted() {
         int newTotal;
-        if (mNumberPicked != 0) {
+        if (!(mNumberPicked < 0)) {
             String currentTally = mTaskTally.getText().toString();
             if (!currentTally.equals("")) {
                 int tallyInt = Integer.valueOf(currentTally);
@@ -198,7 +241,13 @@ public class DetailActivity extends MenuDrawer {
                 mTaskTally.setText(String.valueOf(newTotal));
                 tallyInt = Integer.valueOf(mTaskTally.getText().toString());
                 int goalChecker1 = Integer.valueOf(mGoal.getText().toString());
+                if (mNumberPicked <= tallyInt) {
+                    mDecrement.setVisibility(View.VISIBLE);
+                } else {
+                    mDecrement.setVisibility(View.INVISIBLE);
+                }
                 if (goalChecker1 <= tallyInt) {
+                    mTallyLabel.setText("Completed");
                     mTallyLabel.setTextColor(Color.parseColor("#4caf50"));
                     mAddToGoal.setVisibility(View.VISIBLE);;
                 }
@@ -208,6 +257,7 @@ public class DetailActivity extends MenuDrawer {
                 tallyInt = Integer.valueOf(mTaskTally.getText().toString());
                 int goalChecker2 = Integer.valueOf(mGoal.getText().toString());
                 if (goalChecker2 <= tallyInt) {
+                    mTallyLabel.setText("Completed");
                     mTallyLabel.setTextColor(Color.parseColor("#4caf50"));
                     mAddToGoal.setVisibility(View.VISIBLE);
                 }
@@ -219,9 +269,21 @@ public class DetailActivity extends MenuDrawer {
         int newTotal;
         if (mNumberPicked != 0){
             int tally = Integer.valueOf(mTaskTally.getText().toString());
-            if ((tally - mNumberPicked) > 0) {
+            if ((tally - mNumberPicked) >= 0) {
                 newTotal = tally - mNumberPicked;
                 mTaskTally.setText(String.valueOf(newTotal));
+                tally = Integer.valueOf(mTaskTally.getText().toString());
+                int goalChecker2 = Integer.valueOf(mGoal.getText().toString());
+                if (mNumberPicked <= tally) {
+                    mDecrement.setVisibility(View.VISIBLE);
+                } else {
+                    mDecrement.setVisibility(View.INVISIBLE);
+                }
+                if (goalChecker2 > tally) {
+                    mTallyLabel.setText("Done");
+                    mTallyLabel.setTextColor(Color.parseColor("#001970"));
+                    mAddToGoal.setVisibility(View.INVISIBLE);
+                }
             }
         }
     }

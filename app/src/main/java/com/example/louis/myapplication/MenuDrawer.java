@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -30,7 +31,6 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
 
     @BindView(R.id.menu_layout)
     RelativeLayout mMenuLayout;
-
 
     // any class that extends this abstract class must define this.
     public abstract int getLayoutId();
@@ -54,6 +54,7 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
 
         int layoutId = this.getLayoutId();
         View.inflate(this, layoutId, mMenuLayout);
+
     }
 
     @Override

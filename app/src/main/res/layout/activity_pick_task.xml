@@ -91,7 +91,7 @@
                 android:layout_centerHorizontal="true"
                 android:ems="6"
                 android:inputType="number"
-                android:hint="# per day"
+                android:hint="times per day"
                 android:textColorHint="@color/secondaryLightColor"/>
 
             <Button
@@ -108,7 +108,7 @@
             android:id="@+id/button_back"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Pick A Different Task"
+            android:text="Back To Task"
             android:textColor="@color/secondaryColor"
             android:background="@color/black"
             android:layout_alignParentBottom="true"

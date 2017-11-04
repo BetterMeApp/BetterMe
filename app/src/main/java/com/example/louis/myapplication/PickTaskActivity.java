@@ -30,10 +30,6 @@ import Model.DownloadImageTask;
 import Model.Task;
 import butterknife.ButterKnife;
 
-// todo- strectch todo need to let the user go back to the tasklist layout from the selectedtask layout
-
-// todo add click listeners for any click anywhere to dismiss the keyboard
-
 public class PickTaskActivity extends MenuDrawer {
 
     private static final String TAG = "PickTaskActivity: ";

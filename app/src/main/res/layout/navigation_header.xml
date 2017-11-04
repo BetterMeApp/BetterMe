@@ -16,6 +16,7 @@
         android:contentDescription="@string/desc"/>
 
     <TextView
+        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Username"
