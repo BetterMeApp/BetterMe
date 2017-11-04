@@ -55,7 +55,6 @@ public class ProfileActivity extends MenuDrawer {
             }
         };
 
-//        Task.dataListener();
         checkTaskCompletion();
         setViews();
     }
