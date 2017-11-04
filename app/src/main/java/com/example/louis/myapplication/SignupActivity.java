@@ -47,7 +47,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     //user is logged in, go back to Login (and from there go to HomeActy)
                     finish();
                 }
@@ -68,7 +68,7 @@ public class SignupActivity extends AppCompatActivity {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 
-    private void attachListeners(){
+    private void attachListeners() {
         final Context ctx = this;
         mSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +78,7 @@ public class SignupActivity extends AppCompatActivity {
                 String email = mEmail.getText().toString();
                 String un = mUsername.getText().toString();
                 String pw = mPassword.getText().toString();
-                if (email.length() < 7 || un.length() < 7 || pw.length() < 7){
+                if (email.length() < 7 || un.length() < 7 || pw.length() < 7) {
                     Toast.makeText(SignupActivity.this, "Signup Failed. Ensure you are using a valid email and your username and password are both 8 characters or longer.", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -86,7 +86,7 @@ public class SignupActivity extends AppCompatActivity {
                         .addOnCompleteListener((Activity) ctx, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(!task.isSuccessful()){
+                                if (!task.isSuccessful()) {
                                     Toast.makeText(SignupActivity.this, "Oops! Something went wrong in the Sign-Up process.\nPlease try again or contact support.", Toast.LENGTH_LONG).show();
                                 } else {
                                     //user?
@@ -122,7 +122,7 @@ public class SignupActivity extends AppCompatActivity {
         mEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(!b) {
+                if (!b) {
                     dismissKeyboard(view);
                 }
 
@@ -132,7 +132,7 @@ public class SignupActivity extends AppCompatActivity {
         mUsername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(!b) {
+                if (!b) {
                     dismissKeyboard(view);
                 }
             }
@@ -141,16 +141,16 @@ public class SignupActivity extends AppCompatActivity {
         mPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(!b) {
+                if (!b) {
                     dismissKeyboard(view);
                 }
             }
         });
     }
 
-    private void dismissKeyboard(View view){
-            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    private void dismissKeyboard(View view) {
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
     }
 

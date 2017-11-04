@@ -99,52 +99,52 @@ public class HomeTaskActivity extends MenuDrawer {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 
-    private void addDatabaseListener(){
+    private void addDatabaseListener() {
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onDataChange: Task changed");
 
-                for(DataSnapshot task : dataSnapshot.getChildren()){
+                for (DataSnapshot task : dataSnapshot.getChildren()) {
                     Log.d(TAG, "onDataChange: completedNumber check->: " + task.getValue().toString());
                     //=====check to see if task is already complete=================
-                if(task.child("completed").getValue().toString().equals("true")){
-                    continue;
-                }
+                    if (task.child("completed").getValue().toString().equals("true")) {
+                        continue;
+                    }
 //                    //=========load arraylist with Tasks======================
 //
 //                    //identify each value (this could be refactored, but clarifies what value each is being assigned to)
-                try {
+                    try {
 
-                    String title = task.child("title").getValue().toString();
-                    String description = task.child("description").getValue().toString();
-                    String taskImgURL = task.child("imgURL").getValue().toString();
-                    Long startTime = Long.valueOf(task.child("time").getValue().toString());
-                    Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(task.child("date").getValue().toString());
-                    Integer goalNumber = Integer.valueOf(task.child("goal").getValue().toString());
-                    Integer completedNumber = Integer.valueOf(task.child("done").getValue().toString());
-                    Boolean completed = (Boolean) task.child("completed").getValue();
-                    Integer daysCompleted = Integer.valueOf(task.child("dayscompleted").getValue().toString());
+                        String title = task.child("title").getValue().toString();
+                        String description = task.child("description").getValue().toString();
+                        String taskImgURL = task.child("imgURL").getValue().toString();
+                        Long startTime = Long.valueOf(task.child("time").getValue().toString());
+                        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(task.child("date").getValue().toString());
+                        Integer goalNumber = Integer.valueOf(task.child("goal").getValue().toString());
+                        Integer completedNumber = Integer.valueOf(task.child("done").getValue().toString());
+                        Boolean completed = (Boolean) task.child("completed").getValue();
+                        Integer daysCompleted = Integer.valueOf(task.child("dayscompleted").getValue().toString());
 
-                    //create new task
-                    Task newTask = new Model.Task(title,
-                            description,
-                            taskImgURL,
-                            startTime,
-                            startDate,
-                            goalNumber,
-                            completedNumber,
-                            completed,
-                            daysCompleted);
+                        //create new task
+                        Task newTask = new Model.Task(title,
+                                description,
+                                taskImgURL,
+                                startTime,
+                                startDate,
+                                goalNumber,
+                                completedNumber,
+                                completed,
+                                daysCompleted);
 
-                    //add task to arraylist
-                    mTaskArrayList.add(newTask);
-                } catch(Exception e){
-                    Log.d(TAG, "onDataChange: Date format parsing failed" + e.getMessage());
-                    e.printStackTrace();
-                }
+                        //add task to arraylist
+                        mTaskArrayList.add(newTask);
+                    } catch (Exception e) {
+                        Log.d(TAG, "onDataChange: Date format parsing failed" + e.getMessage());
+                        e.printStackTrace();
+                    }
 
-                mAdapter.notifyDataSetChanged();
+                    mAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -156,10 +156,10 @@ public class HomeTaskActivity extends MenuDrawer {
 
     }
 
-    private void configureListView(){
+    private void configureListView() {
         final Context context = this;
         mTaskListView = findViewById(R.id.current_task_listView);
-        mAdapter = new TaskListAdapter(this, mTaskArrayList){
+        mAdapter = new TaskListAdapter(this, mTaskArrayList) {
             @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
 //                return super.getView(i, view, viewGroup);

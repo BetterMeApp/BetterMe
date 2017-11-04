@@ -46,6 +46,7 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -100,6 +101,4 @@ public abstract class MenuDrawer extends AppCompatActivity implements Navigation
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 }

@@ -38,7 +38,7 @@ public class DetailActivity extends MenuDrawer {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     // user is logged in
                 } else {
                     finish();
@@ -65,22 +65,22 @@ public class DetailActivity extends MenuDrawer {
                 String goalString = goal.toString();
                 Integer tally = Integer.valueOf(dataSnapshot.child("done").getValue().toString());
                 String tallyString = tally.toString();
-                TextView taskTitle = (TextView)findViewById(R.id.task_title);
+                TextView taskTitle = (TextView) findViewById(R.id.task_title);
                 taskTitle.setText(title);
 
-                TextView taskDescription = (TextView)findViewById(R.id.description);
+                TextView taskDescription = (TextView) findViewById(R.id.description);
                 taskDescription.setText(description);
 
-                TextView taskTime = (TextView)findViewById(R.id.time_started);
+                TextView taskTime = (TextView) findViewById(R.id.time_started);
                 taskTime.setText(time);
 
-                TextView taskDate = (TextView)findViewById(R.id.date_started);
+                TextView taskDate = (TextView) findViewById(R.id.date_started);
                 taskDate.setText(date);
 
-                TextView taskGoal = (TextView)findViewById(R.id.goal);
+                TextView taskGoal = (TextView) findViewById(R.id.goal);
                 taskGoal.setText(goalString);
 
-                TextView taskTally = (TextView)findViewById(R.id.task_tally);
+                TextView taskTally = (TextView) findViewById(R.id.task_tally);
                 taskTally.setText(tallyString);
             }
 

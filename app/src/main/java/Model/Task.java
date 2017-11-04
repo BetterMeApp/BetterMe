@@ -19,7 +19,7 @@ public class Task {
     public Boolean completed;
     public Integer daysCompleted;
 
-    public Task(String title, String description, String imgURL, Long time, Date date, Integer goal, Integer done, Boolean isCompleted, Integer daysCompleted){
+    public Task(String title, String description, String imgURL, Long time, Date date, Integer goal, Integer done, Boolean isCompleted, Integer daysCompleted) {
         this.title = title;
         this.description = description;
         this.taskImgURL = imgURL;

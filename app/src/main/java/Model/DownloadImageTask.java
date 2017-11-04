@@ -23,7 +23,7 @@ public class DownloadImageTask extends AsyncTask<String, String, Bitmap> {
     private String mUrl;
     private static Map<String, Bitmap> cache = new HashMap<>();
 
-    public DownloadImageTask(String Url, ImageView imageView){
+    public DownloadImageTask(String Url, ImageView imageView) {
         this.mUrl = Url;
         this.imgView = imageView;
     }
@@ -59,7 +59,6 @@ public class DownloadImageTask extends AsyncTask<String, String, Bitmap> {
             imgView.setImageBitmap(bmp);
         }
     }
-
 
 
 }
