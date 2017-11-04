@@ -27,7 +27,7 @@
     <string name="better_me">BetterMe</string>
     <string name="hint_percentage">%</string>
     <string name="hint_task_title">Title</string>
-    <string name="hint_description">Description</string>
+    <string name="hint_description">"This will be the task description that will briefly explain what the task entails and ask them to enter the number of tasks/day they want to do."</string>
     <string name="hint_start_date">Date started</string>
     <string name="hint_start_time">Time started</string>
     <string name="hint_goal_number">Your goal</string>

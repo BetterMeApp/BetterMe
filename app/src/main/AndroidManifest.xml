@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeTaskActivity">
+        <activity
+            android:name=".DetailActivity"
+            android:label="Tasks"
+            android:parentActivityName=".HomeTaskActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,9 +26,8 @@
         </activity>
         <activity android:name=".ProfileActivity">
         </activity>
-        <activity
-            android:name=".DetailActivity"
-            android:label="Tasks"
-            android:parentActivityName=".HomeTaskActivity" />
+        <activity android:name=".HomeTaskActivity">
+        </activity>
+
     </application>
 </manifest>

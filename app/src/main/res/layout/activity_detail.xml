@@ -3,173 +3,192 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <ImageView
-        android:id="@+id/logo_background"
+    <RelativeLayout
+        android:id="@+id/relativeLayout_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:contentDescription="@string/desc"
-        android:src="@drawable/logo"
-        android:alpha="0.1" />
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="275dp"
-        android:layout_marginEnd="275dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/desc"
-        android:src="@drawable/logo"
-        tools:mockup_opacity="1" />
-    <TextView
-        android:layout_width="wrap_content"
+        android:background="@color/primaryDarkColor">
+        <ImageView
+            android:id="@+id/imageView_task_img"
+            android:layout_width="82dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/logo"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+        <TextView
+            android:id="@+id/task_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imageView_task_img"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:text="Push-ups"
+            android:textColor="@color/secondaryColor"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/textView_started_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Started On:"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
+        <TextView
+            android:id="@+id/date_started"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_started_label"
+            android:layout_marginTop="2dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="11-3-2017"
+            android:textColor="@color/secondaryLightColor"
+            android:textSize="16sp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout_info_area"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="200dp"
-        android:layout_marginRight="200dp"
-        android:text="@string/better_me"
-        android:textColor="@color/white"
-        android:textStyle="italic"
-        android:textSize="20sp"/>
-    <TextView
-        android:id="@+id/task_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-        android:hint="@string/hint_task_title"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:layout_below="@id/relativeLayout_title_bar">
+        <TextView
+            android:id="@+id/textView_day_number_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Day #"
+            android:textSize="22sp"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/primaryDarkColor"/>
+        <TextView
+            android:id="@+id/textView_day_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:layout_below="@id/textView_day_number_label"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/secondaryLightColor"
+            android:textSize="30sp" />
+        <TextView
+            android:id="@+id/textView_daily_goal_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily Goal"
+            android:layout_below="@id/textView_day_number"
+            android:layout_centerHorizontal="true"
+            android:textSize="22sp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/primaryDarkColor"/>
+        <TextView
+            android:id="@+id/goal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_daily_goal_label"
+            android:layout_centerHorizontal="true"
+            android:text="100"
+            android:textColor="@color/secondaryDarkColor"
+            android:textSize="40sp" />
+        <ImageView
+            android:id="@+id/logo_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.1"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/logo"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <RelativeLayout
+            android:id="@+id/relativeLayout_number_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+            <TextView
+                android:id="@+id/textView_number_picked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Add Progress"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/white" />
+            <NumberPicker
+                android:id="@+id/number_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView_number_picked"
+                android:descendantFocusability="blocksDescendants"
+                android:solidColor="@color/primaryDarkColor"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_alignParentRight="true" />
+            <TextView
+                android:id="@+id/textView_daily_tally_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed"
+                android:layout_below="@id/textView_number_picked"
+                android:textSize="22sp"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/primaryDarkColor"/>
+            <TextView
+                android:id="@+id/task_tally"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView_daily_tally_label"
+                android:text="75"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginStart="35dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="@color/secondaryColor"
+                android:textSize="50sp" />
+            <Button
+                android:id="@+id/button_add_towards_goal"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@color/secondaryColor"
+                android:textColor="@color/black"
+                android:layout_below="@+id/task_tally"
+                android:text="Add"/>
+            <Button
+                android:id="@+id/button_increment"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:background="@color/secondaryColor"
+                android:textColor="@color/black"
+                android:layout_toLeftOf="@id/number_picker"
+                android:layout_toStartOf="@id/number_picker"
+                android:layout_below="@id/textView_number_picked"
+                android:layout_marginRight="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginTop="35dp"/>
+            <Button
+                android:id="@+id/button_decrement"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:background="@color/secondaryColor"
+                android:textColor="@color/black"
+                android:layout_toLeftOf="@id/number_picker"
+                android:layout_toStartOf="@id/number_picker"
+                android:layout_below="@id/button_increment"
+                android:layout_marginRight="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginTop="25dp" />
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/task_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
-        android:hint="@string/hint_description"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-    <TextView
-        android:id="@+id/date_started"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/description"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:hint="@string/hint_start_date"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-    <TextView
-        android:id="@+id/time_started"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/description"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="@string/hint_start_time"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-    <TextView
-        android:id="@+id/goal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/date_started"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:hint="@string/hint_goal_number"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-    <TextView
-        android:id="@+id/task_tally"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/time_started"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="@string/hint_task_tally"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-    <TextView
-        android:id="@+id/minute_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/goal"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:hint="@string/hint_minute_number"
-        android:textColor="@color/primaryDarkColor"
-        android:textSize="20sp" />
-    <TextView
-        android:id="@+id/checked_boxes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/task_tally"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="@string/hint_boxes_checked"
-        android:textColor="@color/primaryDarkColor"
-        android:textSize="20sp" />
-    <ImageView
-        android:id="@+id/image_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/minute_number"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
-        android:contentDescription="@string/desc" />
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/checked_boxes"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="80dp"
-        android:layout_marginRight="90dp"
-        android:layout_marginEnd="90dp"
-        android:hint="@string/hint_username"
-        android:textColor="@color/primaryDarkColor"
-        android:textSize="20sp" />
-
+        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>

@@ -1,16 +1,21 @@
 package com.example.louis.myapplication;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +28,8 @@ public class DetailActivity extends MenuDrawer {
     private static final String TAG = "DetailActivity";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseRef;
     private TextView mTaskTitle;
     private TextView mDescription;
     private TextView mDateStarted;
@@ -34,8 +41,8 @@ public class DetailActivity extends MenuDrawer {
     private ImageView mLogo;
     private ImageView mImagePhoto;
     private ImageView mLogoBackground;
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference mDatabaseRef;
+    private RelativeLayout mLayout;
+
 
     public int getLayoutId() {
         int id = R.layout.activity_detail;
@@ -45,14 +52,23 @@ public class DetailActivity extends MenuDrawer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        configureLayout();
+        configureFirebase();
+        configureNumberPicker();
+        dismissKeyboard();
+    }
 
-        ImageView imageView = (ImageView) findViewById(R.id.logo);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        imageView.setImageDrawable(roundedBitmapDrawable);
+    private void configureLayout() {
+        mTaskTitle = findViewById(R.id.task_title);
+        mDateStarted = findViewById(R.id.date_started);
+        mGoal = findViewById(R.id.goal);
+        mTaskTally = findViewById(R.id.task_tally);
+        mLogo = findViewById(R.id.logo);
+        mLogoBackground = findViewById(R.id.logo_background);
+        mLayout = findViewById(R.id.relativeLayout_info_area);
+    }
 
-
+    private void configureFirebase() {
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -69,43 +85,25 @@ public class DetailActivity extends MenuDrawer {
         mDatabase = FirebaseDatabase.getInstance();
         String userId = "xZEHwfTM4jbNOJRBikKvQhzpkbh2";
         mDatabaseRef = mDatabase.getReference("users").child(userId);
-//        Query queryDatabase = mDatabaseRef.child("users").child("user");
+        //        Query queryDatabase = mDatabaseRef.child("users").child("user");
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                String task = dataSnapshot.getValue(String.class);
+                //     String task = dataSnapshot.getValue(String.class);
+                String selectedTask = "Push-ups";
                 Log.d(TAG, "onDataChange: Task changed");
-                DataSnapshot pushUpSnapshot = dataSnapshot.child("Push-ups");
-                Iterable<DataSnapshot> pushUpChildren = pushUpSnapshot.getChildren();
+                DataSnapshot realTimeTaskInfo = dataSnapshot.child(selectedTask);
+                Iterable<DataSnapshot> taskChildren = realTimeTaskInfo.getChildren();
 
-
-                boolean isCompleted = pushUpSnapshot.child("completed").getValue(Boolean.class);
-                String time = pushUpSnapshot.child("time").getValue(String.class);
-                String date = pushUpSnapshot.child("date").getValue(String.class);
-                String title = pushUpSnapshot.child("title").getValue(String.class);
-                String description = pushUpSnapshot.child("description").getValue(String.class);
-                Integer goal = Integer.valueOf(pushUpSnapshot.child("goal").getValue().toString());
-                String goalString = goal.toString();
-                Integer tally = Integer.valueOf(pushUpSnapshot.child("done").getValue().toString());
-                String tallyString = tally.toString();
-                TextView taskTitle = (TextView)findViewById(R.id.task_title);
-                taskTitle.setText(title);
-
-                TextView taskDescription = (TextView)findViewById(R.id.description);
-                taskDescription.setText(description);
-
-                TextView taskTime = (TextView)findViewById(R.id.time_started);
-                taskTime.setText(time);
-
-                TextView taskDate = (TextView)findViewById(R.id.date_started);
-                taskDate.setText(date);
-
-                TextView taskGoal = (TextView)findViewById(R.id.goal);
-                taskGoal.setText(goalString);
-
-                TextView taskTally = (TextView)findViewById(R.id.task_tally);
-                taskTally.setText(tallyString);
+                String date = realTimeTaskInfo.child("date").getValue(String.class);
+                String title = realTimeTaskInfo.child("title").getValue(String.class);
+                String description = realTimeTaskInfo.child("description").getValue(String.class);
+                Integer goal = Integer.valueOf(realTimeTaskInfo.child("goal").getValue().toString());
+                Integer tally = Integer.valueOf(realTimeTaskInfo.child("done").getValue().toString());
+                mTaskTitle.setText(title);
+                mDateStarted.setText(date);
+                mGoal.setText(goal.toString());
             }
 
             @Override
@@ -115,6 +113,31 @@ public class DetailActivity extends MenuDrawer {
             }
         });
 
+    }
+
+    private void configureNumberPicker(){
+        final TextView numberPicked = findViewById(R.id.textView_number_picked);
+        NumberPicker numberPicker = findViewById(R.id.number_picker);
+        dismissKeyboard();
+        numberPicker.setMinValue(0);
+        numberPicker.setMaxValue(25);
+        numberPicker.setWrapSelectorWheel(true);
+        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        @Override
+        public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+            //Display the newly selected number from picker
+            numberPicked.setText("Selected Number : " + newVal);
+        }
+    });
+}
+
+
+    private void dismissKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     @Override
@@ -130,18 +153,4 @@ public class DetailActivity extends MenuDrawer {
 
     }
 
-    private void configureLayout() {
-        mTaskTitle = (TextView) findViewById(R.id.task_title);
-        mDescription = (TextView) findViewById(R.id.description);
-        mDateStarted = (TextView) findViewById(R.id.date_started);
-        mTimeStarted = (TextView) findViewById(R.id.time_started);
-        mGoal = (TextView) findViewById(R.id.goal);
-        mTaskTally = (TextView) findViewById(R.id.task_tally);
-        mMinuteNumber = (TextView) findViewById(R.id.minute_number);
-        mCheckedBoxes = (TextView) findViewById(R.id.checked_boxes);
-        mLogo = (ImageView) findViewById(R.id.logo);
-        mImagePhoto = (ImageView) findViewById(R.id.image_photo);
-        mLogoBackground = (ImageView) findViewById(R.id.logo_background);
-
-    }
 }
