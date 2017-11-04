@@ -104,7 +104,7 @@ public class ProfileActivity extends MenuDrawer {
                         Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(data.child("date").getValue().toString());
                         Integer goalNumber = Integer.valueOf(data.child("goal").getValue().toString());
                         Integer completedNumber = Integer.valueOf(data.child("done").getValue().toString());
-                        Boolean completed = (Boolean) data.child("isCompleted").getValue();
+                        Boolean completed = (Boolean) data.child("completed").getValue();
                         Integer daysCompleted = Integer.valueOf(data.child("dayscompleted").getValue().toString());
 
                         Task newCompletedTask = new Task(title,
