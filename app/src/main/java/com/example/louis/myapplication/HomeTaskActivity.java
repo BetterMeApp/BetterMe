@@ -60,8 +60,9 @@ public class HomeTaskActivity extends MenuDrawer {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     //user is signed in
+                    startView();
                 } else {
                     //user not signed in
                     Intent loginIntent = new Intent(ctx, LoginActivity.class);
@@ -69,6 +70,9 @@ public class HomeTaskActivity extends MenuDrawer {
                 }
             }
         };
+    }
+
+    public void startView() {
         mLogo = (ImageView) findViewById(R.id.logo);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);

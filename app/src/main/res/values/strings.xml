@@ -4,7 +4,7 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="create_new">Create New</string>
-    <string name="profile">Profile</string>
+    <string name="completed">Completed</string>
     <string name="pick_task">Pick Task</string>
     <string name="task_details">Task Details</string>
     <string name="logout">logout</string>
