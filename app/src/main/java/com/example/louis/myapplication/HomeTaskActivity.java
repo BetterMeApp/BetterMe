@@ -114,36 +114,36 @@ public class HomeTaskActivity extends MenuDrawer {
 //                    //=========load arraylist with Tasks======================
 //
 //                    //identify each value (this could be refactored, but clarifies what value each is being assigned to)
-                    try {
 
-                        String title = task.child("title").getValue().toString();
-                        String description = task.child("description").getValue().toString();
-                        String taskImgURL = task.child("imgURL").getValue().toString();
-                        Long startTime = Long.valueOf(task.child("time").getValue().toString());
-                        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(task.child("date").getValue().toString());
-                        Integer goalNumber = Integer.valueOf(task.child("goal").getValue().toString());
-                        Integer completedNumber = Integer.valueOf(task.child("done").getValue().toString());
-                        Boolean completed = (Boolean) task.child("completed").getValue();
-                        Integer daysCompleted = Integer.valueOf(task.child("dayscompleted").getValue().toString());
+                try {
 
-                        //create new task
-                        Task newTask = new Model.Task(title,
-                                description,
-                                taskImgURL,
-                                startTime,
-                                startDate,
-                                goalNumber,
-                                completedNumber,
-                                completed,
-                                daysCompleted);
+                    String title = task.child("title").getValue().toString();
+                    String description = task.child("description").getValue().toString();
+                    String taskImgURL = task.child("imgURL").getValue().toString();
+                    Long startTime = Long.valueOf(task.child("time").getValue().toString());
+                    Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(task.child("date").getValue().toString());
+                    Integer goalNumber = Integer.valueOf(task.child("goal").getValue().toString());
+                    Integer completedNumber = Integer.valueOf(task.child("done").getValue().toString());
+                    Boolean completed = (Boolean) task.child("completed").getValue();
+                    Integer daysCompleted = Integer.valueOf(task.child("dayscompleted").getValue().toString());
 
-                        //add task to arraylist
-                        mTaskArrayList.add(newTask);
-                    } catch (Exception e) {
-                        Log.d(TAG, "onDataChange: Date format parsing failed" + e.getMessage());
-                        e.printStackTrace();
-                    }
+                    //create new task
+                    Task newTask = new Model.Task(title,
+                            description,
+                            taskImgURL,
+                            startTime,
+                            startDate,
+                            goalNumber,
+                            completedNumber,
+                            completed,
+                            daysCompleted);
 
+                    //add task to arraylist
+                    mTaskArrayList.add(newTask);
+                } catch(Exception e){
+                    Log.d(TAG, "onDataChange: Date format parsing failed" + e.getMessage());
+                    e.printStackTrace();
+                }
                     mAdapter.notifyDataSetChanged();
                 }
             }
@@ -177,17 +177,20 @@ public class HomeTaskActivity extends MenuDrawer {
 //                Log.d(TAG, "getView: percentage calc->: " + getItem(i).completedNumber / getItem(i).goalNumber);
                 Double comp = Double.valueOf(getItem(i).completedNumber.toString());
                 Double goal = Double.valueOf(getItem(i).goalNumber.toString());
-                Double percentage = 100 * (comp / goal);
+                Double percentage = Math.floor(100 * (comp / goal));
                 percent.setText(String.valueOf(percentage));
 
                 //days left should be 30 - daysCompleted
                 //daysCompleted should (somewhere) be incremented each day (or by TodayDate - StartDate)
                 //if daysCompleted is a utilized property for each task, the following code could be refactored
                 Date today = new Date();
-                Date startDay = getItem(i).startDate;
-                startDay.setTime(getItem(i).startTime);
+                Log.d(TAG, "getView: today: " + today.toString());
+                Date startDay = new Date(getItem(i).startTime);
+                Log.d(TAG, "getView: startDay: " + startDay.toString());
+//                startDay.setTime(getItem(i).startTime);
+
                 Long diff = today.getTime() - startDay.getTime();
-                Long days = diff / (24 * 60 * 60 * 1000);
+                Long days = diff / (86400000);
                 Long daysLeft = 30 - days;
                 count.setText(String.valueOf(daysLeft));
 
